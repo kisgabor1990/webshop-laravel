@@ -236,10 +236,10 @@
         @yield('newest')
         @yield('similar')
 
-        <button class="btn btn-outline-dark" id="topButton" data-bs-tooltip="tooltip" data-bs-placement="left" title="Az oldal tetejére!"><i class="far fa-hand-point-up"></i></button>
+        <button class="btn btn-dark" id="topButton" data-bs-tooltip="tooltip" data-bs-placement="left" title="Az oldal tetejére!"><i class="far fa-hand-point-up"></i></button>
 
     </div>
-    <div class="container-fluid bg-dark p-5">
+    <div class="container-fluid bg-dark bg-gradient p-5">
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0 d-flex align-items-end justify-content-center">
                 <div id="also_linkek" class="row text-center text-lg-start">
