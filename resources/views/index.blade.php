@@ -236,7 +236,7 @@
         @yield('newest')
         @yield('similar')
 
-        <button id="topButton" title="Az oldal tetejére!"><i class="far fa-arrow-alt-circle-up"></i></button>
+        <button class="btn btn-outline-dark" id="topButton" data-bs-tooltip="tooltip" data-bs-placement="left" title="Az oldal tetejére!"><i class="far fa-hand-point-up"></i></button>
 
     </div>
     <div class="container-fluid bg-dark p-5">

@@ -1,7 +1,10 @@
 $(function () {
 
     function topFunction() {
-        $("html, body").animate({ scrollTop: 0 }, 'slow');
+        $("html").stop().animate({ 
+            scrollTop: 0 
+        }, ($(window).scrollTop() * 0.5));
+        return false;
     }
 
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-tooltip="tooltip"]'))
@@ -36,14 +39,14 @@ $(function () {
 
     $(window).scroll(function () {
         // Az oldal tetejére gomb
-        if ($("html, body").scrollTop() > 500) {
+        if ($(window).scrollTop() > 500) {
             $("#topButton").css("display", "block");
         } else {
             $("#topButton").css("display", "none");
         }
 
         // Az oldalsó menü követi a görgetést
-        if ($("html, body").scrollTop() < $("#mainContent").height() + 10) {
+        if ($(window).scrollTop() < $("#mainContent").height() + 10) {
 
             $("#sideCategory")
                 .addClass("sticky-top")
@@ -55,7 +58,8 @@ $(function () {
         }
     });
 
-    $("#topButton").click(function () {
+    $("#topButton").click(function (e) {
+        e.preventDefault();
         topFunction();
     });
 
@@ -70,7 +74,6 @@ $(function () {
 
     }
 
-    $("body")
 
 
     $(document)
