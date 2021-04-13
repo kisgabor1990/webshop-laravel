@@ -26,21 +26,21 @@
             </div>
             <!--/.Slides-->
             <!--Controls-->
-            <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#carousel-thumb" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
             <!--/.Controls-->
             <ol class="carousel-indicators">
-                <li data-target="#carousel-thumb" data-slide-to="0" class="active"> <img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                <li data-target="#carousel-thumb" data-slide-to="1"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                <li data-target="#carousel-thumb" data-slide-to="2"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                <li data-target="#carousel-thumb" data-slide-to="3"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                <li data-target="#carousel-thumb" data-slide-to="4"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
+                <li data-bs-target="#carousel-thumb" data-bs-slide-to="0" class="active"> <img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
+                <li data-bs-target="#carousel-thumb" data-bs-slide-to="1"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
+                <li data-bs-target="#carousel-thumb" data-bs-slide-to="2"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
+                <li data-bs-target="#carousel-thumb" data-bs-slide-to="3"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
+                <li data-bs-target="#carousel-thumb" data-bs-slide-to="4"><img class="d-block w-100 img-fluid" src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
             </ol>
         </div>
         <!--/.Carousel Wrapper-->
@@ -50,7 +50,7 @@
         <p class="h6">{{ $product->brand }}</p>
         <hr>
         <p class="h1">{{ $product->price }} Ft.</p>
-        <p class="mt-5"><a id="addToCartButton" class="btn btn-outline-success shadow" href="#" data-tooltip="tooltip" data-placement="right" title="Kosárba rakom!"><i class="fas fa-cart-plus"></i></a></p>
+        <p class="mt-5"><a id="addToCartButton" class="btn btn-outline-success shadow" href="#" data-bs-tooltip="tooltip" data-placement="right" title="Kosárba rakom!"><i class="fas fa-cart-plus"></i></a></p>
     </div>
 </div>
 <div class="row mt-5">
@@ -59,10 +59,10 @@
             <div class="card-header  bg-light">
                 <ul class="nav nav-tabs card-header-tabs " id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Leírás</a>
+                        <a class="nav-link active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Leírás</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Általános információ</a>
+                        <a class="nav-link" id="info-tab" data-bs-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Általános információ</a>
                     </li>
                 </ul>
             </div>
