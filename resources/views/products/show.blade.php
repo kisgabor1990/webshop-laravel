@@ -83,7 +83,7 @@
             <p class="h2">{{ $product->property }} {{ $product->type }}</p>
             <p class="h6">{{ $product->brand }}</p>
             <hr>
-            <p class="h1">{{ $product->price }} Ft.</p>
+            <p class="h1">{{ number_format($product->price, 0, ',', ' ') }} Ft.</p>
             <p class="mt-5"><a id="addToCartButton" class="btn btn-outline-success rounded-circle shadow"
                     href="{{ url('/kosarba-rakom/' . $product->id) }}" data-bs-tooltip="tooltip" data-placement="right"
                     title="Kosárba rakom!"><i class="fas fa-cart-plus fa-fw"></i></a></p>
@@ -280,8 +280,8 @@
                             </a>
                             <p class="card-text">{{ $product->brand }}</p>
                         </div>
-                        <div class="card-footer text-right">
-                            <b class="text-muted">{{ $product->price }} Ft.</b>
+                        <div class="card-footer text-end">
+                            <b class="text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
                         </div>
                     </div>
                 </div>
