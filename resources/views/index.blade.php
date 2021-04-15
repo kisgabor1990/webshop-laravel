@@ -16,13 +16,13 @@
         <div class="container">
 
             {{-- Kategória oldalmenü gomb --}}
-            <a class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" href="#navCategory" role="button"
+            <button class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navCategory"
                 aria-controls="offcanvasExample">
                 <i class="fa fa-tags" data-bs-toggle="offcanvas" href="#navCategory" aria-hidden="true"></i>
-            </a>
+            </button>
 
             {{-- Navigáció sáv --}}
-            <a class="navbar-brand d-block d-lg-none" href="#">Webshop logó</a>
+            <a class="navbar-brand d-block d-lg-none" href="{{ url('/') }}">Webshop logó</a>
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">
@@ -37,10 +37,10 @@
             </div>
 
             {{-- Főmenü oldalmenü gomb --}}
-            <a class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" href="#navMenu" role="button"
+            <button class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navMenu"
                 aria-controls="offcanvasExample">
                 <i class="fa fa-bars" data-bs-toggle="offcanvas" href="#navMenu" aria-hidden="true"></i>
-            </a>
+            </button>
 
             {{-- Főmenü oldalmenü tartalma --}}
             <div class="offcanvas offcanvas-end text-center bg-dark text-light" tabindex="-1" id="navMenu"
@@ -126,8 +126,19 @@
                         {{-- Kosár --}}
                         <div class="col-auto my-auto border border-danger border-2 rounded-pill">
                             <div class="row align-items-center d-flex">
-                                <div class="col-auto me-auto h5 mb-0">
-                                    0 Ft. (0)
+                                <div class="col-auto me-auto h5 mb-0 user-select-none">
+                                    @php
+                                        $total = 0;
+                                        $quantity = 0;
+                                    @endphp
+                                    @foreach (session('cart') as $product)
+                                        @php
+                                            $total += $product['quantity'] * $product['price'];
+                                            $quantity += $product['quantity'];
+                                        @endphp
+                                    @endforeach
+                                    {{ number_format($total, 0, ',', ' ') }} Ft.
+                                    ({{ $quantity }})
                                 </div>
                                 <div class="col-auto pe-0">
                                     <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
@@ -236,7 +247,8 @@
         @yield('newest')
         @yield('similar')
 
-        <button class="btn btn-dark" id="topButton" data-bs-tooltip="tooltip" data-bs-placement="left" title="Az oldal tetejére!"><i class="far fa-hand-point-up"></i></button>
+        <button class="btn btn-dark" id="topButton" data-bs-tooltip="tooltip" data-bs-placement="left"
+            title="Az oldal tetejére!"><i class="far fa-hand-point-up"></i></button>
 
     </div>
     <div class="container-fluid bg-dark bg-gradient p-5">
@@ -288,6 +300,7 @@
     </script>
     <script src="https://kit.fontawesome.com/e8e7489ac2.js" crossorigin="anonymous"></script>
     <script src="{{ URL::asset('scripts/app.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>

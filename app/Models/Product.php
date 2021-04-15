@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Nagy\LaravelRating\Traits\Rate\Rateable;
+
 
 class Product extends Model {
 
-    use HasFactory;
+    use HasFactory, Rateable;
     
     public function getProduct($id) {
         return $this::find($id);

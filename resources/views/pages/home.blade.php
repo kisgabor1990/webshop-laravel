@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <ol class="carousel-indicators">
         <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
         <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>

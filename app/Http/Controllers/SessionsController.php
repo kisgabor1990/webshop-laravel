@@ -12,31 +12,38 @@ use function view;
 
 class SessionsController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('auth.profil');
     }
-    
-    public function create() {
+
+    public function create()
+    {
         return view('auth.bejelentkezes');
     }
-    
-    public function store(LoginRequest $request) {
-        if ( ! (Auth::attempt($request->only('email', 'password'))) ) {
+
+    public function store(LoginRequest $request)
+    {
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+        if (!(Auth::attempt($request->only('email', 'password')))) {
             return redirect()->to("/bejelentkezes")->withErrors(['message' => 'Hibás email/jelszó páros!']);
         }
-        
+
         $request->session()->regenerate();
-        
-        return redirect()->to('/profil');
+
+        return redirect()->intended();
     }
-    
-    public function destroy(Request $request) {
+
+    public function destroy(Request $request)
+    {
         auth()->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-        
+
         return redirect()->to('/');
     }
 }

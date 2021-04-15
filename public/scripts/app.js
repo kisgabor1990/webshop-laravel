@@ -1,8 +1,8 @@
 $(function () {
 
     function topFunction() {
-        $("html").stop().animate({ 
-            scrollTop: 0 
+        $("html").stop().animate({
+            scrollTop: 0
         }, ($(window).scrollTop() * 0.5));
         return false;
     }
@@ -31,6 +31,9 @@ $(function () {
                 form.classList.add('was-validated')
             }, false)
         })
+
+    
+
 
     $('#profilButton').on('click', function (event) {
         $('.dropdown-menu').toggleClass('show');
