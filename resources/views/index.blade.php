@@ -125,7 +125,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" name="query" placeholder="Keresés"
                                     required>
-                                <button type="submit" id="searchButton" class="btn btn-outline-warning ml-3"
+                                <button type="submit" class="btn btn-outline-warning ml-3 searchButton"
                                     data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i
                                         class="fas fa-search"></i></button>
                             </div>
@@ -172,7 +172,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="query" placeholder="Keresés"
                                             required>
-                                        <button type="submit" id="searchButton" class="btn btn-outline-warning ml-3"
+                                        <button type="submit" class="btn btn-outline-warning ml-3 searchButton"
                                             data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i
                                                 class="fas fa-search"></i></button>
                                     </div>
