@@ -131,7 +131,7 @@
                                         $total = 0;
                                         $quantity = 0;
                                     @endphp
-                                    @foreach (session('cart') as $product)
+                                    @foreach ((array)session('cart') as $product)
                                         @php
                                             $total += $product['quantity'] * $product['price'];
                                             $quantity += $product['quantity'];
