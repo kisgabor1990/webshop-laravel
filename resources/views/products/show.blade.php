@@ -289,7 +289,7 @@
 
 
         </div>
-        <div class="alert alert-warning text-right mb-0">Hasonló termékek!</div>
+        <div class="alert alert-warning text-end mb-0">Hasonló termékek!</div>
     </div>
 </div>
 
