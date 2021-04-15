@@ -40,7 +40,7 @@ Author     : kisba
     font-size: 48px;
     border: 0;
 }
-#profilButton {
+#profilButton, .profilButton {
     font-size: 36px;
     border: 0;
 }

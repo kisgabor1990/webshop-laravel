@@ -29,8 +29,8 @@
                     </div>
                 </form>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/regisztracio">Nincs még fiókja? Regisztráljon!</a>
-                <a class="dropdown-item" href="/elfelejtett-jelszo">Elfelejtette jelszavát?</a>
+                <a class="dropdown-item" href="{{ url('/regisztracio') }}">Nincs még fiókja? Regisztráljon!</a>
+                <a class="dropdown-item" href="{{ url('/elfelejtett-jelszo') }}">Elfelejtette jelszavát?</a>
             </div>
         </div>
     </div>

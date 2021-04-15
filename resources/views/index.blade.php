@@ -62,6 +62,51 @@
                             <i class="fas {{ $menu_item[0] }} fa-fw"></i> {{ $menu_item[1] }}
                         </a>
                     @endforeach
+                    <div class="row">
+                        {{-- Kosár --}}
+                        <div class="col-auto my-3 mx-auto border border-danger border-2 rounded-pill">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-auto ps-3 h5 mb-0 user-select-none">
+                                    @php
+                                        $total = 0;
+                                        $quantity = 0;
+                                    @endphp
+                                    @foreach ((array) session('cart') as $product)
+                                        @php
+                                            $total += $product['quantity'] * $product['price'];
+                                            $quantity += $product['quantity'];
+                                        @endphp
+                                    @endforeach
+                                    {{ number_format($total, 0, ',', ' ') }} Ft.
+                                    ({{ $quantity }})
+                                </div>
+                                <div class="col-auto px-0">
+                                    <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
+                                        href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
+                                        data-bs-placement="bottom" title="Kosaram!">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Profil --}}
+                        <div class="col-auto my-3 mx-auto">
+                            <a class="btn btn-outline-success rounded-circle profilButton"
+                                href="{{ Auth::check() ? '/profil' : '/bejelentkezes' }}">
+                                <i class="fas fa-user fa-fw"></i>
+                            </a>
+                        </div>
+                    </div>
+                    @auth
+                        <div class="col-6 mx-auto my-auto text-center border-0">
+                            <div class="card-header pb-3">
+                                Üdvözöljük <br><b>{{ auth()->user()->billing_name }}</b>
+                            </div>
+                            <div class="card-footer border-top pt-3">
+                                <a href="{{ url('/kijelentkezes') }}" class="btn btn-warning">Kijelentkezés</a>
+                            </div>
+                        </div>
+                    @endauth
                 </div>
             </div>
 
@@ -75,10 +120,22 @@
                     </button>
                 </div>
                 <div class="offcanvas-body list-group list-group-flush">
+                    <form action="" method="get">
+                        <div class="row mb-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="query" placeholder="Keresés"
+                                    required>
+                                <button type="submit" id="searchButton" class="btn btn-outline-warning ml-3"
+                                    data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i
+                                        class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
                     @foreach ($categories as $category)
                         <a class="list-group-item list-group-item-action {{ request()->is('termekek/' . $category->slug) ? 'active' : '' }}"
                             href="{{ url('/termekek/' . $category->slug) }}">{{ $category->name }}</a>
                     @endforeach
+                    
                 </div>
             </div>
 
@@ -100,14 +157,14 @@
                     </h2>
                 </div>
                 <div class="col-12 col-lg-9">
-                    <div class="row d-flex">
+                    <div class="row">
 
                         {{-- Kereső, telefonszám, email cím --}}
                         <div class="col-4 me-auto">
                             <div class="row mb-3">
                                 <div class="col d-flex">
-                                    <span class="me-auto"><i class="fas fa-phone-alt"></i> 06-1/123-45-67</span>
-                                    <span><i class="far fa-envelope"></i> info@valami.hu</span>
+                                    <span class="me-auto"><i class="fas fa-phone-alt h5 me-1"></i> 06-1/123-45-67</span>
+                                    <span><i class="far fa-envelope h5 me-1"></i> info@valami.hu</span>
                                 </div>
                             </div>
                             <form action="" method="get">
@@ -125,13 +182,13 @@
 
                         {{-- Kosár --}}
                         <div class="col-auto my-auto border border-danger border-2 rounded-pill">
-                            <div class="row align-items-center d-flex">
-                                <div class="col-auto me-auto h5 mb-0 user-select-none">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-auto h5 mb-0 user-select-none">
                                     @php
                                         $total = 0;
                                         $quantity = 0;
                                     @endphp
-                                    @foreach ((array)session('cart') as $product)
+                                    @foreach ((array) session('cart') as $product)
                                         @php
                                             $total += $product['quantity'] * $product['price'];
                                             $quantity += $product['quantity'];
