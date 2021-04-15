@@ -68,8 +68,8 @@
                 </a>
                 <p class="card-text">{{ $product->brand }}</p>
             </div>
-            <div class="card-footer text-right">
-                <b class="text-muted">{{ $product->price }} Ft.</b>
+            <div class="card-footer text-end">
+                <b class="text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
             </div>
         </div>
     </div>
