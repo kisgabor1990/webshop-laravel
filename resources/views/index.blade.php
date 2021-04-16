@@ -92,7 +92,7 @@
                         {{-- Profil --}}
                         <div class="col-auto my-3 mx-auto">
                             <a class="btn btn-outline-success rounded-circle profilButton"
-                                href="{{ Auth::check() ? '/profil' : '/bejelentkezes' }}">
+                                href="{{ url('' . Auth::check() ? '/profil' : '/bejelentkezes' . '') }}">
                                 <i class="fas fa-user fa-fw"></i>
                             </a>
                         </div>
