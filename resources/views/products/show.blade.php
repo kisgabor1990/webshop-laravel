@@ -100,7 +100,7 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="info-tab" data-bs-toggle="tab" href="#info" role="tab"
-                                aria-controls="info" aria-selected="false">Általános információ</a>
+                                aria-controls="info" aria-selected="false">Jellemzők</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="info-tab" data-bs-toggle="tab" href="#rate" role="tab"
@@ -115,28 +115,28 @@
                             Leírás
                         </div>
                         <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
-                            <div class="col-12 col-lg-6 offset-lg-3">
+                            <div class="col-12 col-lg-4">
 
                                 <table class="table table-hover">
                                     <tbody>
                                         <tr class="border-top-0">
-                                            <th class="user-select-none text-end" scope="row">Márka:</th>
+                                            <th class="user-select-none" scope="row">Márka:</th>
                                             <td>márka</td>
                                         </tr>
                                         <tr>
-                                            <th class="user-select-none text-end" scope="row">Típus:</th>
+                                            <th class="user-select-none" scope="row">Típus:</th>
                                             <td>típus</td>
                                         </tr>
                                         <tr>
-                                            <th class="user-select-none text-end" scope="row">Méretek:</th>
+                                            <th class="user-select-none" scope="row">Méretek:</th>
                                             <td>szé x ho x ma Cm</td>
                                         </tr>
                                         <tr>
-                                            <th class="user-select-none text-end" scope="row">Szín:</th>
+                                            <th class="user-select-none" scope="row">Szín:</th>
                                             <td>Fehér</td>
                                         </tr>
                                         <tr>
-                                            <th class="user-select-none text-end" scope="row">Garancia: </th>
+                                            <th class="user-select-none" scope="row">Garancia: </th>
                                             <td>2 év</td>
                                         </tr>
                                     </tbody>
@@ -270,18 +270,45 @@
             @foreach ($similar as $product)
                 <div class="col mb-5 card-group">
                     <div class="card shadow">
-                        <img class="card-img-top"
+                        <img class="card-img-top px-3 pt-3"
                             src="https://via.placeholder.com/362x500/DDDDDD/808080?text=Kép+termékről"
                             alt="Card image cap">
                         <div class="card-body">
+                            <div class="col-auto h5 user-select-none text-center" style="color: gold">
+                                @php
+                                    $rating = $product->ratingsAvg();
+                                @endphp
+                                @foreach (range(1, 5) as $i)
+                                    <span class="fa-stack" style="width:1em">
+                                        <i class="far fa-star fa-stack-1x"></i>
+                                        @if ($rating > 0)
+                                            @if ($rating > 0.5)
+                                                <i class="fas fa-star fa-stack-1x"></i>
+                                            @else
+                                                <i class="fas fa-star-half fa-stack-1x"></i>
+                                            @endif
+                                        @endif
+                                        @php $rating--; @endphp
+                                    </span>
+                                @endforeach
+                            </div>
                             <a href="{{ url('/termekek/' . $product->id) }}"
                                 class="text-reset text-decoration-none stretched-link">
                                 <h5 class="card-title">{{ $product->property }} {{ $product->type }}</h5>
                             </a>
                             <p class="card-text">{{ $product->brand }}</p>
+                            <p class="card-text mt-5">
+                                <h6>Termékjellemzők:</h6>
+                                <ul>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                </ul>
+                            </p>
                         </div>
                         <div class="card-footer text-end">
-                            <b class="text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
+                            <b class="h4 text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
                         </div>
                     </div>
                 </div>
