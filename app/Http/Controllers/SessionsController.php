@@ -14,7 +14,9 @@ class SessionsController extends Controller
 {
     public function index()
     {
-        return view('auth.profil');
+        $user = Auth::user();
+
+        return view('auth.profil')->with('user', $user);
     }
 
     public function create()
@@ -38,7 +40,7 @@ class SessionsController extends Controller
 
     public function destroy(Request $request)
     {
-        auth()->logout();
+        Auth::logout();
 
         $request->session()->invalidate();
 
