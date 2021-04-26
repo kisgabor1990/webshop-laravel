@@ -123,8 +123,7 @@
                     <form action="" method="get">
                         <div class="row mb-5">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="query" placeholder="Keresés"
-                                    required>
+                                <input type="text" class="form-control" name="query" placeholder="Keresés" required>
                                 <button type="submit" class="btn btn-outline-warning ml-3 searchButton"
                                     data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i
                                         class="fas fa-search"></i></button>
@@ -135,7 +134,7 @@
                         <a class="list-group-item list-group-item-action {{ request()->is('termekek/' . $category->slug) ? 'active' : '' }}"
                             href="{{ url('/termekek/' . $category->slug) }}">{{ $category->name }}</a>
                     @endforeach
-                    
+
                 </div>
             </div>
 
@@ -172,7 +171,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="query" placeholder="Keresés"
                                             required>
-                                        <button type="submit" class="btn btn-outline-warning ml-3 searchButton"
+                                        <button type="submit" class="btn btn-outline-warning searchButton"
                                             data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i
                                                 class="fas fa-search"></i></button>
                                     </div>
@@ -180,40 +179,14 @@
                             </form>
                         </div>
 
-                        {{-- Kosár --}}
-                        <div class="col-auto my-auto border border-danger border-2 rounded-pill">
-                            <div class="row align-items-center justify-content-between">
-                                <div class="col-auto h5 mb-0 user-select-none">
-                                    @php
-                                        $total = 0;
-                                        $quantity = 0;
-                                    @endphp
-                                    @foreach ((array) session('cart') as $product)
-                                        @php
-                                            $total += $product['quantity'] * $product['price'];
-                                            $quantity += $product['quantity'];
-                                        @endphp
-                                    @endforeach
-                                    {{ number_format($total, 0, ',', ' ') }} Ft.
-                                    ({{ $quantity }})
-                                </div>
-                                <div class="col-auto pe-0">
-                                    <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
-                                        href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
-                                        data-bs-placement="bottom" title="Kosaram!">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
                         {{-- Profil --}}
                         <div class="col-auto my-auto">
-                            <div class="dropdown" data-bs-tooltip="tooltip" data-bs-placement="right" title="Profil!">
-                                <button class="btn btn-outline-success rounded-circle" type="button" id="profilButton">
+                            <div class="dropdown" data-bs-tooltip="tooltip" data-bs-placement="left" title="Profil!">
+                                <button class="btn btn-outline-success rounded-circle" type="button" id="profilButton"
+                                    data-bs-offset="-150,10">
                                     <i class="fas fa-user fa-fw"></i>
                                 </button>
-                                <div class="dropdown-menu py-3 profil" aria-labelledby="profilButton">
+                                <div class="dropdown-menu py-4 profil" aria-labelledby="profilButton">
 
                                     @guest
                                         <form class="px-3" action="{{ url('/bejelentkezes') }}" method="post">
@@ -258,6 +231,35 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Kosár --}}
+                        <div class="col-auto my-auto border border-danger border-2 rounded-pill">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-auto h5 mb-0 user-select-none">
+                                    @php
+                                        $total = 0;
+                                        $quantity = 0;
+                                    @endphp
+                                    @foreach ((array) session('cart') as $product)
+                                        @php
+                                            $total += $product['quantity'] * $product['price'];
+                                            $quantity += $product['quantity'];
+                                        @endphp
+                                    @endforeach
+                                    {{ number_format($total, 0, ',', ' ') }} Ft.
+                                    ({{ $quantity }})
+                                </div>
+                                <div class="col-auto pe-0">
+                                    <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
+                                        href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
+                                        data-bs-placement="bottom" title="Kosaram!">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -265,6 +267,10 @@
         </div>
 
     </div>
+
+
+
+    
     <div class="container">
         <div class="row mt-3 my-lg-4">
             <div class="col-12 col-lg-3">
