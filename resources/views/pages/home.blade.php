@@ -3,13 +3,7 @@
 @section('content')
 
     <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></li>
-        </ol>
+        
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="https://via.placeholder.com/1024x600/0000FF/808080?text=Hűtők" class="d-block w-100" alt="...">
@@ -29,15 +23,9 @@
                 <img src="https://via.placeholder.com/1024x600/777777/333333?text=Stb..." class="d-block w-100" alt="...">
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
+
+
 
 @endsection
 
@@ -50,18 +38,45 @@
                 @foreach ($newest as $product)
                     <div class="col mb-5 card-group">
                         <div class="card shadow">
-                            <img class="card-img-top"
-                                src="https://via.placeholder.com/362x500/DDDDDD/808080?text=Kép+termékről"
+                            <img class="card-img-top px-3 pt-3"
+                                src="https://via.placeholder.com/180x250/DDDDDD/808080?text=Kép+termékről"
                                 alt="Card image cap">
                             <div class="card-body">
+                                <div class="col-auto h5 user-select-none text-center mt-0" style="color: gold">
+                                    @php
+                                        $rating = $product->ratingsAvg();
+                                    @endphp
+                                    @foreach (range(1, 5) as $i)
+                                        <span class="fa-stack" style="width:1em">
+                                            <i class="far fa-star fa-stack-1x"></i>
+                                            @if ($rating > 0)
+                                                @if ($rating > 0.5)
+                                                    <i class="fas fa-star fa-stack-1x"></i>
+                                                @else
+                                                    <i class="fas fa-star-half fa-stack-1x"></i>
+                                                @endif
+                                            @endif
+                                            @php $rating--; @endphp
+                                        </span>
+                                    @endforeach
+                                </div>
                                 <a href="{{ url('/termekek/' . $product->id) }}"
                                     class="text-reset text-decoration-none stretched-link">
                                     <h5 class="card-title">{{ $product->property }} {{ $product->type }}</h5>
                                 </a>
                                 <p class="card-text">{{ $product->brand }}</p>
+                                <p class="card-text mt-5">
+                                <h6>Termékjellemzők:</h6>
+                                <ul>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    <li>Lorem ipsum dolor sit amet.</li>
+                                </ul>
+                                </p>
                             </div>
                             <div class="card-footer text-end">
-                                <b class="text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
+                                <b class="h4 text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
                             </div>
                         </div>
                     </div>
