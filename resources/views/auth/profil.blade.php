@@ -2,7 +2,7 @@
 
 @section('content')
 
-profil
+{{ $user }}
 
 @endsection
 
