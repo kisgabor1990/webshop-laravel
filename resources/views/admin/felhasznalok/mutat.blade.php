@@ -26,6 +26,10 @@
                                 <td>{{ $user->updated_at }}</td>
                             </tr>
                             <tr>
+                                <th scope="row" class="user-select-none">Törölve:</th>
+                                <td>@if ($user->deleted_at)Igen @else Nem @endif</td>
+                            </tr>
+                            <tr>
                                 <th scope="row" class="user-select-none">Számlázási címei:</th>
                                 <td>{{ count($billing_addresses) }} db.</td>
                             </tr>
