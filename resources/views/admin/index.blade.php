@@ -64,10 +64,12 @@
                     <p>
                         Ez a művelet visszavonhatatlan!
                     </p>
-                    <p class="mb-0">A felhasználó:</p>
+                    <p class="mb-0">A <span class="modal_header"></span>:</p>
                     <ul>
                         <li>Neve: <span class="name fw-bold"></span></li>
-                        <li>E-mail címe: <span class="email fw-bold"></span></li>
+                        @if (request()->is('admin/felhasznalok'))
+                            <li>E-mail címe: <span class="email fw-bold"></span></li>
+                        @endif
                     </ul>
                 </div>
                 <div class="modal-footer">
