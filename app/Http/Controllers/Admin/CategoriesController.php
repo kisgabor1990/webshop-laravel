@@ -67,7 +67,7 @@ class CategoriesController extends Controller
         // $shipping_addresses = Shipping_address::where('user_id', $id)->get();
 
         return view('admin.kategoriak.mutat')->with([
-            'category' => $category->find($id),
+            'category' => $category->withTrashed()->find($id),
             // 'billing_addresses' => $billing_addresses,
             // 'shipping_addresses' => $shipping_addresses,
             ]);
@@ -81,7 +81,7 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category, $id)
     {
-        return view('admin.kategoriak.szerkeszt')->with('category', $category->find($id));
+        return view('admin.kategoriak.szerkeszt')->with('category', $category->withTrashed()->find($id));
     }
 
     /**
@@ -93,7 +93,7 @@ class CategoriesController extends Controller
      */
     public function update(AdminNewCategoryRequest $request, Category $category, $id)
     {
-        $mod_cat = $category->find($id);
+        $mod_cat = $category->withTrashed()->find($id);
 
         $hu=array('/é/','/É/','/á/','/Á/','/ó/','/Ó/','/ö/','/Ö/','/ő/','/Ő/','/ú/','/Ú/','/ű/','/Ű/','/ü/','/Ü/','/í/','/Í/','/ /');
         $en= array('e','E','a','A','o','O','o','O','o','O','u','U','u','U','u','U','i','I','-'); 
