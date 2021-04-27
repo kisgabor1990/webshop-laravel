@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OpinionController;
@@ -63,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'] );
     Route::redirect('/', 'admin/dashboard');
+
     Route::get('/felhasznalok', [UserController::class, 'index'] );
     Route::get('/felhasznalok/mutat/{id}', [UserController::class, 'show'] );
     Route::get('/felhasznalok/uj', [UserController::class, 'create'] );
@@ -71,6 +73,16 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('/felhasznalok/szerkeszt/{id}', [UserController::class, 'update'] );
     Route::get('/felhasznalok/torol/{id}', [UserController::class, 'destroy'] );
     Route::get('/felhasznalok/visszaallit/{id}', [UserController::class, 'restore'] );
+    
+    Route::get('/kategoriak', [CategoriesController::class, 'index'] );
+    Route::get('/kategoriak/mutat/{id}', [CategoriesController::class, 'show'] );
+    Route::get('/kategoriak/uj', [CategoriesController::class, 'create'] );
+    Route::post('/kategoriak/uj', [CategoriesController::class, 'store'] );
+    Route::get('/kategoriak/szerkeszt/{id}', [CategoriesController::class, 'edit'] );
+    Route::post('/kategoriak/szerkeszt/{id}', [CategoriesController::class, 'update'] );
+    Route::get('/kategoriak/torol/{id}', [CategoriesController::class, 'destroy'] );
+    Route::get('/kategoriak/visszaallit/{id}', [CategoriesController::class, 'restore'] );
+
 });
 
 
