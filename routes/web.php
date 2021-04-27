@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\PagesController;
@@ -62,6 +63,14 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'] );
     Route::redirect('/', 'admin/dashboard');
+    Route::get('/felhasznalok', [UserController::class, 'index'] );
+    Route::get('/felhasznalok/mutat/{id}', [UserController::class, 'show'] );
+    Route::get('/felhasznalok/uj', [UserController::class, 'create'] );
+    Route::post('/felhasznalok/uj', [UserController::class, 'store'] );
+    Route::get('/felhasznalok/szerkeszt/{id}', [UserController::class, 'edit'] );
+    Route::post('/felhasznalok/szerkeszt/{id}', [UserController::class, 'update'] );
+    Route::get('/felhasznalok/torol/{id}', [UserController::class, 'destroy'] );
+    Route::get('/felhasznalok/visszaallit/{id}', [UserController::class, 'restore'] );
 });
 
 
