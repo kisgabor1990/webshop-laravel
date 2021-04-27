@@ -62,7 +62,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->find($id);
         $billing_addresses = Billing_address::where('user_id', $id)->get();
         $shipping_addresses = Shipping_address::where('user_id', $id)->get();
 
@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->find($id);
 
         return view('admin.felhasznalok.szerkeszt')->with('user', $user);
     }
@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function update(AdminEditUserRequest $request, $id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->find($id);
 
         $user->name = $request->name;
         if ($request->email != $user->email) {
