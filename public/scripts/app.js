@@ -7,6 +7,8 @@ $(function () {
         return false;
     }
 
+    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-tooltip="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -32,7 +34,7 @@ $(function () {
             }, false)
         })
 
-    
+
 
 
     $('#profilButton').on('click', function (event) {
@@ -77,35 +79,6 @@ $(function () {
 
     }
 
-    // Slider
-
-    $("#myCarousel").on("slide.bs.carousel", function(e) {
-        var $e = $(e.relatedTarget);
-        var idx = $e.index();
-        var itemsPerSlide = 3;
-        var totalItems = $(".carousel-item").length;
-      
-        if (idx >= totalItems - (itemsPerSlide - 1)) {
-          var it = itemsPerSlide - (totalItems - idx);
-          for (var i = 0; i < it; i++) {
-            // append slides to end
-            if (e.direction == "left") {
-              $(".carousel-item")
-                .eq(i)
-                .appendTo(".carousel-inner");
-            } else {
-              $(".carousel-item")
-                .eq(0)
-                .appendTo($(this).find(".carousel-inner"));
-            }
-          }
-        }
-      });
-      
-    // End Slider
-
-
-
     $(document)
         .on("click", function (e) {
             if (!$('div.dropdown').is(e.target)
@@ -115,37 +88,6 @@ $(function () {
                 $('.dropdown-menu').removeClass('show');
             }
         })
-        // .on("click", "a.is-ajax", function (e) {
-        //     e.preventDefault();
-        //     let this_r = $(this);
-        //     let sidenav = $(this_r).parent().attr("id");
-        //     let url = window.location.protocol + "//" + window.location.host + "/" + this_r.attr("href");
-        //     let params = (new URL(url)).searchParams;
-        //     $("#loading").show();
-        //     closeNav(sidenav);
-        //     topFunction();
-        //     if (params.get('module') === 'home') {
-        //         $("#newest").fadeIn(500);
-        //     } else {
-        //         $("#newest").fadeOut(500);
-        //     }
-
-        //     $.get(this_r.attr("href"), function (data) {
-
-        //         $("a").removeClass("active");
-        //         if (params.get('module') !== 'products') {
-        //             $("a.nav-" + params.get('module')).addClass("active");
-        //         } else {
-        //             $("a.nav-category" + params.get('category_id')).addClass("active");
-        //         }
-        //         $("#mainContent").hide().html(data).fadeIn(500);
-        //         window.history.pushState("", "", this_r.attr("href"));
-        //         $("#loading").hide();
-        //     })
-        //         .fail(function (response) {
-        //             alert(response);
-        //         });
-        // })
         .on('click', '#is_company', function () {
             $("#taxnum").fadeIn(500);
             $("#billing_taxnum").removeAttr("disabled");
@@ -185,5 +127,27 @@ $(function () {
             $(this).find(":input").filter(function () {
                 return !this.value;
             }).attr("disabled", "disabled");
-        });
+        })
+
+    // Confirm Modal
+
+    .on("click", ".table .delete", function (e) {
+        e.preventDefault();
+        $("#confirmModal a.delete")
+            .data("href", $(this).data("href"))
+            .data("header", $(this).data("header"))
+            .data("name", $(this).data("name"))
+            .data("email", $(this).data("email"));
+        $("#confirmModal .modal_header").html($(this).data("header"));
+        $("#confirmModal .name").html($(this).data("name"));
+        $("#confirmModal .email").html($(this).data("email"));
+        confirmModal.show();
+    });
+
+    $("#confirmModal a.delete").click(function (e) {
+        e.preventDefault();
+        confirmModal.hide();
+        window.location.replace($(this).data("href"));
+    });
+
 });
