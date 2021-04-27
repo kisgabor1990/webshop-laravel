@@ -19,7 +19,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menu">
-                <div class="navbar-nav">
+                <div class="navbar-nav w-100">
                     <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }} me-3"
                         aria-current="page" href="{{ url('admin/dashboard') }}"><i
                             class="fa fa-dashboard fa-lg fa-fw me-2" aria-hidden="true"></i> Dashboard</a>
@@ -38,7 +38,7 @@
                         aria-current="page" href="{{ url('admin/rendelesek') }}"><i
                             class="fas fa-clipboard-list fa-lg fa-fw me-2"></i>
                         Rendelések</a>
-                    <a class="nav-link" aria-current="page" href="{{ url('/home') }}"><i
+                    <a class="nav-link ms-auto" aria-current="page" href="{{ url('/home') }}"><i
                             class="fa fa-sign-out fa-lg fa-fw me-2" aria-hidden="true"></i> Kilépés</a>
 
                 </div>
