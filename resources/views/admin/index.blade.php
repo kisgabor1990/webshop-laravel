@@ -34,11 +34,11 @@
                         href="{{ url('admin/termekek') }}"><i class="fas fa-store fa-lg fa-fw me-2"
                             aria-hidden="true"></i>
                         Termékek</a>
-                    <a class="nav-link {{ request()->is('admin/rendelesek') ? 'active' : '' }} me-3"
+                    <a class="nav-link {{ request()->is('admin/rendelesek') ? 'active' : '' }} me-auto"
                         aria-current="page" href="{{ url('admin/rendelesek') }}"><i
                             class="fas fa-clipboard-list fa-lg fa-fw me-2"></i>
                         Rendelések</a>
-                    <a class="nav-link ms-auto" aria-current="page" href="{{ url('/home') }}"><i
+                    <a class="nav-link" aria-current="page" href="{{ url('/home') }}"><i
                             class="fa fa-sign-out fa-lg fa-fw me-2" aria-hidden="true"></i> Kilépés</a>
 
                 </div>
