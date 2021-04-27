@@ -37,7 +37,7 @@ class Opinion extends Model
     public function getOpinions($product_id) {
         return $this::where('product_id', $product_id)
             ->leftJoin('users', 'opinions.user_id', '=', 'users.id')
-            ->select('opinions.*', 'users.billing_name AS name')
+            ->select('opinions.*', 'users.name AS name')
             ->orderByDesc('opinions.updated_at')
             ->get();
     }
