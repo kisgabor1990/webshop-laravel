@@ -21,6 +21,10 @@
                                 <th scope="row" class="user-select-none">Utoljára módosítva:</th>
                                 <td>{{ $category->updated_at }}</td>
                             </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Törölve:</th>
+                                <td>@if ($category->deleted_at)Igen @else Nem @endif</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
