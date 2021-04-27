@@ -24,15 +24,20 @@
             {{-- Navigáció sáv --}}
             <a class="navbar-brand d-block d-lg-none" href="{{ url('/') }}">Webshop logó</a>
             <div class="collapse navbar-collapse">
-                <div class="navbar-nav">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">
-                        <i class="fas fa-home fa-fw"></i> Főoldal
+                <div class="navbar-nav w-100">
+                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }} me-3" href="{{ url('/') }}">
+                        <i class="fas fa-home fa-lg fa-fw me-2"></i> Főoldal
                     </a>
                     @foreach ($menu as $key => $menu_item)
-                        <a class="nav-link {{ request()->is($key) ? 'active' : '' }}" href="{{ url('/' . $key) }}">
-                            <i class="fas {{ $menu_item[0] }} fa-fw"></i> {{ $menu_item[1] }}
+                        <a class="nav-link {{ request()->is($key) ? 'active' : '' }} me-3" href="{{ url('/' . $key) }}">
+                            <i class="fas {{ $menu_item[0] }} fa-lg fa-fw me-2"></i> {{ $menu_item[1] }}
                         </a>
                     @endforeach
+                    @if (auth()->check() && auth()->user()->is_admin)
+                    <a class="nav-link ms-auto" href="{{ url('/admin') }}">
+                        <i class="fas fa-user-lock fa-lg fa-fw me-2"></i> Admin
+                    </a>
+                    @endif
                 </div>
             </div>
 
@@ -62,6 +67,11 @@
                             <i class="fas {{ $menu_item[0] }} fa-fw"></i> {{ $menu_item[1] }}
                         </a>
                     @endforeach
+                    @if (auth()->check() && auth()->user()->is_admin)
+                    <a class="list-group-item list-group-item-action" href="{{ url('/admin') }}">
+                        <i class="fas fa-user-lock fa-lg fa-fw me-2"></i> Admin
+                    </a>
+                    @endif
                     <div class="row">
                         {{-- Kosár --}}
                         <div class="col-auto my-3 mx-auto border border-danger border-2 rounded-pill">
@@ -100,7 +110,7 @@
                     @auth
                         <div class="col-6 mx-auto my-auto text-center border-0">
                             <div class="card-header pb-3">
-                                Üdvözöljük <br><b>{{ auth()->user()->billing_name }}</b>
+                                Üdvözöljük <br><b>{{ auth()->user()->name }}</b>
                             </div>
                             <div class="card-footer border-top pt-3">
                                 <a href="{{ url('/kijelentkezes') }}" class="btn btn-warning">Kijelentkezés</a>
@@ -213,7 +223,7 @@
                                     @auth
                                         <div class="card mx-3 text-center border-0" style="width: 200px">
                                             <div class="card-header bg-white pb-3">
-                                                Üdvözöljük <br><b>{{ auth()->user()->billing_name }}</b>
+                                                Üdvözöljük <br><b>{{ auth()->user()->name }}</b>
                                             </div>
                                             <div class="list-group list-group-flush">
                                                 <a href="{{ url('/profil') }}"
