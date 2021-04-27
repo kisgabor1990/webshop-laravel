@@ -45,6 +45,7 @@
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-success btn-sm">Mentés</button>
+                        <a class="btn btn-primary btn-sm" href="{{ url('admin/felhasznalok') }}" role="button">Mégsem</a>
                     </div>
                 </form>
             </div>
