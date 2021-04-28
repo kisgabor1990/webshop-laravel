@@ -33,8 +33,8 @@
                     @foreach ($categories as $category)
                         <tr>
                             <td scope="row" class="user-select-none fw-bold">{{ $category->id }}</td>
-                            <td>{{ $category->name }}</td>
-                            <td>{{ $category->slug }}</td>
+                            <td class="text-nowrap">{{ $category->name }}</td>
+                            <td class="text-nowrap">{{ $category->slug }}</td>
                             <td class="text-end">
                                 <div class="btn-group" role="group">
                                     <a class="btn btn-primary btn-sm "
