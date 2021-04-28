@@ -61,20 +61,18 @@
                                 <thead class="user-select-none">
                                     <tr>
                                         <th>Név</th>
-                                        <th>Adószám<br><small>(Cég esetén)</small></th>
-                                        <th>Cím</th>
+                                        <th class="text-nowrap">Adószám <small>(Cég esetén)</small></th>
+                                        <th colspan="3">Cím</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($billing_addresses as $billing)
                                         <tr>
-                                            <td>{{ $billing->name }}</td>
-                                            <td>{{ $billing->tax_num }}</td>
-                                            <td>
-                                                {{ $billing->city }} <br>
-                                                {{ $billing->address }} <br>
-                                                {{ $billing->zip }}
-                                            </td>
+                                            <td class="text-nowrap">{{ $billing->name }}</td>
+                                            <td class="text-nowrap">{{ $billing->tax_num }}</td>
+                                            <td class="text-nowrap">{{ $billing->city }}</td>
+                                            <td class="text-nowrap">{{ $billing->address }}</td>
+                                            <td class="text-nowrap">{{ $billing->zip }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -103,11 +101,11 @@
                                 <tbody>
                                     @forelse ($shipping_addresses as $shipping)
                                         <tr>
-                                            <td class="w-50">{{ $shipping->name }}</td>
-                                            <td>{{ $shipping->phone }}</td>
-                                            <td>{{ $shipping->city }}</td>
-                                            <td>{{ $shipping->address }}</td>
-                                            <td>{{ $shipping->zip }}</td>
+                                            <td class="text-nowrap">{{ $shipping->name }}</td>
+                                            <td class="text-nowrap">{{ $shipping->phone }}</td>
+                                            <td class="text-nowrap">{{ $shipping->city }}</td>
+                                            <td class="text-nowrap">{{ $shipping->address }}</td>
+                                            <td class="text-nowrap">{{ $shipping->zip }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -129,7 +127,7 @@
                                 <thead class="user-select-none">
                                     <tr class="text-center">
                                         <th>Azonosító</th>
-                                        <th>Rendelés ideje</th>
+                                        <th class="text-nowrap">Rendelés ideje</th>
                                         <th>Státusz</th>
                                     </tr>
                                 </thead>

@@ -33,7 +33,7 @@
                     @foreach ($users as $user)
                         <tr>
                             <td scope="row" class="user-select-none fw-bold">{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
+                            <td class="text-nowrap">{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td class="text-end">
                                 <div class="btn-group" role="group">
