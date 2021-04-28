@@ -23,7 +23,11 @@
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Törölve:</th>
-                                <td>@if ($category->deleted_at)Igen @else Nem @endif</td>
+                                <td>{{ $category->deleted_at ? 'Igen' : 'Nem' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Termékek száma:</th>
+                                <td>{{ $products->total() }} db.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -33,106 +37,42 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-12 col-lg-6 offset-lg-1 mb-5">
+        <div class="col-12 col-lg-6 offset-lg-1 mb-5">
             <div class="col-12 mb-5">
                 <div class="card">
-                    <div class="card-header text-center user-select-none h3">Számlázási adatok</div>
+                    <div class="card-header text-center user-select-none h3">Termékek</div>
                     <div class="card-body">
-                        <table class="table table-hover">
-                            <thead class="user-select-none">
-                                <tr>
-                                    <th>Név</th>
-                                    <th>Adószám<br><small>(Cég esetén)</small></th>
-                                    <th>Cím</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($billing_addresses as $billing)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="user-select-none">
                                     <tr>
-                                        <td>{{ $billing->name }}</td>
-                                        <td>{{ $billing->tax_num }}</td>
-                                        <td>
-                                            {{ $billing->city }} <br>
-                                            {{ $billing->address }} <br>
-                                            {{ $billing->zip }} 
-                                        </td>
+                                        <th>Márka</th>
+                                        <th>Termékazonosító</th>
+                                        <th>Tulajdonság</th>
                                     </tr>
-
-                                @empty
-                                    <tr>
-                                        <td colspan="5">Nincs rögzített számlázási adat!</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @forelse ($products as $product)
+                                        <tr>
+                                            <td>{{ $product->brand }}</td>
+                                            <td></td>
+                                            <td class="text-nowrap">{{ $product->property }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5">Nincs termék a kategóriában!</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 mb-5">
-                <div class="card">
-                    <div class="card-header text-center user-select-none h3">Szállítási adatok</div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead class="user-select-none">
-                                <tr>
-                                    <th>Név</th>
-                                    <th>Telefonszám</th>
-                                    <th>Cím</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($shipping_addresses as $shipping)
-                                    <tr>
-                                        <td>{{ $shipping->name }}</td>
-                                        <td>{{ $shipping->phone }}</td>
-                                        <td>
-                                            {{ $shipping->city }} <br>
-                                            {{ $shipping->address }} <br>
-                                            {{ $shipping->zip }}
-                                        </td>
-                                    </tr>
-
-                                @empty
-                                    <tr>
-                                        <td colspan="5">Nincs rögzített szállítási adat!</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="col-12 d-flex justify-content-center">
+                {{ $products->onEachSide(1)->links() }}
             </div>
-            <div class="col-12 mb-5">
-                <div class="card">
-                    <div class="card-header text-center user-select-none h3">Leadott megrendelések</div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead class="user-select-none">
-                                <tr class="text-center">
-                                    <th>Azonosító</th>
-                                    <th>Rendelés ideje</th>
-                                    <th>Státusz</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($billing_addresses as $billing_address)
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-                                @empty
-                                    <tr>
-                                        <td colspan="3">Nincs rögzített megrendelés!</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
+        </div>
     </div>
 
 @endsection

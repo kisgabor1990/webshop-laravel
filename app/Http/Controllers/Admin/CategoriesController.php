@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminNewCategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -62,14 +63,11 @@ class CategoriesController extends Controller
      */
     public function show(Category $category, $id)
     {
-        // $user = User::find($id);
-        // $billing_addresses = Billing_address::where('user_id', $id)->get();
-        // $shipping_addresses = Shipping_address::where('user_id', $id)->get();
+        $products = new Product();
 
         return view('admin.kategoriak.mutat')->with([
             'category' => $category->withTrashed()->find($id),
-            // 'billing_addresses' => $billing_addresses,
-            // 'shipping_addresses' => $shipping_addresses,
+            'products' => $products->getProducts($id, 15),
             ]);
     }
 
