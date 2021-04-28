@@ -23,18 +23,18 @@
                     <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }} me-3"
                         aria-current="page" href="{{ url('admin/dashboard') }}"><i
                             class="fa fa-dashboard fa-lg fa-fw me-2" aria-hidden="true"></i> Dashboard</a>
-                    <a class="nav-link {{ request()->is('admin/felhasznalok') ? 'active' : '' }} me-3"
+                    <a class="nav-link {{ request()->is('admin/felhasznalok*') ? 'active' : '' }} me-3"
                         aria-current="page" href="{{ url('admin/felhasznalok') }}"><i
                             class="fa fa-user fa-lg fa-fw me-2" aria-hidden="true"></i> Felhasználók</a>
-                    <a class="nav-link {{ request()->is('admin/kategoriak') ? 'active' : '' }} me-3"
+                    <a class="nav-link {{ request()->is('admin/kategoriak*') ? 'active' : '' }} me-3"
                         aria-current="page" href="{{ url('admin/kategoriak') }}"><i
                             class="fa fa-tags fa-lg fa-fw me-2" aria-hidden="true"></i>
                         Kategóriák</a>
-                    <a class="nav-link {{ request()->is('admin/termekek') ? 'active' : '' }} me-3" aria-current="page"
+                    <a class="nav-link {{ request()->is('admin/termekek*') ? 'active' : '' }} me-3" aria-current="page"
                         href="{{ url('admin/termekek') }}"><i class="fas fa-store fa-lg fa-fw me-2"
                             aria-hidden="true"></i>
                         Termékek</a>
-                    <a class="nav-link {{ request()->is('admin/rendelesek') ? 'active' : '' }} me-auto"
+                    <a class="nav-link {{ request()->is('admin/rendelesek*') ? 'active' : '' }} me-auto"
                         aria-current="page" href="{{ url('admin/rendelesek') }}"><i
                             class="fas fa-clipboard-list fa-lg fa-fw me-2"></i>
                         Rendelések</a>
