@@ -15,9 +15,9 @@ class Product extends Model {
         return $this::find($id);
     }
 
-    public function getProducts($category_id) {
+    public function getProducts($category_id, $ipp = 6) {
         return $this::where('category_id', $category_id)
-                        ->paginate(6);
+                        ->paginate($ipp);
     }
     
     public function getNewest() {
