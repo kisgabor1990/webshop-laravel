@@ -62,7 +62,7 @@
                                     <tr>
                                         <th>Név</th>
                                         <th class="text-nowrap">Adószám <small>(Cég esetén)</small></th>
-                                        <th colspan="3">Cím</th>
+                                        <th colspan="4">Cím</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,11 +72,12 @@
                                             <td class="text-nowrap">{{ $billing->tax_num }}</td>
                                             <td class="text-nowrap">{{ $billing->city }}</td>
                                             <td class="text-nowrap">{{ $billing->address }}</td>
+                                            <td class="text-nowrap">{{ $billing->address2 }}</td>
                                             <td class="text-nowrap">{{ $billing->zip }}</td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5">Nincs rögzített számlázási adat!</td>
+                                            <td colspan="6">Nincs rögzített számlázási adat!</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -95,7 +96,7 @@
                                     <tr>
                                         <th>Név</th>
                                         <th>Telefonszám</th>
-                                        <th colspan="3">Cím</th>
+                                        <th colspan="4">Cím</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,11 +106,12 @@
                                             <td class="text-nowrap">{{ $shipping->phone }}</td>
                                             <td class="text-nowrap">{{ $shipping->city }}</td>
                                             <td class="text-nowrap">{{ $shipping->address }}</td>
+                                            <td class="text-nowrap">{{ $shipping->address2 }}</td>
                                             <td class="text-nowrap">{{ $shipping->zip }}</td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5">Nincs rögzített szállítási adat!</td>
+                                            <td colspan="6">Nincs rögzített szállítási adat!</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
