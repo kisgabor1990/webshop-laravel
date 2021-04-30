@@ -85,10 +85,10 @@
                                     A név megadása kötelező!
                                 </div>
                             </div>
-                            <div id="taxnum" class="form-group mb-3" @if (old('choose_company') == 'is_person') style="display: none" @endif>
-                                <label for="billing_taxnum">Cég esetén adószám</label>
-                                <input type="number" class="form-control" id="billing_taxnum" name="billing_taxnum"
-                                    value="{{ old('billing_taxnum') }}" required>
+                            <div id="taxnumDiv" class="form-group mb-3" @if (old('choose_company') == 'is_person') style="display: none" @endif>
+                                <label for="taxnum">Cég esetén adószám</label>
+                                <input type="number" class="form-control" id="taxnum" name="taxnum"
+                                    value="{{ old('taxnum') }}" required>
                                 <div class="invalid-feedback">
                                     Az adószám megadása cég esetén kötelező!
                                 </div>
