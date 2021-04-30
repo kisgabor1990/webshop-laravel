@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BillingAddessController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ShippingAddressController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OpinionController;
@@ -71,7 +73,8 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('/felhasznalok/uj', [UserController::class, 'store'] );
     Route::get('/felhasznalok/szerkeszt/{id}', [UserController::class, 'edit'] );
     Route::post('/felhasznalok/szerkeszt/{id}', [UserController::class, 'update'] );
-    Route::get('/felhasznalok/torol/{id}', [UserController::class, 'destroy'] );
+    Route::get('/felhasznalok/torol/{id}', [UserController::class, 'delete'] );
+    Route::get('/felhasznalok/vegleg-torol/{id}', [UserController::class, 'destroy'] );
     Route::get('/felhasznalok/visszaallit/{id}', [UserController::class, 'restore'] );
     
     Route::get('/kategoriak', [CategoriesController::class, 'index'] );
@@ -80,8 +83,29 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('/kategoriak/uj', [CategoriesController::class, 'store'] );
     Route::get('/kategoriak/szerkeszt/{id}', [CategoriesController::class, 'edit'] );
     Route::post('/kategoriak/szerkeszt/{id}', [CategoriesController::class, 'update'] );
-    Route::get('/kategoriak/torol/{id}', [CategoriesController::class, 'destroy'] );
+    Route::get('/kategoriak/torol/{id}', [CategoriesController::class, 'delete'] );
+    Route::get('/kategoriak/vegleg-torol/{id}', [CategoriesController::class, 'destroy'] );
     Route::get('/kategoriak/visszaallit/{id}', [CategoriesController::class, 'restore'] );
+    
+    Route::get('/szamlazasi-cimek', [BillingAddessController::class, 'index'] );
+    Route::get('/szamlazasi-cimek/mutat/{id}', [BillingAddessController::class, 'show'] );
+    Route::get('/szamlazasi-cimek/uj', [BillingAddessController::class, 'create'] );
+    Route::post('/szamlazasi-cimek/uj', [BillingAddessController::class, 'store'] );
+    Route::get('/szamlazasi-cimek/szerkeszt/{id}', [BillingAddessController::class, 'edit'] );
+    Route::post('/szamlazasi-cimek/szerkeszt/{id}', [BillingAddessController::class, 'update'] );
+    Route::get('/szamlazasi-cimek/torol/{id}', [BillingAddessController::class, 'delete'] );
+    Route::get('/szamlazasi-cimek/vegleg-torol/{id}', [BillingAddessController::class, 'destroy'] );
+    Route::get('/szamlazasi-cimek/visszaallit/{id}', [BillingAddessController::class, 'restore'] );
+    
+    Route::get('/szallitasi-cimek', [ShippingAddressController::class, 'index'] );
+    Route::get('/szallitasi-cimek/mutat/{id}', [ShippingAddressController::class, 'show'] );
+    Route::get('/szallitasi-cimek/uj', [ShippingAddressController::class, 'create'] );
+    Route::post('/szallitasi-cimek/uj', [ShippingAddressController::class, 'store'] );
+    Route::get('/szallitasi-cimek/szerkeszt/{id}', [ShippingAddressController::class, 'edit'] );
+    Route::post('/szallitasi-cimek/szerkeszt/{id}', [ShippingAddressController::class, 'update'] );
+    Route::get('/szallitasi-cimek/torol/{id}', [ShippingAddressController::class, 'delete'] );
+    Route::get('/szallitasi-cimek/vegleg-torol/{id}', [ShippingAddressController::class, 'destroy'] );
+    Route::get('/szallitasi-cimek/visszaallit/{id}', [ShippingAddressController::class, 'restore'] );
 
 });
 
