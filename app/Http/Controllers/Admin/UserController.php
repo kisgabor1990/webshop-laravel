@@ -21,8 +21,14 @@ class UserController extends Controller
     public function index()
     {
         $users = User::withTrashed()->get();
+        $billing_addresses_count = Billing_address::count();
+        $shipping_addresses_count = Shipping_address::count();
 
-        return view('admin.felhasznalok.index')->with('users', $users);
+        return view('admin.felhasznalok.index')->with([
+            'users' => $users,
+            'billing_addresses_count' => $billing_addresses_count,
+            'shipping_addresses_count' => $shipping_addresses_count
+            ]);
     }
 
     /**
