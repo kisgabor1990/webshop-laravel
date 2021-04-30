@@ -116,23 +116,41 @@ class UserController extends Controller
     }
     
     /**
-     * Remove the specified resource from storage.
+     * Disable the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(User $user, $id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $user->find($id)->delete();
 
         return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó törlésre került!');
     }
     
-    public function restore($id) {
-        $user = User::withTrashed()->find($id);
-        $user->restore();
+    /**
+     * Restore the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(User $user, $id) 
+    {
+        $user->withTrashed()->find($id)->restore();
         
         return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó sikeresen visszaállítva!');
+    }
+
+    /**
+     * Delete the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user, $id)
+    {
+        $user->withTrashed()->find($id)->forceDelete();
+
+        return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó végleg törlésre került!');
     }
 }

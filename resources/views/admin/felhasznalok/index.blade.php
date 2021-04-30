@@ -32,12 +32,21 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr>
+                            <tr class="{{ $user->trashed() ? 'bg-dark text-white' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $user->id }}</td>
                                 <td class="text-nowrap">{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
+                                        @if ($user->trashed())
+                                        <a class="btn btn-danger btn-sm delete me-3" href="#"
+                                                    data-href="{{ url('admin/felhasznalok/vegleg-torol/' . $user->id) }}"
+                                                    data-header="felhasználó" data-name="{{ $user->name }}"
+                                                    data-email="{{ $user->email }}"
+                                                    data-id="{{ $user->id }}" role="button">
+                                                    <i class="fas fa-trash fa-sm fa-fw"></i>
+                                                </a>
+                                        @endif
                                         <a class="btn btn-primary btn-sm "
                                             href="{{ url('admin/felhasznalok/mutat/' . $user->id) }}" role="button">
                                             <i class="fas fa-eye fa-sm fa-fw"></i>
@@ -48,18 +57,15 @@
                                         </a>
                                         @if ($user->is_admin == 0)
                                             @if ($user->trashed())
-                                                <a class="btn btn-dark btn-sm"
+                                                <a class="btn btn-success btn-sm"
                                                     href="{{ url('admin/felhasznalok/visszaallit/' . $user->id) }}" role="button">
                                                     <i class="fas fa-trash-restore fa-sm fa-fw"></i>
                                                 </a>
                                             @else
-                                                <a class="btn btn-danger btn-sm delete" href="#"
-                                                    data-href="{{ url('admin/felhasznalok/torol/' . $user->id) }}"
-                                                    data-header="felhasználó" data-name="{{ $user->name }}"
-                                                    data-email="{{ $user->email }}"
-                                                    data-id="{{ $user->id }}" role="button">
-                                                    <i class="fas fa-trash fa-sm fa-fw"></i>
-                                                </a>
+                                            <a class="btn btn-danger btn-sm"
+                                                href="{{ url('admin/felhasznalok/torol/' . $user->id) }}" role="button">
+                                            <i class="fas fa-trash fa-sm fa-fw"></i>
+                                        </a>
                                             @endif
                                         @endif
                                     </div>
