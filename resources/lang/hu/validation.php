@@ -127,5 +127,7 @@ return [
         'billing_address' => 'számlázási adat (utca / házszám)',
         'billing_zip' => 'számlázási adat (irányítószám)',
         'aszf' => 'ÁSZF',
+        'zip' => 'irányítószám',
+        'taxnum' => 'adószám'
     ],
 ];
