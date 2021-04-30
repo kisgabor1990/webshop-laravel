@@ -103,7 +103,7 @@
                         @if (request()->is('admin/felhasznalok'))
                             <li>E-mail cím: <span class="email fw-bold"></span></li>
                         @endif
-                        @if (request()->is('admin/szamlazasi-cimek'))
+                        @if (request()->is('admin/szamlazasi-cimek') || request()->is('admin/szallitasi-cimek'))
                             <li>Cím: <span class="address fw-bold"></span></li>
                             <li>Felhasználó: <span class="user fw-bold"></span></li>
                         @endif
