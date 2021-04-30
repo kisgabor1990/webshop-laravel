@@ -28,7 +28,7 @@ class UserController extends Controller
             'users' => $users,
             'billing_addresses_count' => $billing_addresses_count,
             'shipping_addresses_count' => $shipping_addresses_count
-            ]);
+        ]);
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ];
-        
+
         User::create($user);
 
         return redirect()->to('admin/felhasznalok')->withSuccess('Új felhasználó sikeresen létrehozva!');
@@ -69,14 +69,20 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::withTrashed()->find($id);
-        $billing_addresses = Billing_address::where('user_id', $id)->get();
-        $shipping_addresses = Shipping_address::where('user_id', $id)->get();
+        $billing_addresses = Billing_address::where('user_id', $id)
+            ->leftJoin('addresses', 'billing_addresses.address_id', '=', 'addresses.id')
+            ->select('billing_addresses.*', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
+            ->get();
+        $shipping_addresses = Shipping_address::where('user_id', $id)
+            ->leftJoin('addresses', 'shipping_addresses.address_id', '=', 'addresses.id')
+            ->select('shipping_addresses.*', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
+            ->get();
 
         return view('admin.felhasznalok.mutat')->with([
             'user' => $user,
             'billing_addresses' => $billing_addresses,
             'shipping_addresses' => $shipping_addresses,
-            ]);
+        ]);
     }
 
     /**
@@ -114,7 +120,7 @@ class UserController extends Controller
 
         return redirect()->to('admin/felhasznalok')->withSuccess('Felhasználó adatai sikeresen módosítva!');
     }
-    
+
     /**
      * Disable the specified resource.
      *
@@ -127,17 +133,17 @@ class UserController extends Controller
 
         return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó törlésre került!');
     }
-    
+
     /**
      * Restore the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore(User $user, $id) 
+    public function restore(User $user, $id)
     {
         $user->withTrashed()->find($id)->restore();
-        
+
         return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó sikeresen visszaállítva!');
     }
 
