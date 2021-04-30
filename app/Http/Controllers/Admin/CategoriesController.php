@@ -112,7 +112,7 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, $id)
+    public function delete(Category $category, $id)
     {
         $category->find($id)->delete();
 
@@ -123,5 +123,12 @@ class CategoriesController extends Controller
     {
         $category->withTrashed()->find($id)->restore();
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória sikeresen visszaállítva!');
+    }
+    
+    public function destroy(Category $category, $id)
+    {
+        $category->withTrashed()->find($id)->forceDelete();
+
+        return redirect()->to('admin/kategoriak')->withSuccess('A kategória végleg törlésre került!');
     }
 }

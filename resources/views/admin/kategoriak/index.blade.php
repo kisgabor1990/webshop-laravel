@@ -32,12 +32,20 @@
                     </thead>
                     <tbody>
                         @foreach ($categories as $category)
-                            <tr>
+                            <tr class="{{ $category->trashed() ? 'bg-dark text-white' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $category->id }}</td>
                                 <td class="text-nowrap">{{ $category->name }}</td>
                                 <td class="text-nowrap">{{ $category->slug }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
+                                        @if ($category->trashed())
+                                        <a class="btn btn-danger btn-sm delete me-3" href="#"
+                                                data-href="{{ url('admin/kategoriak/vegleg-torol/' . $category->id) }}"
+                                                data-header="kategória" data-name="{{ $category->name }}"
+                                                data-id="{{ $category->id }}" role="button">
+                                                <i class="fas fa-trash fa-sm fa-fw"></i>
+                                            </a>
+                                        @endif
                                         <a class="btn btn-primary btn-sm "
                                             href="{{ url('admin/kategoriak/mutat/' . $category->id) }}" role="button">
                                             <i class="fas fa-eye fa-sm fa-fw"></i>
@@ -47,15 +55,13 @@
                                             <i class="fas fa-edit fa-sm fa-fw"></i>
                                         </a>
                                         @if ($category->trashed())
-                                            <a class="btn btn-dark btn-sm"
+                                            <a class="btn btn-success btn-sm"
                                                 href="{{ url('admin/kategoriak/visszaallit/' . $category->id) }}" role="button">
                                                 <i class="fas fa-trash-restore fa-sm fa-fw"></i>
                                             </a>
-                                        @else
-                                            <a class="btn btn-danger btn-sm delete" href="#"
-                                                data-href="{{ url('admin/kategoriak/torol/' . $category->id) }}"
-                                                data-header="kategória" data-name="{{ $category->name }}"
-                                                data-id="{{ $category->id }}" role="button">
+                                            @else
+                                            <a class="btn btn-danger btn-sm"
+                                                href="{{ url('admin/kategoriak/torol/' . $category->id) }}" role="button">
                                                 <i class="fas fa-trash fa-sm fa-fw"></i>
                                             </a>
                                         @endif
