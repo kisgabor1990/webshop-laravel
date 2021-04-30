@@ -56,7 +56,8 @@
                                                 <a class="btn btn-danger btn-sm delete" href="#"
                                                     data-href="{{ url('admin/felhasznalok/torol/' . $user->id) }}"
                                                     data-header="felhasználó" data-name="{{ $user->name }}"
-                                                    data-email="{{ $user->email }}" role="button">
+                                                    data-email="{{ $user->email }}"
+                                                    data-id="{{ $user->id }}" role="button">
                                                     <i class="fas fa-trash fa-sm fa-fw"></i>
                                                 </a>
                                             @endif

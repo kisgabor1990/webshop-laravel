@@ -136,10 +136,16 @@ $(function () {
         $("#confirmModal a.delete")
             .data("href", $(this).data("href"))
             .data("header", $(this).data("header"))
+            .data("id", $(this).data("id"))
             .data("name", $(this).data("name"))
+            .data("user", $(this).data("user"))
+            .data("address", $(this).data("address"))
             .data("email", $(this).data("email"));
         $("#confirmModal .modal_header").html($(this).data("header"));
+        $("#confirmModal .id").html($(this).data("id"));
         $("#confirmModal .name").html($(this).data("name"));
+        $("#confirmModal .user").html($(this).data("user"));
+        $("#confirmModal .address").html($(this).data("address"));
         $("#confirmModal .email").html($(this).data("email"));
         confirmModal.show();
     });

@@ -54,7 +54,8 @@
                                         @else
                                             <a class="btn btn-danger btn-sm delete" href="#"
                                                 data-href="{{ url('admin/kategoriak/torol/' . $category->id) }}"
-                                                data-header="kategória" data-name="{{ $category->name }}" role="button">
+                                                data-header="kategória" data-name="{{ $category->name }}"
+                                                data-id="{{ $category->id }}" role="button">
                                                 <i class="fas fa-trash fa-sm fa-fw"></i>
                                             </a>
                                         @endif

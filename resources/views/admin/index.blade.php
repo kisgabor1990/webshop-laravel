@@ -61,14 +61,16 @@
                     <p class="h3">
                         Biztos akarja?
                     </p>
-                    <p>
-                        Ez a művelet visszavonhatatlan!
-                    </p>
-                    <p class="mb-0">A <span class="modal_header"></span>:</p>
+                    <p class="mb-0">A <span class="modal_header"></span> adatai:</p>
                     <ul>
-                        <li>Neve: <span class="name fw-bold"></span></li>
+                        <li>ID: <span class="id fw-bold"></span></li>
+                        <li>Név: <span class="name fw-bold"></span></li>
                         @if (request()->is('admin/felhasznalok'))
-                            <li>E-mail címe: <span class="email fw-bold"></span></li>
+                            <li>E-mail cím: <span class="email fw-bold"></span></li>
+                        @endif
+                        @if (request()->is('admin/szamlazasi-cimek'))
+                            <li>Cím: <span class="address fw-bold"></span></li>
+                            <li>Felhasználó: <span class="user fw-bold"></span></li>
                         @endif
                     </ul>
                 </div>
