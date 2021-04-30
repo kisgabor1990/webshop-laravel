@@ -85,7 +85,7 @@ $(function () {
                 && $('div.dropdown').has(e.target).length === 0
                 && $('.show').has(e.target).length === 0
             ) {
-                $('.dropdown-menu').removeClass('show');
+                $('div.dropdown-menu').removeClass('show');
             }
         })
         .on('click', '#is_company', function () {
