@@ -103,7 +103,7 @@
                                     @forelse ($shipping_addresses as $shipping)
                                         <tr>
                                             <td class="text-nowrap">{{ $shipping->name }}</td>
-                                            <td class="text-nowrap">{{ $shipping->phone }}</td>
+                                            <td class="text-nowrap">+36{{ $shipping->phone }}</td>
                                             <td class="text-nowrap">{{ $shipping->city }}</td>
                                             <td class="text-nowrap">{{ $shipping->address }}</td>
                                             <td class="text-nowrap">{{ $shipping->address2 }}</td>
