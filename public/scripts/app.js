@@ -3,7 +3,7 @@ $(function () {
     function topFunction() {
         $("html").stop().animate({
             scrollTop: 0
-        }, ($(window).scrollTop() * 0.5));
+        }); // , ($(window).scrollTop() * 0.5) Ha a bootstrap 5 is úgy akarja....
         return false;
     }
 
@@ -76,8 +76,17 @@ $(function () {
         $("#shippingData :input").each(function () {
             $(this).removeAttr("disabled");
         });
-
     }
+
+    if ($("#is_company").prop('checked')) {
+        $("#taxnumDiv").show();
+        $("#taxnum").removeAttr("disabled");
+    }
+    else {
+        $("#taxnumDiv").hide();
+        $("#taxnum").attr("disabled", "disabled");
+    }
+        
 
     $(document)
         .on("click", function (e) {
@@ -89,12 +98,12 @@ $(function () {
             }
         })
         .on('click', '#is_company', function () {
-            $("#taxnum").fadeIn(500);
-            $("#billing_taxnum").removeAttr("disabled");
+            $("#taxnumDiv").fadeIn(500);
+            $("#taxnum").removeAttr("disabled");
         })
         .on('click', '#is_person', function () {
-            $("#taxnum").fadeOut(500);
-            $("#billing_taxnum").attr("disabled", "disabled");
+            $("#taxnumDiv").fadeOut(500);
+            $("#taxnum").attr("disabled", "disabled");
         })
         .on('click', '#shipping_same', function () {
             $("#shippingData").fadeToggle(500);
