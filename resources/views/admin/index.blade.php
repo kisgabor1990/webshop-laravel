@@ -19,32 +19,67 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menu">
-                <div class="navbar-nav w-100">
-                    <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }} me-3"
-                        aria-current="page" href="{{ url('admin/dashboard') }}"><i
-                            class="fa fa-dashboard fa-lg fa-fw me-2" aria-hidden="true"></i> Dashboard</a>
-                    <a class="nav-link {{ request()->is('admin/felhasznalok*') ? 'active' : '' }} me-3"
-                        aria-current="page" href="{{ url('admin/felhasznalok') }}"><i
-                            class="fa fa-user fa-lg fa-fw me-2" aria-hidden="true"></i> Felhasználók</a>
-                    <a class="nav-link {{ request()->is('admin/kategoriak*') ? 'active' : '' }} me-3"
-                        aria-current="page" href="{{ url('admin/kategoriak') }}"><i
-                            class="fa fa-tags fa-lg fa-fw me-2" aria-hidden="true"></i>
-                        Kategóriák</a>
-                    <a class="nav-link {{ request()->is('admin/termekek*') ? 'active' : '' }} me-3" aria-current="page"
-                        href="{{ url('admin/termekek') }}"><i class="fas fa-store fa-lg fa-fw me-2"
-                            aria-hidden="true"></i>
-                        Termékek</a>
-                    <a class="nav-link {{ request()->is('admin/rendelesek*') ? 'active' : '' }} me-auto"
-                        aria-current="page" href="{{ url('admin/rendelesek') }}"><i
-                            class="fas fa-clipboard-list fa-lg fa-fw me-2"></i>
-                        Rendelések</a>
-                    <a class="nav-link" aria-current="page" href="{{ url('/home') }}"><i
-                            class="fa fa-sign-out fa-lg fa-fw me-2" aria-hidden="true"></i> Kilépés</a>
+                <ul class="navbar-nav w-100">
+                    <li class="nav-item me-3">
+                        <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }} "
+                            aria-current="page" href="{{ url('admin/dashboard') }}"><i
+                                class="fa fa-dashboard fa-lg fa-fw me-2" aria-hidden="true"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link dropdown-toggle {{ request()->is('admin/felhasznalok*') ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user fa-lg fa-fw me-2" aria-hidden="true"></i> Felhasználók
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                          <li>
+                                <a class="dropdown-item {{ request()->is('admin/felhasznalok*') ? 'active' : '' }}" 
+                                    href="{{ url('admin/felhasznalok') }}">
+                                        Felhasználók
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item {{ request()->is('admin/szamlazasi-cimek*') ? 'active' : '' }}" href="{{ url('admin/szamlazasi-cimek') }}">Számlázási címek</a></li>
+                          <li><a class="dropdown-item {{ request()->is('admin/szallitasi-cimek*') ? 'active' : '' }}" href="{{ url('admin/szallitasi-cimek') }}">Szállítási címek</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link dropdown-toggle {{ request()->is('admin/kategoriak*') ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-tags fa-lg fa-fw me-2" aria-hidden="true"></i>
+                            Kategóriák
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                          <li>
+                                <a class="dropdown-item {{ request()->is('admin/kategoriak*') ? 'active' : '' }}" 
+                                    href="{{ url('admin/kategoriak') }}">
+                                        Kategóriák
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item {{ request()->is('admin/markak*') ? 'active' : '' }}" href="{{ url('admin/markak') }}">Márkák</a></li>
+                          <li><a class="dropdown-item {{ request()->is('admin/tulajdonsagok*') ? 'active' : '' }}" href="{{ url('admin/tulajdonsagok') }}">Tulajdonságok</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link {{ request()->is('admin/termekek*') ? 'active' : '' }} " aria-current="page"
+                            href="{{ url('admin/termekek') }}"><i class="fas fa-store fa-lg fa-fw me-2"
+                                aria-hidden="true"></i>
+                            Termékek</a>
+                    </li>
+                    <li class="nav-item me-auto">
+                        <a class="nav-link {{ request()->is('admin/rendelesek*') ? 'active' : '' }}"
+                            aria-current="page" href="{{ url('admin/rendelesek') }}"><i
+                                class="fas fa-clipboard-list fa-lg fa-fw me-2"></i>
+                            Rendelések</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url('/home') }}"><i
+                                class="fa fa-sign-out fa-lg fa-fw me-2" aria-hidden="true"></i> Kilépés</a>
+                    </li>
 
-                </div>
+                </ul>
             </div>
         </div>
     </nav>
+    
 
     <div class="container my-5">
         @yield('content')
