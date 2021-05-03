@@ -57,9 +57,7 @@ class BillingAddessController extends Controller
             'tax_num' => $request->taxnum,
         ]);
 
-        if ($user) {
-            $billing_address->user()->associate($user);
-        }
+        $billing_address->user()->associate($user);
         $billing_address->address()->associate($address);
 
         $billing_address->save();
@@ -131,11 +129,7 @@ class BillingAddessController extends Controller
         $mod_billing_address->name = $request->name;
         $mod_billing_address->tax_num = $request->taxnum;
 
-        if ($user) {
-            $mod_billing_address->user()->associate($user);
-        } else {
-            $mod_billing_address->user()->dissociate($user);
-        }
+        $mod_billing_address->user()->associate($user);
         $mod_billing_address->address()->associate($address);
 
         $mod_billing_address->save();

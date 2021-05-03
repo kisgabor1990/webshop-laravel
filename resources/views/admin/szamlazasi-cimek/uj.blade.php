@@ -37,7 +37,6 @@
                         </div>
                         <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
                             <select class="form-select" id="user_id" name="user_id">
-                                <option value="" selected>Nem tartozik felhasználóhoz!</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->email }}</option>
                                 @endforeach

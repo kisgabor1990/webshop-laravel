@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                         @forelse ($billing_addresses as $billing_address)
-                            <tr class="{{ $billing_address->trashed() ? 'bg-dark text-white' : '' }}">
+                            <tr class="{{ $billing_address->trashed() ? 'table-dark' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $billing_address->id }}</td>
                                 <td class="text-nowrap">{{ $billing_address->user->name ?? '' }}</td>
                                 <td class="text-nowrap">{{ $billing_address->name }}</td>
