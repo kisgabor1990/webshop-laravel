@@ -10,7 +10,7 @@
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <th scope="row" class="user-select-none">Kategóriák:</th>
+                                <th scope="row" class="user-select-none">Kategóriákhoz rendelve:</th>
                                 <td>
                                     <ul>
                                         @forelse ($property->categories as $category)

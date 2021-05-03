@@ -11,7 +11,15 @@
                         <tbody>
                             <tr>
                                 <th scope="row" class="user-select-none">Kategóriákhoz rendelve:</th>
-                                <td>TODO</td>
+                                <td>
+                                    <ul>
+                                        @forelse ($brand->categories as $category)
+                                        <li>{{ $category->name }}</li>
+                                        @empty
+                                        <li>Nincs kategóriához rendelve!</li>
+                                        @endforelse
+                                    </ul>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Termékek:</th>
