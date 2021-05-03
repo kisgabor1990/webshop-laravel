@@ -37,20 +37,20 @@
                         @forelse ($billing_addresses as $billing_address)
                             <tr class="{{ $billing_address->trashed() ? 'bg-dark text-white' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $billing_address->id }}</td>
-                                <td class="text-nowrap">{{ $billing_address->user }}</td>
+                                <td class="text-nowrap">{{ $billing_address->user->name ?? '' }}</td>
                                 <td class="text-nowrap">{{ $billing_address->name }}</td>
                                 <td class="text-nowrap">{{ $billing_address->tax_num }}</td>
-                                <td class="text-nowrap">{{ $billing_address->city }}</td>
-                                <td class="text-nowrap">{{ $billing_address->address }}</td>
-                                <td class="text-nowrap">{{ $billing_address->address2 }}</td>
-                                <td class="text-nowrap">{{ $billing_address->zip }}</td>
+                                <td class="text-nowrap">{{ $billing_address->address->city }}</td>
+                                <td class="text-nowrap">{{ $billing_address->address->address }}</td>
+                                <td class="text-nowrap">{{ $billing_address->address->address2 }}</td>
+                                <td class="text-nowrap">{{ $billing_address->address->zip }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($billing_address->trashed())
                                             <a class="btn btn-danger btn-sm delete me-3" href="#"
                                                 data-href="{{ url('admin/szamlazasi-cimek/vegleg-torol/' . $billing_address->id) }}"
                                                 data-header="számlázási cím" data-name="{{ $billing_address->name }}"
-                                                data-user="{{ $billing_address->user }}"
+                                                data-user="{{ $billing_address->user->name }}"
                                                 data-address="{{ $billing_address->city }}, {{ $billing_address->address }} {{ $billing_address->address2 }}"
                                                 data-id="{{ $billing_address->id }}" role="button">
                                                 <i class="fas fa-trash fa-sm fa-fw"></i>

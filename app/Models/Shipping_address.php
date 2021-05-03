@@ -17,4 +17,12 @@ class Shipping_address extends Model
         'address_id',
         'comment',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function address() {
+        return $this->belongsTo(Address::class);
+    }
 }

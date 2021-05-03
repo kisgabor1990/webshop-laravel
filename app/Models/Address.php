@@ -16,4 +16,13 @@ class Address extends Model
         'address2',
         'zip',
     ];
+
+    public function billing_addresses() {
+        return $this->hasMany(Billing_address::class);
+    }
+
+    public function shipping_addresses() {
+        return $this->hasMany(Shipping_address::class);
+    }
+    
 }

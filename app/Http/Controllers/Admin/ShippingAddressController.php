@@ -18,12 +18,7 @@ class ShippingAddressController extends Controller
      */
     public function index()
     {
-        $shipping_addresses = Shipping_address::withTrashed()
-        ->leftJoin('users', 'shipping_addresses.user_id', '=', 'users.id')
-        ->leftJoin('addresses', 'shipping_addresses.address_id', '=', 'addresses.id')
-        ->select('shipping_addresses.*', 'users.name AS user', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-        ->orderBy('shipping_addresses.user_id')
-        ->get();
+        $shipping_addresses = Shipping_address::withTrashed()->orderBy('user_id')->get();
 
         return view('admin.szallitasi-cimek.index')->with('shipping_addresses', $shipping_addresses);
     }
@@ -47,6 +42,8 @@ class ShippingAddressController extends Controller
      */
     public function store(AdminShippingAddressRequest $request)
     {
+        $user = User::find($request->user_id);
+
         $address = Address::updateOrCreate([
             'city' => $request->city,
             'address' => $request->address,
@@ -54,15 +51,18 @@ class ShippingAddressController extends Controller
             'zip' => $request->zip,
         ]);
 
-        $shipping_address = [
-            'user_id' => $request->user_id,
+        $shipping_address = Shipping_address::updateOrCreate([
             'name' => $request->name,
             'phone' => $request->phone,
-            'address_id' => $address->id,
             'comment' => $request->comment,
-        ];
+        ]);
 
-        Shipping_address::create($shipping_address);
+        if ($user) {
+            $shipping_address->user()->associate($user);
+        }
+        $shipping_address->address()->associate($address);
+
+        $shipping_address->save();
 
         return redirect()->to('admin/szallitasi-cimek')->withSuccess('Új szállítási cím sikeresen létrehozva!');
     }
@@ -79,11 +79,7 @@ class ShippingAddressController extends Controller
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
         return view('admin.szallitasi-cimek.mutat')->with([
-            'shipping_address' => $shipping_address->withTrashed()
-                ->leftJoin('users', 'shipping_addresses.user_id', '=', 'users.id')
-                ->leftJoin('addresses', 'shipping_addresses.address_id', '=', 'addresses.id')
-                ->select('shipping_addresses.*', 'users.name AS user', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-                ->find($id)
+            'shipping_address' => $shipping_address->withTrashed()->find($id)
         ]);
     }
 
@@ -101,10 +97,7 @@ class ShippingAddressController extends Controller
         $users = User::get();
 
         return view('admin.szallitasi-cimek.szerkeszt')->with([
-            'shipping_address' => $shipping_address->withTrashed()
-                ->leftJoin('addresses', 'shipping_addresses.address_id', '=', 'addresses.id')
-                ->select('shipping_addresses.*', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-                ->find($id),
+            'shipping_address' => $shipping_address->withTrashed()->find($id),
             'users' => $users,
         ]);
     }
@@ -121,6 +114,9 @@ class ShippingAddressController extends Controller
         if (!$shipping_address->withTrashed()->find($id)) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
+
+        $user = User::find($request->user_id);
+
         $address = Address::updateOrCreate([
             'city' => $request->city,
             'address' => $request->address,
@@ -129,11 +125,17 @@ class ShippingAddressController extends Controller
         ]);
 
         $mod_shipping_address = $shipping_address->withTrashed()->find($id);
-        $mod_shipping_address->user_id = $request->user_id;
+
         $mod_shipping_address->name = $request->name;
         $mod_shipping_address->phone = $request->phone;
-        $mod_shipping_address->address_id = $address->id;
         $mod_shipping_address->comment = $request->comment;
+
+        if ($user) {
+            $mod_shipping_address->user()->associate($user);
+        } else {
+            $mod_shipping_address->user()->dissociate($user);
+        }
+        $mod_shipping_address->address()->associate($address);
 
         $mod_shipping_address->save();
 

@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
                             <input type="text" class="form-control" id="city" name="city" placeholder="Város"
-                                value="{{ $billing_address->city }}" required>
+                                value="{{ $billing_address->address->city }}" required>
                             <label for="city">Város</label>
                             <div class="invalid-feedback">
                                 A város megadása kötelező!
@@ -71,7 +71,7 @@
                         </div>
                         <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
                             <input type="text" class="form-control" id="address" name="address" placeholder="Utca / Házszám"
-                                value="{{ $billing_address->address }}" required>
+                                value="{{ $billing_address->address->address }}" required>
                             <label for="address">Utca / Házszám</label>
                             <div class="invalid-feedback">
                                 A cím megadása kötelező!
@@ -79,12 +79,12 @@
                         </div>
                         <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
                             <input type="text" class="form-control" id="address2" name="address2"
-                                placeholder="Emelet / Ajtó" value="{{ $billing_address->address2 }}">
+                                placeholder="Emelet / Ajtó" value="{{ $billing_address->address->address2 }}">
                             <label for="address2">Emelet / Ajtó</label>
                         </div>
                         <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
                             <input type="number" class="form-control" id="zip" name="zip" placeholder="Irányítószám"
-                                value="{{ $billing_address->zip }}" required>
+                                value="{{ $billing_address->address->zip }}" required>
                             <label for="zip">Irányítószám</label>
                             <div class="invalid-feedback">
                                 Az irányítószám megadása kötelező!

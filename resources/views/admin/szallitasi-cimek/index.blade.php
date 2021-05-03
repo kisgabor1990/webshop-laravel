@@ -37,13 +37,13 @@
                         @forelse ($shipping_addresses as $shipping_address)
                             <tr class="{{ $shipping_address->trashed() ? 'bg-dark text-white' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $shipping_address->id }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->user }}</td>
+                                <td class="text-nowrap">{{ $shipping_address->user->name ?? '' }}</td>
                                 <td class="text-nowrap">{{ $shipping_address->name }}</td>
                                 <td class="text-nowrap">{{ $shipping_address->phone }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->city }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->address }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->address2 }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->zip }}</td>
+                                <td class="text-nowrap">{{ $shipping_address->address->city }}</td>
+                                <td class="text-nowrap">{{ $shipping_address->address->address }}</td>
+                                <td class="text-nowrap">{{ $shipping_address->address->address2 }}</td>
+                                <td class="text-nowrap">{{ $shipping_address->address->zip }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($shipping_address->trashed())

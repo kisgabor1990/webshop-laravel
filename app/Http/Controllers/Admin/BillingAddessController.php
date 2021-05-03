@@ -18,12 +18,7 @@ class BillingAddessController extends Controller
      */
     public function index()
     {
-        $billing_addresses = Billing_address::withTrashed()
-            ->leftJoin('users', 'billing_addresses.user_id', '=', 'users.id')
-            ->leftJoin('addresses', 'billing_addresses.address_id', '=', 'addresses.id')
-            ->select('billing_addresses.*', 'users.name AS user', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-            ->orderBy('billing_addresses.user_id')
-            ->get();
+        $billing_addresses = Billing_address::withTrashed()->orderBy('user_id')->get();
 
         return view('admin.szamlazasi-cimek.index')->with('billing_addresses', $billing_addresses);
     }
@@ -47,6 +42,8 @@ class BillingAddessController extends Controller
      */
     public function store(AdminBillingAddressRequest $request)
     {
+        $user = User::find($request->user_id);
+
         $address = Address::updateOrCreate([
             'city' => $request->city,
             'address' => $request->address,
@@ -54,15 +51,18 @@ class BillingAddessController extends Controller
             'zip' => $request->zip,
         ]);
 
-        $billing_address = [
-            'user_id' => $request->user_id,
+        $billing_address = Billing_address::updateOrCreate([
             'choose_company' => $request->choose_company,
             'name' => $request->name,
             'tax_num' => $request->taxnum,
-            'address_id' => $address->id,
-        ];
+        ]);
 
-        Billing_address::create($billing_address);
+        if ($user) {
+            $billing_address->user()->associate($user);
+        }
+        $billing_address->address()->associate($address);
+
+        $billing_address->save();
 
         return redirect()->to('admin/szamlazasi-cimek')->withSuccess('Új számlázási cím sikeresen létrehozva!');
     }
@@ -75,15 +75,12 @@ class BillingAddessController extends Controller
      */
     public function show(Billing_address $billing_address, $id)
     {
+        
         if (!$billing_address->withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
         return view('admin.szamlazasi-cimek.mutat')->with([
-            'billing_address' => $billing_address->withTrashed()
-                ->leftJoin('users', 'billing_addresses.user_id', '=', 'users.id')
-                ->leftJoin('addresses', 'billing_addresses.address_id', '=', 'addresses.id')
-                ->select('billing_addresses.*', 'users.name AS user', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-                ->find($id)
+            'billing_address' => $billing_address->withTrashed()->find($id)
         ]);
     }
 
@@ -101,10 +98,7 @@ class BillingAddessController extends Controller
         $users = User::get();
 
         return view('admin.szamlazasi-cimek.szerkeszt')->with([
-            'billing_address' => $billing_address->withTrashed()
-                ->leftJoin('addresses', 'billing_addresses.address_id', '=', 'addresses.id')
-                ->select('billing_addresses.*', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-                ->find($id),
+            'billing_address' => $billing_address->withTrashed()->find($id),
             'users' => $users,
         ]);
     }
@@ -121,6 +115,9 @@ class BillingAddessController extends Controller
         if (!$billing_address->withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
+
+        $user = User::find($request->user_id);
+
         $address = Address::updateOrCreate([
             'city' => $request->city,
             'address' => $request->address,
@@ -129,11 +126,17 @@ class BillingAddessController extends Controller
         ]);
 
         $mod_billing_address = $billing_address->withTrashed()->find($id);
+
         $mod_billing_address->choose_company = $request->choose_company;
-        $mod_billing_address->user_id = $request->user_id;
         $mod_billing_address->name = $request->name;
         $mod_billing_address->tax_num = $request->taxnum;
-        $mod_billing_address->address_id = $address->id;
+
+        if ($user) {
+            $mod_billing_address->user()->associate($user);
+        } else {
+            $mod_billing_address->user()->dissociate($user);
+        }
+        $mod_billing_address->address()->associate($address);
 
         $mod_billing_address->save();
 
