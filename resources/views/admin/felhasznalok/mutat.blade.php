@@ -70,10 +70,10 @@
                                         <tr>
                                             <td class="text-nowrap">{{ $billing->name }}</td>
                                             <td class="text-nowrap">{{ $billing->tax_num }}</td>
-                                            <td class="text-nowrap">{{ $billing->city }}</td>
-                                            <td class="text-nowrap">{{ $billing->address }}</td>
-                                            <td class="text-nowrap">{{ $billing->address2 }}</td>
-                                            <td class="text-nowrap">{{ $billing->zip }}</td>
+                                            <td class="text-nowrap">{{ $billing->address->city }}</td>
+                                            <td class="text-nowrap">{{ $billing->address->address }}</td>
+                                            <td class="text-nowrap">{{ $billing->address->address2 }}</td>
+                                            <td class="text-nowrap">{{ $billing->address->zip }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -104,10 +104,10 @@
                                         <tr>
                                             <td class="text-nowrap">{{ $shipping->name }}</td>
                                             <td class="text-nowrap">+36{{ $shipping->phone }}</td>
-                                            <td class="text-nowrap">{{ $shipping->city }}</td>
-                                            <td class="text-nowrap">{{ $shipping->address }}</td>
-                                            <td class="text-nowrap">{{ $shipping->address2 }}</td>
-                                            <td class="text-nowrap">{{ $shipping->zip }}</td>
+                                            <td class="text-nowrap">{{ $shipping->address->city }}</td>
+                                            <td class="text-nowrap">{{ $shipping->address->address }}</td>
+                                            <td class="text-nowrap">{{ $shipping->address->address2 }}</td>
+                                            <td class="text-nowrap">{{ $shipping->address->zip }}</td>
                                         </tr>
                                     @empty
                                         <tr>

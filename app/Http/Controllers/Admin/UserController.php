@@ -69,14 +69,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::withTrashed()->find($id);
-        $billing_addresses = Billing_address::where('user_id', $id)
-            ->leftJoin('addresses', 'billing_addresses.address_id', '=', 'addresses.id')
-            ->select('billing_addresses.*', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-            ->get();
-        $shipping_addresses = Shipping_address::where('user_id', $id)
-            ->leftJoin('addresses', 'shipping_addresses.address_id', '=', 'addresses.id')
-            ->select('shipping_addresses.*', 'addresses.city', 'addresses.address', 'addresses.address2', 'addresses.zip')
-            ->get();
+        $billing_addresses = $user->billing_addresses;
+        $shipping_addresses = $user->shipping_addresses;
+
 
         return view('admin.felhasznalok.mutat')->with([
             'user' => $user,
