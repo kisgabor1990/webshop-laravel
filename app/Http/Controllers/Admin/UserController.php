@@ -21,13 +21,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::withTrashed()->get();
-        $billing_addresses_count = Billing_address::count();
-        $shipping_addresses_count = Shipping_address::count();
+        $billing_addresses = Billing_address::withTrashed()->get();
+        $shipping_addresses = Shipping_address::withTrashed()->get();
 
         return view('admin.felhasznalok.index')->with([
             'users' => $users,
-            'billing_addresses_count' => $billing_addresses_count,
-            'shipping_addresses_count' => $shipping_addresses_count
+            'billing_addresses' => $billing_addresses,
+            'shipping_addresses' => $shipping_addresses
         ]);
     }
 
@@ -69,14 +69,10 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::withTrashed()->find($id);
-        $billing_addresses = $user->billing_addresses;
-        $shipping_addresses = $user->shipping_addresses;
 
 
         return view('admin.felhasznalok.mutat')->with([
             'user' => $user,
-            'billing_addresses' => $billing_addresses,
-            'shipping_addresses' => $shipping_addresses,
         ]);
     }
 
@@ -105,9 +101,7 @@ class UserController extends Controller
         $user = User::withTrashed()->find($id);
 
         $user->name = $request->name;
-        if ($request->email != $user->email) {
-            $user->email = $request->email;
-        }
+        $user->email = $request->email;
         if ($request->password != '') {
             $user->password = Hash::make($request->password);
         }
