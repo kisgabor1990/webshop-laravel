@@ -32,15 +32,15 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="user-select-none">Számlázási címei:</th>
-                                    <td>{{ count($billing_addresses) }} db.</td>
+                                    <td>{{ count($user->billing_addresses) }} db.</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="user-select-none">Szállítási címei:</th>
-                                    <td>{{ count($shipping_addresses) }} db.</td>
+                                    <td>{{ count($user->shipping_addresses) }} db.</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="user-select-none">Megrendelései:</th>
-                                    <td>{{ count($billing_addresses) }} db.</td>
+                                    <td>TODO</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -66,8 +66,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($billing_addresses as $billing)
-                                        <tr>
+                                    @forelse ($user->billing_addresses as $billing)
+                                        <tr class="@if ($billing->trashed()) table-dark @endif">
                                             <td class="text-nowrap">{{ $billing->name }}</td>
                                             <td class="text-nowrap">{{ $billing->tax_num }}</td>
                                             <td class="text-nowrap">{{ $billing->address->city }}</td>
@@ -100,8 +100,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($shipping_addresses as $shipping)
-                                        <tr>
+                                    @forelse ($user->shipping_addresses as $shipping)
+                                        <tr class="@if ($shipping->trashed()) table-dark @endif">
                                             <td class="text-nowrap">{{ $shipping->name }}</td>
                                             <td class="text-nowrap">+36{{ $shipping->phone }}</td>
                                             <td class="text-nowrap">{{ $shipping->address->city }}</td>
@@ -134,7 +134,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($billing_addresses as $billing_address)
+                                    {{-- @forelse ($billing_addresses as $billing_address)
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -144,7 +144,7 @@
                                         <tr>
                                             <td colspan="3">Nincs rögzített megrendelés!</td>
                                         </tr>
-                                    @endforelse
+                                    @endforelse --}}
                                 </tbody>
                             </table>
                         </div>

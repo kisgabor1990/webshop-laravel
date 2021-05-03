@@ -45,11 +45,11 @@ class User extends Authenticatable
     ];
     
     public function billing_addresses() {
-        return $this->hasMany(Billing_address::class);
+        return $this->hasMany(Billing_address::class)->withTrashed();
     }
 
     public function shipping_addresses() {
-        return $this->hasMany(Shipping_address::class);
+        return $this->hasMany(Shipping_address::class)->withTrashed();
     }
 
 }

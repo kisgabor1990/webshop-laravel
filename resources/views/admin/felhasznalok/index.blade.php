@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr class="{{ $user->trashed() ? 'bg-dark text-white' : '' }}">
+                            <tr class="{{ $user->trashed() ? 'table-dark' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $user->id }}</td>
                                 <td class="text-nowrap">{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
@@ -80,7 +80,8 @@
             <div class="card mb-3 mx-auto" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Számlázási címek</div>
                 <div class="card-body">
-                    {{ $billing_addresses_count }} db.
+                    <p>Aktív: {{ count($billing_addresses->where('deleted_at', null)) }} db.</p>
+                    <p>Inaktív: {{ count($billing_addresses->where('deleted_at', '!=', null)) }} db.</p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/szamlazasi-cimek') }}" role="button">Számlázási címek</a>
@@ -89,7 +90,8 @@
             <div class="card mb-5 mx-auto" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Szállítási címek</div>
                 <div class="card-body">
-                    {{ $shipping_addresses_count }} db.
+                    <p>Aktív: {{ count($shipping_addresses->where('deleted_at', null)) }} db.</p>
+                    <p>Inaktív: {{ count($shipping_addresses->where('deleted_at', '!=', null)) }} db.</p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/szallitasi-cimek') }}" role="button">Szállítási címek</a>
