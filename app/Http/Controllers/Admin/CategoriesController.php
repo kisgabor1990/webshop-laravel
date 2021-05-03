@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Brand_Category;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -20,11 +21,13 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::withTrashed()->get();
-        $brands = Brand::get();
+        $brands = Brand::withTrashed()->get();
+        $properties = Property::withTrashed()->get();
 
         return view('admin.kategoriak.index')->with([
             'categories' => $categories,
             'brands' => $brands,
+            'properties' => $properties,
         ]);
     }
 
@@ -35,7 +38,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $brands = Brand::get();
+        $brands = Brand::withTrashed()->get();
         return view('admin.kategoriak.uj')->with('brands', $brands);
     }
 
@@ -87,13 +90,11 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category, $id)
     {
-        $brands = Brand::get();
-        $brands_added = $category->withTrashed()->find($id)->brands;
+        $brands = Brand::withTrashed()->get();
 
         return view('admin.kategoriak.szerkeszt')->with([
             'category' => $category->withTrashed()->find($id),
             'brands' => $brands,
-            'brands_added' => $brands_added,
         ]);
     }
 
@@ -117,7 +118,7 @@ class CategoriesController extends Controller
         $mod_cat->slug = $slug;
 
         $mod_cat->save();
-        
+
         $mod_cat->brands()->sync($request->brands);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Kategória sikeresen módosítva!');

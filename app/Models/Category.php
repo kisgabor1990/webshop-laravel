@@ -21,7 +21,11 @@ class Category extends Model
     ];
 
     public function brands() {
-        return $this->belongsToMany(Brand::class);
+        return $this->belongsToMany(Brand::class)->withTrashed();
+    }
+
+    public function properties() {
+        return $this->hasMany(Property::class)->withTrashed();
     }
     
     public function getCategories() {

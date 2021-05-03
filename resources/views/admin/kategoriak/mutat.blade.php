@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12 col-lg-5 mb-5">
             <div class="card">
-                <div class="card-header text-center user-select-none h3">{{ $category->id }} - {{ $category->name }}</div>
+                <div class="card-header text-center user-select-none h3">{{ $category->id }} - {{ $category->name }} @if ($category->trashed()) (inaktív) @endif</div>
                 <div class="card-body">
                     <table class="table table-hover">
                         <tbody>
@@ -30,11 +30,23 @@
                                 <td>{{ $products->total() }} db.</td>
                             </tr>
                             <tr>
+                                <th scope="row" class="user-select-none">Tulajdonságok:</th>
+                                <td>
+                                    <ul>
+                                        @forelse ($category->properties as $property)
+                                        <li>{{ $property->name }} @if ($property->trashed()) (inaktív) @endif</li>
+                                        @empty
+                                        Nincs tulajdonság társítva!
+                                        @endforelse
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th scope="row" class="user-select-none">Márkák:</th>
                                 <td>
                                     <ul>
                                         @forelse ($brands as $brand)
-                                        <li>{{ $brand->name }}</li>
+                                        <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif</li>
                                         @empty
                                         Nincs márka társítva!
                                         @endforelse
