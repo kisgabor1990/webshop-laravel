@@ -57,9 +57,7 @@ class ShippingAddressController extends Controller
             'comment' => $request->comment,
         ]);
 
-        if ($user) {
-            $shipping_address->user()->associate($user);
-        }
+        $shipping_address->user()->associate($user);
         $shipping_address->address()->associate($address);
 
         $shipping_address->save();
@@ -130,11 +128,7 @@ class ShippingAddressController extends Controller
         $mod_shipping_address->phone = $request->phone;
         $mod_shipping_address->comment = $request->comment;
 
-        if ($user) {
-            $mod_shipping_address->user()->associate($user);
-        } else {
-            $mod_shipping_address->user()->dissociate($user);
-        }
+        $mod_shipping_address->user()->associate($user);
         $mod_shipping_address->address()->associate($address);
 
         $mod_shipping_address->save();
