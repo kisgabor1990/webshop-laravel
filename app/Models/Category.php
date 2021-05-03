@@ -19,6 +19,10 @@ class Category extends Model
         'name',
         'slug',
     ];
+
+    public function brands() {
+        return $this->belongsToMany(Brand::class);
+    }
     
     public function getCategories() {
         return $this::get();

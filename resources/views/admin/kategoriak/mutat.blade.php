@@ -29,6 +29,18 @@
                                 <th scope="row" class="user-select-none">Termékek száma:</th>
                                 <td>{{ $products->total() }} db.</td>
                             </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Márkák:</th>
+                                <td>
+                                    <ul>
+                                        @forelse ($brands as $brand)
+                                        <li>{{ $brand->name }}</li>
+                                        @empty
+                                        Nincs márka társítva!
+                                        @endforelse
+                                    </ul>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

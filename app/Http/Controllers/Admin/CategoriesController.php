@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminNewCategoryRequest;
+use App\Models\Brand;
+use App\Models\Brand_Category;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -29,7 +31,8 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.kategoriak.uj');
+        $brands = Brand::get();
+        return view('admin.kategoriak.uj')->with('brands', $brands);
     }
 
     /**
@@ -40,17 +43,17 @@ class CategoriesController extends Controller
      */
     public function store(AdminNewCategoryRequest $request)
     {
-        $hu=array('/é/','/É/','/á/','/Á/','/ó/','/Ó/','/ö/','/Ö/','/ő/','/Ő/','/ú/','/Ú/','/ű/','/Ű/','/ü/','/Ü/','/í/','/Í/','/ /');
-        $en= array('e','E','a','A','o','O','o','O','o','O','u','U','u','U','u','U','i','I','-'); 
-       
-        $slug = strtolower(preg_replace($hu,$en,$request->name));
+        $hu = array('/é/', '/É/', '/á/', '/Á/', '/ó/', '/Ó/', '/ö/', '/Ö/', '/ő/', '/Ő/', '/ú/', '/Ú/', '/ű/', '/Ű/', '/ü/', '/Ü/', '/í/', '/Í/', '/ /');
+        $en = array('e', 'E', 'a', 'A', 'o', 'O', 'o', 'O', 'o', 'O', 'u', 'U', 'u', 'U', 'u', 'U', 'i', 'I', '-');
 
-        $category = [
+        $slug = strtolower(preg_replace($hu, $en, $request->name));
+
+        $category = Category::create([
             'name' => $request->name,
             'slug' => $slug,
-        ];
-        
-        Category::create($category);
+        ]);
+
+        $category->brands()->attach($request->brands);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Új kategória sikeresen létrehozva!');
     }
@@ -67,8 +70,9 @@ class CategoriesController extends Controller
 
         return view('admin.kategoriak.mutat')->with([
             'category' => $category->withTrashed()->find($id),
+            'brands' => $category->withTrashed()->find($id)->brands,
             'products' => $products->getProducts($id, 15),
-            ]);
+        ]);
     }
 
     /**
@@ -79,7 +83,14 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category, $id)
     {
-        return view('admin.kategoriak.szerkeszt')->with('category', $category->withTrashed()->find($id));
+        $brands = Brand::get();
+        $brands_added = $category->withTrashed()->find($id)->brands;
+
+        return view('admin.kategoriak.szerkeszt')->with([
+            'category' => $category->withTrashed()->find($id),
+            'brands' => $brands,
+            'brands_added' => $brands_added,
+        ]);
     }
 
     /**
@@ -93,15 +104,17 @@ class CategoriesController extends Controller
     {
         $mod_cat = $category->withTrashed()->find($id);
 
-        $hu=array('/é/','/É/','/á/','/Á/','/ó/','/Ó/','/ö/','/Ö/','/ő/','/Ő/','/ú/','/Ú/','/ű/','/Ű/','/ü/','/Ü/','/í/','/Í/','/ /');
-        $en= array('e','E','a','A','o','O','o','O','o','O','u','U','u','U','u','U','i','I','-'); 
-       
-        $slug = strtolower(preg_replace($hu,$en,$request->name));
+        $hu = array('/é/', '/É/', '/á/', '/Á/', '/ó/', '/Ó/', '/ö/', '/Ö/', '/ő/', '/Ő/', '/ú/', '/Ú/', '/ű/', '/Ű/', '/ü/', '/Ü/', '/í/', '/Í/', '/ /');
+        $en = array('e', 'E', 'a', 'A', 'o', 'O', 'o', 'O', 'o', 'O', 'u', 'U', 'u', 'U', 'u', 'U', 'i', 'I', '-');
+
+        $slug = strtolower(preg_replace($hu, $en, $request->name));
 
         $mod_cat->name = $request->name;
         $mod_cat->slug = $slug;
 
         $mod_cat->save();
+        
+        $mod_cat->brands()->sync($request->brands);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Kategória sikeresen módosítva!');
     }
@@ -118,13 +131,13 @@ class CategoriesController extends Controller
 
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória törlésre került!');
     }
-    
+
     public function restore(Category $category, $id)
     {
         $category->withTrashed()->find($id)->restore();
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória sikeresen visszaállítva!');
     }
-    
+
     public function destroy(Category $category, $id)
     {
         $category->withTrashed()->find($id)->forceDelete();
