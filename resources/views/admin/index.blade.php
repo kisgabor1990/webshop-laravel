@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand me-5" href="{{ url('admin/dashboard') }}">Webshop Admin felület</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu"
@@ -20,14 +20,14 @@
             </button>
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav w-100">
-                    <li class="nav-item me-3">
+                    <li class="nav-item me-xxl-3">
                         <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }} "
                             aria-current="page" href="{{ url('admin/dashboard') }}"><i
-                                class="fa fa-dashboard fa-lg fa-fw me-2" aria-hidden="true"></i> Dashboard</a>
+                                class="fa fa-dashboard fa-lg fa-fw me-xxl-2" aria-hidden="true"></i> Dashboard</a>
                     </li>
-                    <li class="nav-item dropdown me-3">
+                    <li class="nav-item dropdown me-xxl-3">
                         <a class="nav-link dropdown-toggle {{ request()->is('admin/felhasznalok*') ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-user fa-lg fa-fw me-2" aria-hidden="true"></i> Felhasználók
+                            <i class="fa fa-user fa-lg fa-fw me-xxl-2" aria-hidden="true"></i> Felhasználók
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                           <li>
@@ -41,9 +41,9 @@
                           <li><a class="dropdown-item {{ request()->is('admin/szallitasi-cimek*') ? 'active' : '' }}" href="{{ url('admin/szallitasi-cimek') }}">Szállítási címek</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown me-3">
+                    <li class="nav-item dropdown me-xxl-3">
                         <a class="nav-link dropdown-toggle {{ request()->is('admin/kategoriak*') ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-tags fa-lg fa-fw me-2" aria-hidden="true"></i>
+                            <i class="fa fa-tags fa-lg fa-fw me-xxl-2" aria-hidden="true"></i>
                             Kategóriák
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
@@ -58,21 +58,21 @@
                           <li><a class="dropdown-item {{ request()->is('admin/tulajdonsagok*') ? 'active' : '' }}" href="{{ url('admin/tulajdonsagok') }}">Tulajdonságok</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item me-3">
+                    <li class="nav-item me-xxl-3">
                         <a class="nav-link {{ request()->is('admin/termekek*') ? 'active' : '' }} " aria-current="page"
-                            href="{{ url('admin/termekek') }}"><i class="fas fa-store fa-lg fa-fw me-2"
+                            href="{{ url('admin/termekek') }}"><i class="fas fa-store fa-lg fa-fw me-xxl-2"
                                 aria-hidden="true"></i>
                             Termékek</a>
                     </li>
                     <li class="nav-item me-auto">
                         <a class="nav-link {{ request()->is('admin/rendelesek*') ? 'active' : '' }}"
                             aria-current="page" href="{{ url('admin/rendelesek') }}"><i
-                                class="fas fa-clipboard-list fa-lg fa-fw me-2"></i>
+                                class="fas fa-clipboard-list fa-lg fa-fw me-xxl-2"></i>
                             Rendelések</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{{ url('/home') }}"><i
-                                class="fa fa-sign-out fa-lg fa-fw me-2" aria-hidden="true"></i> Kilépés</a>
+                                class="fa fa-sign-out fa-lg fa-fw me-xxl-2" aria-hidden="true"></i> Kilépés</a>
                     </li>
 
                 </ul>
