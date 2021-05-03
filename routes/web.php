@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BillingAddessController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ShippingAddressController;
 use App\Http\Controllers\Admin\UserController;
@@ -106,6 +107,14 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/szallitasi-cimek/torol/{id}', [ShippingAddressController::class, 'delete'] );
     Route::get('/szallitasi-cimek/vegleg-torol/{id}', [ShippingAddressController::class, 'destroy'] );
     Route::get('/szallitasi-cimek/visszaallit/{id}', [ShippingAddressController::class, 'restore'] );
+
+    Route::get('/markak', [BrandController::class, 'index'] );
+    Route::get('/markak/mutat/{id}', [BrandController::class, 'show'] );
+    Route::get('/markak/uj', [BrandController::class, 'create'] );
+    Route::post('/markak/uj', [BrandController::class, 'store'] );
+    Route::get('/markak/szerkeszt/{id}', [BrandController::class, 'edit'] );
+    Route::post('/markak/szerkeszt/{id}', [BrandController::class, 'update'] );
+    Route::get('/markak/torol/{id}', [BrandController::class, 'destroy'] );
 
 });
 
