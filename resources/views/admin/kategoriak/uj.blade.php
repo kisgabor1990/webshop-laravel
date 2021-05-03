@@ -27,7 +27,7 @@
                                     <input class="form-check-input" type="checkbox" value="{{ $brand->id }}"
                                         id="brand_{{ $brand->name }}" name="brands[]" @if(is_array(old('brands')) && in_array($brand->id, old('brands'))) checked @endif>
                                     <label class="form-check-label" for="brand_{{ $brand->name }}">
-                                        {{ $brand->name }}
+                                        {{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif
                                     </label>
                                 </div>
                             @empty

@@ -26,12 +26,11 @@
                             @forelse ($brands as $brand)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="{{ $brand->id }}"
-                                        id="brand_{{ $brand->name }}" name="brands[]" 
-                                        @foreach ($brands_added as $brand_added)  
-                                        @if ($brand_added->id==$brand->id) checked @endif
-                                        @endforeach>
+                                        id="brand_{{ $brand->name }}" name="brands[]"
+                                        @if (in_array($brand->id, $category->brands->pluck('id')->toArray())) checked @endif
+                                        >
                             <label class="form-check-label" for="brand_{{ $brand->name }}">
-                                {{ $brand->name }}
+                                {{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif
                             </label>
                         </div>
                         @empty

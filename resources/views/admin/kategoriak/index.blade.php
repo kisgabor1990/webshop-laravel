@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                         @foreach ($categories as $category)
-                            <tr class="{{ $category->trashed() ? 'bg-dark text-white' : '' }}">
+                            <tr class="{{ $category->trashed() ? 'table-dark' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $category->id }}</td>
                                 <td class="text-nowrap">{{ $category->name }}</td>
                                 <td class="text-nowrap">{{ $category->slug }}</td>
@@ -77,7 +77,8 @@
             <div class="card mb-3 mx-auto" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Márkák</div>
                 <div class="card-body">
-                    {{ count($brands) }} db.
+                    <p>Aktív: {{ count($brands->where('deleted_at', null)) }} db.</p>
+                    <p>Inaktív: {{ count($brands->where('deleted_at', '!=', null)) }} db.</p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/markak') }}" role="button">Márkák</a>
@@ -86,7 +87,8 @@
             <div class="card mb-5 mx-auto" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Tulajdonságok</div>
                 <div class="card-body">
-                     db.
+                    <p>Aktív: {{ count($properties->where('deleted_at', null)) }} db.</p>
+                    <p>Inaktív: {{ count($properties->where('deleted_at', '!=', null)) }} db.</p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/tulajdonsagok') }}" role="button">Tulajdonságok</a>
