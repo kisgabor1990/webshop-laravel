@@ -31,11 +31,19 @@
                     </thead>
                     <tbody>
                         @forelse ($brands as $brand)
-                            <tr>
+                            <tr class="{{ $brand->trashed() ? 'table-dark' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $brand->id }}</td>
                                 <td class="text-nowrap">{{ $brand->name }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
+                                        @if ($brand->trashed())
+                                        <a class="btn btn-danger btn-sm delete me-3" href="#"
+                                                data-href="{{ url('admin/markak/vegleg-torol/' . $brand->id) }}"
+                                                data-header="márka" data-name="{{ $brand->name }}"
+                                                data-id="{{ $brand->id }}" role="button">
+                                                <i class="fas fa-trash fa-sm fa-fw"></i>
+                                            </a>
+                                        @endif
                                         <a class="btn btn-primary btn-sm "
                                             href="{{ url('admin/markak/mutat/' . $brand->id) }}" role="button">
                                             <i class="fas fa-eye fa-sm fa-fw"></i>
@@ -44,12 +52,17 @@
                                             href="{{ url('admin/markak/szerkeszt/' . $brand->id) }}" role="button">
                                             <i class="fas fa-edit fa-sm fa-fw"></i>
                                         </a>
-                                        <a class="btn btn-danger btn-sm delete" href="#"
-                                            data-href="{{ url('admin/markak/torol/' . $brand->id) }}"
-                                            data-header="márka" data-name="{{ $brand->name }}"
-                                            data-id="{{ $brand->id }}" role="button">
-                                            <i class="fas fa-trash fa-sm fa-fw"></i>
-                                        </a>
+                                        @if ($brand->trashed())
+                                            <a class="btn btn-success btn-sm"
+                                                href="{{ url('admin/markak/visszaallit/' . $brand->id) }}" role="button">
+                                                <i class="fas fa-trash-restore fa-sm fa-fw"></i>
+                                            </a>
+                                            @else
+                                            <a class="btn btn-danger btn-sm"
+                                                href="{{ url('admin/markak/torol/' . $brand->id) }}" role="button">
+                                                <i class="fas fa-trash fa-sm fa-fw"></i>
+                                            </a>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

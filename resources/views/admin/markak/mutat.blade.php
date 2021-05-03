@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12 col-lg-5 mb-5">
             <div class="card">
-                <div class="card-header text-center user-select-none h3">{{ $brand->id }} - {{ $brand->name }}</div>
+                <div class="card-header text-center user-select-none h3">{{ $brand->id }} - {{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif</div>
                 <div class="card-body">
                     <table class="table table-hover">
                         <tbody>

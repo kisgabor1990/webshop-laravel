@@ -16,7 +16,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::get();
+        $brands = Brand::withTrashed()->get();
 
         return view('admin.markak.index')->with('brands', $brands);
     }
@@ -56,7 +56,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand, $id)
     {
-        return view('admin.markak.mutat')->with('brand', $brand->find($id));
+        return view('admin.markak.mutat')->with('brand', $brand->withTrashed()->find($id));
     }
 
     /**
@@ -67,7 +67,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand, $id)
     {
-        return view('admin.markak.szerkeszt')->with('brand', $brand->find($id));
+        return view('admin.markak.szerkeszt')->with('brand', $brand->withTrashed()->find($id));
     }
 
     /**
@@ -79,7 +79,7 @@ class BrandController extends Controller
      */
     public function update(AdminBrandRequest $request, Brand $brand, $id)
     {
-        $mod_brand = $brand->find($id);
+        $mod_brand = $brand->withTrashed()->find($id);
         $mod_brand->name = $request->name;
         $mod_brand->save();
 
@@ -92,10 +92,23 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand, $id)
+    public function delete(Brand $brand, $id)
     {
         $brand->find($id)->delete();
 
         return redirect()->to('admin/markak')->withSuccess('A márka törlésre került!');
+    }
+
+    public function restore(Brand $brand, $id)
+    {
+        $brand->withTrashed()->find($id)->restore();
+        return redirect()->to('admin/markak')->withSuccess('A márka sikeresen visszaállítva!');
+    }
+
+    public function destroy(Brand $brand, $id)
+    {
+        $brand->withTrashed()->find($id)->forceDelete();
+
+        return redirect()->to('admin/markak')->withSuccess('A márka végleg törlésre került!');
     }
 }
