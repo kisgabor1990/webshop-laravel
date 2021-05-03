@@ -50,8 +50,8 @@
                                             <a class="btn btn-danger btn-sm delete me-3" href="#"
                                                 data-href="{{ url('admin/szamlazasi-cimek/vegleg-torol/' . $billing_address->id) }}"
                                                 data-header="számlázási cím" data-name="{{ $billing_address->name }}"
-                                                data-user="{{ $billing_address->user->name }}"
-                                                data-address="{{ $billing_address->city }}, {{ $billing_address->address }} {{ $billing_address->address2 }}"
+                                                data-user="{{ $billing_address->user->name ?? '' }}"
+                                                data-address="{{ $billing_address->address->zip }} {{ $billing_address->address->city }}, {{ $billing_address->address->address }} {{ $billing_address->address->address2 }}"
                                                 data-id="{{ $billing_address->id }}" role="button">
                                                 <i class="fas fa-trash fa-sm fa-fw"></i>
                                             </a>
