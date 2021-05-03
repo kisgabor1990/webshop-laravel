@@ -4,12 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Nagy\LaravelRating\Traits\Rate\Rateable;
 
 
 class Product extends Model {
 
-    use HasFactory, Rateable;
+    use HasFactory, Rateable, SoftDeletes;
+
+    protected $fillable = [
+        'model',
+        'category_id',
+        'brand_id',
+        'description',
+        'price',
+    ];
+
+    public function category() {
+        return $this->hasOne(Category::class)->withTrashed();
+    }
+
+    public function properties() {
+        return $this->belongsToMany(Property::class)->withPivot('value')->withTrashed();
+    }
     
     public function getProduct($id) {
         return $this::find($id);

@@ -10,8 +10,16 @@
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <th scope="row" class="user-select-none">Kategória:</th>
-                                <td>{{ $property->category->name }} @if ($property->category->trashed()) (inaktív) @endif</td>
+                                <th scope="row" class="user-select-none">Kategóriák:</th>
+                                <td>
+                                    <ul>
+                                        @forelse ($property->categories as $category)
+                                        <li>{{ $category->name }}</li>
+                                        @empty
+                                        <li>Nincs kategóriához rendelve!</li>
+                                        @endforelse
+                                    </ul>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Termékek:</th>

@@ -17,7 +17,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::withTrashed()->orderBy('category_id')->get();
+        $properties = Property::withTrashed()->orderBy('id')->get();
 
         return view('admin.tulajdonsagok.index')->with('properties', $properties);
     }
@@ -29,8 +29,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $categories = Category::withTrashed()->get();
-        return view('admin.tulajdonsagok.uj')->with('categories', $categories);
+        return view('admin.tulajdonsagok.uj');
     }
 
     /**
@@ -41,15 +40,9 @@ class PropertyController extends Controller
      */
     public function store(AdminPropertyRequest $request)
     {
-        $category = Category::withTrashed()->find($request->category_id);
-
-        $property = Property::updateOrCreate([
+        Property::updateOrCreate([
             'name' => $request->name,
         ]);
-
-        $property->category()->associate($category);
-
-        $property->save();
 
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Új tulajdonság sikeresen létrehozva!');
     }
@@ -81,11 +74,9 @@ class PropertyController extends Controller
         if (!$property->withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
-        $categories = Category::withTrashed()->get();
 
         return view('admin.tulajdonsagok.szerkeszt')->with([
             'property' => $property->withTrashed()->find($id),
-            'categories' => $categories,
         ]);
     }
 
@@ -101,13 +92,9 @@ class PropertyController extends Controller
         if (!$property->withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
-
-        $category = Category::withTrashed()->find($request->category_id);
-
         $mod_property = $property->withTrashed()->find($id);
 
         $mod_property->name = $request->name;
-        $mod_property->category()->associate($category);
         $mod_property->save();
 
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság sikeresen módosítva!');

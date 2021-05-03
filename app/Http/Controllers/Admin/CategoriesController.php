@@ -38,8 +38,12 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $brands = Brand::withTrashed()->get();
-        return view('admin.kategoriak.uj')->with('brands', $brands);
+        $brands = Brand::withTrashed()->orderBy('name')->get();
+        $properties = Property::withTrashed()->orderBy('name')->get();
+        return view('admin.kategoriak.uj')->with([
+            'brands' => $brands,
+            'properties' => $properties,
+        ]);
     }
 
     /**
@@ -61,6 +65,7 @@ class CategoriesController extends Controller
         ]);
 
         $category->brands()->attach($request->brands);
+        $category->properties()->attach($request->properties);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Új kategória sikeresen létrehozva!');
     }
@@ -77,7 +82,6 @@ class CategoriesController extends Controller
 
         return view('admin.kategoriak.mutat')->with([
             'category' => $category->withTrashed()->find($id),
-            'brands' => $category->withTrashed()->find($id)->brands,
             'products' => $products->getProducts($id, 15),
         ]);
     }
@@ -90,11 +94,13 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category, $id)
     {
-        $brands = Brand::withTrashed()->get();
+        $brands = Brand::withTrashed()->orderBy('name')->get();
+        $properties = Property::withTrashed()->orderBy('name')->get();
 
         return view('admin.kategoriak.szerkeszt')->with([
             'category' => $category->withTrashed()->find($id),
             'brands' => $brands,
+            'properties' => $properties,
         ]);
     }
 
@@ -120,6 +126,7 @@ class CategoriesController extends Controller
         $mod_cat->save();
 
         $mod_cat->brands()->sync($request->brands);
+        $mod_cat->properties()->sync($request->properties);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Kategória sikeresen módosítva!');
     }

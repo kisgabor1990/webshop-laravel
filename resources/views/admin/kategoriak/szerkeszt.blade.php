@@ -26,25 +26,39 @@
                             @forelse ($brands as $brand)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="{{ $brand->id }}"
-                                        id="brand_{{ $brand->name }}" name="brands[]"
-                                        @if (in_array($brand->id, $category->brands->pluck('id')->toArray())) checked @endif
-                                        >
-                            <label class="form-check-label" for="brand_{{ $brand->name }}">
-                                {{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif
-                            </label>
-                        </div>
-                        @empty
-                            <p class="h6">Jelenleg nincs márka rögzítve!</p>
+                                        id="brand_{{ $brand->name }}" name="brands[]" @if (in_array($brand->id, $category->brands->pluck('id')->toArray())) checked @endif>
+                                    <label class="form-check-label" for="brand_{{ $brand->name }}">
+                                        {{ $brand->name }} @if ($brand->trashed())
+                                            (inaktív) @endif
+                                    </label>
+                                </div>
+                            @empty
+                                <p class="h6">Jelenleg nincs márka rögzítve!</p>
                             @endforelse
                         </div>
-                </div>
-                <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-success btn-sm">Mentés</button>
-                    <a class="btn btn-primary btn-sm" href="{{ url('admin/kategoriak') }}" role="button">Mégsem</a>
-                </div>
+                        <div class="col-12 col-lg-6 mb-3 mx-auto">
+                            <p class="h4">Tulajdonságok:</p>
+                            @forelse ($properties as $property)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ $property->id }}"
+                                        id="property_{{ $property->name }}" name="properties[]" @if (in_array($property->id, $category->properties->pluck('id')->toArray())) checked @endif>
+                                    <label class="form-check-label" for="property_{{ $property->name }}">
+                                        {{ $property->name }} @if ($property->trashed())
+                                            (inaktív) @endif
+                                    </label>
+                                </div>
+                            @empty
+                                <p class="h6">Jelenleg nincs tulajdonság rögzítve!</p>
+                            @endforelse
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-success btn-sm">Mentés</button>
+                        <a class="btn btn-primary btn-sm" href="{{ url('admin/kategoriak') }}" role="button">Mégsem</a>
+                    </div>
                 </form>
             </div>
         </div>
-        </div>
+    </div>
 
-    @endsection
+@endsection

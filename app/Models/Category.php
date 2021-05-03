@@ -25,7 +25,7 @@ class Category extends Model
     }
 
     public function properties() {
-        return $this->hasMany(Property::class)->withTrashed();
+        return $this->belongsToMany(Property::class)->withTrashed();
     }
     
     public function getCategories() {

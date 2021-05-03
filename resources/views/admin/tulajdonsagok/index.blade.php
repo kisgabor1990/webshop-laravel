@@ -26,7 +26,6 @@
                         <tr>
                             <th>#</th>
                             <th class="w-50">Név</th>
-                            <th>Kategória</th>
                             <th class="text-end">Műveletek</th>
                         </tr>
                     </thead>
@@ -35,7 +34,6 @@
                             <tr class="{{ $property->trashed() ? 'table-dark' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $property->id }}</td>
                                 <td class="text-nowrap">{{ $property->name }}</td>
-                                <td class="text-nowrap @if ($property->category->trashed()) table-dark @endif">{{ $property->category->name }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($property->trashed())

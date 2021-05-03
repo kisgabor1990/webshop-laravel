@@ -12,10 +12,9 @@ class Property extends Model
 
     protected $fillable = [
         'name',
-        'category_id',
     ];
 
-    public function category() {
-        return $this->belongsTo(Category::class)->withTrashed();
+    public function categories() {
+        return $this->belongsToMany(Category::class)->withTrashed();
     }
 }

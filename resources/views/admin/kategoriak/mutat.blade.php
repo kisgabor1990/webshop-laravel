@@ -45,7 +45,7 @@
                                 <th scope="row" class="user-select-none">Márkák:</th>
                                 <td>
                                     <ul>
-                                        @forelse ($brands as $brand)
+                                        @forelse ($category->brands as $brand)
                                         <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif</li>
                                         @empty
                                         Nincs márka társítva!
