@@ -77,7 +77,7 @@
             <div class="card mb-3 mx-auto" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Márkák</div>
                 <div class="card-body">
-                     db.
+                    {{ count($brands) }} db.
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/markak') }}" role="button">Márkák</a>

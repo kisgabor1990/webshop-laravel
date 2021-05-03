@@ -20,8 +20,12 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::withTrashed()->get();
+        $brands = Brand::get();
 
-        return view('admin.kategoriak.index')->with('categories', $categories);
+        return view('admin.kategoriak.index')->with([
+            'categories' => $categories,
+            'brands' => $brands,
+        ]);
     }
 
     /**
