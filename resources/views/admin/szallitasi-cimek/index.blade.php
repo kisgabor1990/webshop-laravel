@@ -50,8 +50,8 @@
                                             <a class="btn btn-danger btn-sm delete me-3" href="#"
                                                 data-href="{{ url('admin/szallitasi-cimek/vegleg-torol/' . $shipping_address->id) }}"
                                                 data-header="szállítási cím" data-name="{{ $shipping_address->name }}"
-                                                data-user="{{ $shipping_address->user }}"
-                                                data-address="{{ $shipping_address->city }}, {{ $shipping_address->address }} {{ $shipping_address->address2 }}"
+                                                data-user="{{ $shipping_address->user->name ?? '' }}"
+                                                data-address="{{ $shipping_address->address->zip }} {{ $shipping_address->address->city }}, {{ $shipping_address->address->address }} {{ $shipping_address->address->address2 }}"
                                                 data-id="{{ $shipping_address->id }}" role="button">
                                                 <i class="fas fa-trash fa-sm fa-fw"></i>
                                             </a>
