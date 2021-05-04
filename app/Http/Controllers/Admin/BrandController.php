@@ -18,7 +18,7 @@ class BrandController extends Controller
     {
         $brands = Brand::withTrashed()->get();
 
-        return view('admin.markak.index')->with('brands', $brands);
+        return view('admin.gyartok.index')->with('brands', $brands);
     }
 
     /**
@@ -28,7 +28,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.markak.uj');
+        return view('admin.gyartok.uj');
     }
 
     /**
@@ -45,7 +45,7 @@ class BrandController extends Controller
         
         Brand::create($brand);
 
-        return redirect()->to('admin/markak')->withSuccess('Új márka sikeresen létrehozva!');
+        return redirect()->to('admin/gyartok')->withSuccess('Új gyártó sikeresen létrehozva!');
     }
 
     /**
@@ -56,7 +56,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand, $id)
     {
-        return view('admin.markak.mutat')->with('brand', $brand->withTrashed()->find($id));
+        return view('admin.gyartok.mutat')->with('brand', $brand->withTrashed()->find($id));
     }
 
     /**
@@ -67,7 +67,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand, $id)
     {
-        return view('admin.markak.szerkeszt')->with('brand', $brand->withTrashed()->find($id));
+        return view('admin.gyartok.szerkeszt')->with('brand', $brand->withTrashed()->find($id));
     }
 
     /**
@@ -83,7 +83,7 @@ class BrandController extends Controller
         $mod_brand->name = $request->name;
         $mod_brand->save();
 
-        return redirect()->to('admin/markak')->withSuccess('Márka sikeresen módosítva!');
+        return redirect()->to('admin/gyartok')->withSuccess('gyártó sikeresen módosítva!');
     }
 
     /**
@@ -96,19 +96,19 @@ class BrandController extends Controller
     {
         $brand->find($id)->delete();
 
-        return redirect()->to('admin/markak')->withSuccess('A márka törlésre került!');
+        return redirect()->to('admin/gyartok')->withSuccess('A gyártó törlésre került!');
     }
 
     public function restore(Brand $brand, $id)
     {
         $brand->withTrashed()->find($id)->restore();
-        return redirect()->to('admin/markak')->withSuccess('A márka sikeresen visszaállítva!');
+        return redirect()->to('admin/gyartok')->withSuccess('A gyártó sikeresen visszaállítva!');
     }
 
     public function destroy(Brand $brand, $id)
     {
         $brand->withTrashed()->find($id)->forceDelete();
 
-        return redirect()->to('admin/markak')->withSuccess('A márka végleg törlésre került!');
+        return redirect()->to('admin/gyartok')->withSuccess('A gyártó végleg törlésre került!');
     }
 }
