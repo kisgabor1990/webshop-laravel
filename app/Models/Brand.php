@@ -17,4 +17,8 @@ class Brand extends Model
     public function categories() {
         return $this->belongsToMany(Category::class)->withTrashed();
     }
+
+    public function products() {
+        return $this->hasMany(Product::class)->withTrashed();
+    }
 }

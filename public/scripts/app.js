@@ -149,6 +149,8 @@ $(function () {
             .data("name", $(this).data("name"))
             .data("user", $(this).data("user"))
             .data("address", $(this).data("address"))
+            .data("brand", $(this).data("brand"))
+            .data("category", $(this).data("category"))
             .data("email", $(this).data("email"));
         $("#confirmModal .modal_header").html($(this).data("header"));
         $("#confirmModal .id").html($(this).data("id"));
@@ -156,6 +158,8 @@ $(function () {
         $("#confirmModal .user").html($(this).data("user"));
         $("#confirmModal .address").html($(this).data("address"));
         $("#confirmModal .email").html($(this).data("email"));
+        $("#confirmModal .brand").html($(this).data("brand"));
+        $("#confirmModal .category").html($(this).data("category"));
         confirmModal.show();
     });
 

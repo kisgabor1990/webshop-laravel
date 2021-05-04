@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BillingAddessController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\ProductsController as AdminProductsController;
 use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\ShippingAddressController;
 use App\Http\Controllers\Admin\UserController;
@@ -109,15 +110,15 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/szallitasi-cimek/vegleg-torol/{id}', [ShippingAddressController::class, 'destroy'] );
     Route::get('/szallitasi-cimek/visszaallit/{id}', [ShippingAddressController::class, 'restore'] );
 
-    Route::get('/markak', [BrandController::class, 'index'] );
-    Route::get('/markak/mutat/{id}', [BrandController::class, 'show'] );
-    Route::get('/markak/uj', [BrandController::class, 'create'] );
-    Route::post('/markak/uj', [BrandController::class, 'store'] );
-    Route::get('/markak/szerkeszt/{id}', [BrandController::class, 'edit'] );
-    Route::post('/markak/szerkeszt/{id}', [BrandController::class, 'update'] );
-    Route::get('/markak/torol/{id}', [BrandController::class, 'delete'] );
-    Route::get('/markak/visszaallit/{id}', [BrandController::class, 'restore'] );
-    Route::get('/markak/vegleg-torol/{id}', [BrandController::class, 'destroy'] );
+    Route::get('/gyartok', [BrandController::class, 'index'] );
+    Route::get('/gyartok/mutat/{id}', [BrandController::class, 'show'] );
+    Route::get('/gyartok/uj', [BrandController::class, 'create'] );
+    Route::post('/gyartok/uj', [BrandController::class, 'store'] );
+    Route::get('/gyartok/szerkeszt/{id}', [BrandController::class, 'edit'] );
+    Route::post('/gyartok/szerkeszt/{id}', [BrandController::class, 'update'] );
+    Route::get('/gyartok/torol/{id}', [BrandController::class, 'delete'] );
+    Route::get('/gyartok/visszaallit/{id}', [BrandController::class, 'restore'] );
+    Route::get('/gyartok/vegleg-torol/{id}', [BrandController::class, 'destroy'] );
     
     Route::get('/tulajdonsagok', [PropertyController::class, 'index'] );
     Route::get('/tulajdonsagok/mutat/{id}', [PropertyController::class, 'show'] );
@@ -128,6 +129,16 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/tulajdonsagok/torol/{id}', [PropertyController::class, 'delete'] );
     Route::get('/tulajdonsagok/visszaallit/{id}', [PropertyController::class, 'restore'] );
     Route::get('/tulajdonsagok/vegleg-torol/{id}', [PropertyController::class, 'destroy'] );
+    
+    Route::get('/termekek', [AdminProductsController::class, 'index'] );
+    Route::get('/termekek/mutat/{id}', [AdminProductsController::class, 'show'] );
+    Route::get('/termekek/uj', [AdminProductsController::class, 'create'] );
+    Route::post('/termekek/uj', [AdminProductsController::class, 'store'] );
+    Route::get('/termekek/szerkeszt/{id}', [AdminProductsController::class, 'edit'] );
+    Route::post('/termekek/szerkeszt/{id}', [AdminProductsController::class, 'update'] );
+    Route::get('/termekek/torol/{id}', [AdminProductsController::class, 'delete'] );
+    Route::get('/termekek/visszaallit/{id}', [AdminProductsController::class, 'restore'] );
+    Route::get('/termekek/vegleg-torol/{id}', [AdminProductsController::class, 'destroy'] );
 });
 
 

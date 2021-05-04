@@ -21,7 +21,11 @@ class Product extends Model {
     ];
 
     public function category() {
-        return $this->hasOne(Category::class)->withTrashed();
+        return $this->belongsTo(Category::class)->withTrashed();
+    }
+    
+    public function brand() {
+        return $this->belongsTo(Brand::class)->withTrashed();
     }
 
     public function properties() {

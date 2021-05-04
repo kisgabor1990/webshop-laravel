@@ -54,7 +54,7 @@
                                 </a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item {{ request()->is('admin/markak*') ? 'active' : '' }}" href="{{ url('admin/markak') }}">Márkák</a></li>
+                            <li><a class="dropdown-item {{ request()->is('admin/gyartok*') ? 'active' : '' }}" href="{{ url('admin/gyartok') }}">Gyártók</a></li>
                           <li><a class="dropdown-item {{ request()->is('admin/tulajdonsagok*') ? 'active' : '' }}" href="{{ url('admin/tulajdonsagok') }}">Tulajdonságok</a></li>
                         </ul>
                     </li>
@@ -106,6 +106,10 @@
                         @if (request()->is('admin/szamlazasi-cimek') || request()->is('admin/szallitasi-cimek'))
                             <li>Cím: <span class="address fw-bold"></span></li>
                             <li>Felhasználó: <span class="user fw-bold"></span></li>
+                        @endif
+                        @if (request()->is('admin/termekek'))
+                            <li>Gyártó: <span class="brand fw-bold"></span></li>
+                            <li>Kategória: <span class="category fw-bold"></span></li>
                         @endif
                     </ul>
                 </div>

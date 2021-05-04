@@ -27,6 +27,10 @@ class Category extends Model
     public function properties() {
         return $this->belongsToMany(Property::class)->withTrashed();
     }
+
+    public function products() {
+        return $this->hasMany(Product::class)->withTrashed();
+    }
     
     public function getCategories() {
         return $this::get();
