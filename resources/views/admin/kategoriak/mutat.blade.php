@@ -42,13 +42,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" class="user-select-none">Márkák:</th>
+                                <th scope="row" class="user-select-none">Gyártók:</th>
                                 <td>
                                     <ul>
                                         @forelse ($category->brands as $brand)
                                         <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif</li>
                                         @empty
-                                        Nincs márka társítva!
+                                        Nincs gyártó társítva!
                                         @endforelse
                                     </ul>
                                 </td>
@@ -70,7 +70,7 @@
                             <table class="table table-hover">
                                 <thead class="user-select-none">
                                     <tr>
-                                        <th>Márka</th>
+                                        <th>Gyártó</th>
                                         <th>Termékazonosító</th>
                                         <th>Tulajdonság</th>
                                     </tr>
