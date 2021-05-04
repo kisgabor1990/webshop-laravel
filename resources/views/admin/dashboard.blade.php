@@ -64,14 +64,14 @@
         </div>
         <div class="col-auto mb-2">
             <div class="card" style="width:18rem;">
-                <div class="card-header text-center user-select-none h3">Márkák</div>
+                <div class="card-header text-center user-select-none h3">Gyártók</div>
                 <div class="card-body">
                     <p>Aktív: {{ count($brands->where('deleted_at', null)) }} db.</p>
                     <p>Inaktív: {{ count($brands->where('deleted_at', '!=', null)) }} db.</p>
                 </div>
                 <div class="card-footer text-end">
-                    <a class="btn btn-primary btn-sm " href="{{ url('admin/markak') }}"
-                    role="button">Márkák</a>
+                    <a class="btn btn-primary btn-sm " href="{{ url('admin/gyartok') }}"
+                    role="button">Gyártók</a>
                 </div>
             </div>
         </div>
