@@ -31,7 +31,7 @@
                                     </label>
                                 </div>
                             @empty
-                                <p class="h6">Jelenleg nincs márka rögzítve!</p>
+                                <p class="h6">Jelenleg nincs gyártó rögzítve!</p>
                             @endforelse
                         </div>
                         <div class="col-12 col-lg-6 mb-3 mx-auto">
