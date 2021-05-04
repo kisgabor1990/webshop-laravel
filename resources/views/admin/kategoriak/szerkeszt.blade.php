@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 mb-3 mx-auto">
-                            <p class="h4">Márkák:</p>
+                            <p class="h4">Gyártók:</p>
                             @forelse ($brands as $brand)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="{{ $brand->id }}"
@@ -33,7 +33,7 @@
                                     </label>
                                 </div>
                             @empty
-                                <p class="h6">Jelenleg nincs márka rögzítve!</p>
+                                <p class="h6">Jelenleg nincs gyártó rögzítve!</p>
                             @endforelse
                         </div>
                         <div class="col-12 col-lg-6 mb-3 mx-auto">
