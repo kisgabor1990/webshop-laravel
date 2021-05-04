@@ -75,13 +75,13 @@
         </div>
         <div class="col-12 col-lg-3 offset-lg-1 order-first order-lg-last justify-content-center">
             <div class="card mb-3 mx-auto" style="width:18rem;">
-                <div class="card-header text-center user-select-none h3">Márkák</div>
+                <div class="card-header text-center user-select-none h3">Gyártók</div>
                 <div class="card-body">
                     <p>Aktív: {{ count($brands->where('deleted_at', null)) }} db.</p>
                     <p>Inaktív: {{ count($brands->where('deleted_at', '!=', null)) }} db.</p>
                 </div>
                 <div class="card-footer text-end">
-                    <a class="btn btn-primary btn-sm " href="{{ url('admin/markak') }}" role="button">Márkák</a>
+                    <a class="btn btn-primary btn-sm " href="{{ url('admin/gyartok') }}" role="button">Gyártók</a>
                 </div>
             </div>
             <div class="card mb-5 mx-auto" style="width:18rem;">
