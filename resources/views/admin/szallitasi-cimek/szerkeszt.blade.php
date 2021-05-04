@@ -8,7 +8,7 @@
         <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header user-select-none h3">
-                    <i class="fas fa-plus fa-lg fa-fw"></i>
+                    <i class="fas fa-edit fa-lg fa-fw"></i>
                     Szállítási cím módosítása
                 </div>
                 <form action="{{ url('admin/szallitasi-cimek/szerkeszt/' . $shipping_address->id) }}" method="POST" class="needs-validation" novalidate>
