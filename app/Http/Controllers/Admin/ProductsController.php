@@ -75,9 +75,12 @@ class ProductsController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product, $id)
+    public function show($id)
     {
-        return view('admin.termekek.mutat')->with('product', $product->find($id));
+        if (! Product::withTrashed()->find($id)) {
+            return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
+        }
+        return view('admin.termekek.mutat')->with('product', Product::withTrashed()->find($id));
     }
 
     /**
@@ -86,9 +89,12 @@ class ProductsController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product, $id)
+    public function edit($id)
     {
-        return view('admin.termekek.szerkeszt')->with('product', $product->find($id));
+        if (! Product::withTrashed()->find($id)) {
+            return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
+        }
+        return view('admin.termekek.szerkeszt')->with('product', Product::withTrashed()->find($id));
     }
 
     /**
@@ -98,19 +104,21 @@ class ProductsController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product, $id)
+    public function update(Request $request, $id)
     {
+        if (! Product::withTrashed()->find($id)) {
+            return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
+        }
+        $product = Product::withTrashed()->find($id);
         $brand = Brand::withTrashed()->find($request->brand_id);
 
-        $mod_product = $product->find($id);
+        $product->model = $request->model;
+        $product->description = $request->description;
+        $product->price = $request->price;
 
-        $mod_product->model = $request->model;
-        $mod_product->description = $request->description;
-        $mod_product->price = $request->price;
-
-        $mod_product->properties()->sync($request->properties);
-        $mod_product->brand()->associate($brand);
-        $mod_product->save();
+        $product->properties()->sync($request->properties);
+        $product->brand()->associate($brand);
+        $product->save();
 
         return redirect()->to('admin/termekek')->withSuccess('A termék sikeresen módosítva!');
     }
@@ -121,12 +129,12 @@ class ProductsController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function delete(Product $product, $id)
+    public function delete(Product $product)
     {
-        if (!$product->withTrashed()->find($id)) {
+        if (!$product) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
-        $product->find($id)->delete();
+        $product->delete();
 
         return redirect()->to('admin/termekek')->withSuccess('A termék törlésre került!');
     }
@@ -137,12 +145,12 @@ class ProductsController extends Controller
      * @param  \App\Models\Billing_address  $billing_address
      * @return \Illuminate\Http\Response
      */
-    public function restore(Product $product, $id)
+    public function restore($id)
     {
-        if (!$product->withTrashed()->find($id)) {
+        if (! Product::withTrashed()->find($id)) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
-        $product->withTrashed()->find($id)->restore();
+        Product::withTrashed()->restore();
 
         return redirect()->to('admin/termekek')->withSuccess('A termék sikeresen visszaállítva!');
     }
@@ -153,12 +161,12 @@ class ProductsController extends Controller
      * @param  \App\Models\Billing_address  $billing_address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product, $id)
+    public function destroy($id)
     {
-        if (!$product->withTrashed()->find($id)) {
+        if (! Product::withTrashed()->find($id)) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
-        $product->withTrashed()->find($id)->forceDelete();
+        Product::withTrashed()->forceDelete();
 
         return redirect()->to('admin/termekek')->withSuccess('A termék végleg törlésre került!');
     }

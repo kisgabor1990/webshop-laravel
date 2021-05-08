@@ -71,13 +71,13 @@ class ShippingAddressController extends Controller
      * @param  \App\Models\Shipping_address  $shipping_address
      * @return \Illuminate\Http\Response
      */
-    public function show(Shipping_address $shipping_address, $id)
+    public function show($id)
     {
-        if (!$shipping_address->withTrashed()->find($id)) {
+        if (!Shipping_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
         return view('admin.szallitasi-cimek.mutat')->with([
-            'shipping_address' => $shipping_address->withTrashed()->find($id)
+            'shipping_address' => Shipping_address::withTrashed()->find($id)
         ]);
     }
 
@@ -87,15 +87,15 @@ class ShippingAddressController extends Controller
      * @param  \App\Models\Shipping_address  $shipping_address
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shipping_address $shipping_address, $id)
+    public function edit($id)
     {
-        if (!$shipping_address->withTrashed()->find($id)) {
+        if (!Shipping_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
         $users = User::get();
 
         return view('admin.szallitasi-cimek.szerkeszt')->with([
-            'shipping_address' => $shipping_address->withTrashed()->find($id),
+            'shipping_address' => Shipping_address::withTrashed()->find($id),
             'users' => $users,
         ]);
     }
@@ -107,9 +107,9 @@ class ShippingAddressController extends Controller
      * @param  \App\Models\Shipping_address  $shipping_address
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminShippingAddressRequest $request, Shipping_address $shipping_address, $id)
+    public function update(AdminShippingAddressRequest $request, $id)
     {
-        if (!$shipping_address->withTrashed()->find($id)) {
+        if (!Shipping_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
 
@@ -122,16 +122,16 @@ class ShippingAddressController extends Controller
             'zip' => $request->zip,
         ]);
 
-        $mod_shipping_address = $shipping_address->withTrashed()->find($id);
+        $shipping_address = Shipping_address::withTrashed()->find($id);
 
-        $mod_shipping_address->name = $request->name;
-        $mod_shipping_address->phone = $request->phone;
-        $mod_shipping_address->comment = $request->comment;
+        $shipping_address->name = $request->name;
+        $shipping_address->phone = $request->phone;
+        $shipping_address->comment = $request->comment;
 
-        $mod_shipping_address->user()->associate($user);
-        $mod_shipping_address->address()->associate($address);
+        $shipping_address->user()->associate($user);
+        $shipping_address->address()->associate($address);
 
-        $mod_shipping_address->save();
+        $shipping_address->save();
 
         return redirect()->to('admin/szallitasi-cimek')->withSuccess('Szállítási cím sikeresen módosítva!');
     }
@@ -142,12 +142,12 @@ class ShippingAddressController extends Controller
      * @param  \App\Models\Shipping_address  $shipping_address
      * @return \Illuminate\Http\Response
      */
-    public function delete(Shipping_address $shipping_address, $id)
+    public function delete(Shipping_address $shipping_address)
     {
-        if (!$shipping_address->withTrashed()->find($id)) {
+        if (!$shipping_address) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
-        $shipping_address->find($id)->delete();
+        $shipping_address->delete();
 
         return redirect()->to('admin/szallitasi-cimek')->withSuccess('A szállítási cím törlésre került!');
     }
@@ -158,12 +158,12 @@ class ShippingAddressController extends Controller
      * @param  \App\Models\shipping_address  $shipping_address
      * @return \Illuminate\Http\Response
      */
-    public function restore(shipping_address $shipping_address, $id)
+    public function restore($id)
     {
-        if (!$shipping_address->withTrashed()->find($id)) {
+        if (!Shipping_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
-        $shipping_address->withTrashed()->find($id)->restore();
+        Shipping_address::withTrashed()->find($id)->restore();
 
         return redirect()->to('admin/szallitasi-cimek')->withSuccess('A szállítási cím sikeresen visszaállítva!');
     }
@@ -174,12 +174,12 @@ class ShippingAddressController extends Controller
      * @param  \App\Models\shipping_address  $shipping_address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(shipping_address $shipping_address, $id)
+    public function destroy($id)
     {
-        if (!$shipping_address->withTrashed()->find($id)) {
+        if (!Shipping_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
-        $shipping_address->withTrashed()->find($id)->forceDelete();
+        Shipping_address::withTrashed()->find($id)->forceDelete();
 
         return redirect()->to('admin/szallitasi-cimek')->withSuccess('A szállítási cím végleg törlésre került!');
     }

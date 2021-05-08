@@ -53,13 +53,13 @@ class PropertyController extends Controller
      * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $property, $id)
+    public function show($id)
     {
-        if (!$property->withTrashed()->find($id)) {
+        if (!Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
         return view('admin.tulajdonsagok.mutat')->with([
-            'property' => $property->withTrashed()->find($id)
+            'property' => Property::withTrashed()->find($id)
         ]);
     }
 
@@ -69,14 +69,14 @@ class PropertyController extends Controller
      * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $property, $id)
+    public function edit($id)
     {
-        if (!$property->withTrashed()->find($id)) {
+        if (! Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
         return view('admin.tulajdonsagok.szerkeszt')->with([
-            'property' => $property->withTrashed()->find($id),
+            'property' => Property::withTrashed()->find($id),
         ]);
     }
 
@@ -87,12 +87,12 @@ class PropertyController extends Controller
      * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminPropertyRequest $request, Property $property, $id)
+    public function update(AdminPropertyRequest $request, $id)
     {
-        if (!$property->withTrashed()->find($id)) {
+        if (!Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
-        $mod_property = $property->withTrashed()->find($id);
+        $mod_property = Property::withTrashed()->find($id);
 
         $mod_property->name = $request->name;
         $mod_property->save();
@@ -106,33 +106,33 @@ class PropertyController extends Controller
      * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function delete(Property $property, $id)
+    public function delete(Property $property)
     {
-        if (!$property->find($id)) {
+        if (!$property) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
-        $property->find($id)->delete();
+        $property->delete();
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság sikeresen törölve!');
     }
 
-    public function restore(Property $property, $id)
+    public function restore($id)
     {
-        if (!$property->withTrashed()->find($id)) {
+        if (!Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
-        $property->withTrashed()->find($id)->restore();
+        Property::withTrashed()->find($id)->restore();
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság sikeresen visszaállítva!');
     }
 
-    public function destroy(Property $property, $id)
+    public function destroy($id)
     {
-        if (!$property->withTrashed()->find($id)) {
+        if (!Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
-        $property->withTrashed()->find($id)->forceDelete();
+        Property::withTrashed()->find($id)->forceDelete();
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság végleg törölve!');
     }
 }

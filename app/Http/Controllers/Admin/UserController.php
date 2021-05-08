@@ -116,9 +116,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(User $user, $id)
+    public function delete(User $user)
     {
-        $user->find($id)->delete();
+        $user->delete();
 
         return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó törlésre került!');
     }
@@ -129,9 +129,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restore(User $user, $id)
+    public function restore($id)
     {
-        $user->withTrashed()->find($id)->restore();
+        User::withTrashed()->find($id)->restore();
 
         return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó sikeresen visszaállítva!');
     }
@@ -142,9 +142,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user, $id)
+    public function destroy($id)
     {
-        $user->withTrashed()->find($id)->forceDelete();
+        User::withTrashed()->find($id)->forceDelete();
 
         return redirect()->to('admin/felhasznalok')->withSuccess('A felhasználó végleg törlésre került!');
     }
