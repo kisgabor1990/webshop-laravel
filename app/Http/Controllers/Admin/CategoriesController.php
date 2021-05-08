@@ -10,6 +10,8 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class CategoriesController extends Controller
 {
@@ -54,14 +56,10 @@ class CategoriesController extends Controller
      */
     public function store(AdminNewCategoryRequest $request)
     {
-        $hu = array('/é/', '/É/', '/á/', '/Á/', '/ó/', '/Ó/', '/ö/', '/Ö/', '/ő/', '/Ő/', '/ú/', '/Ú/', '/ű/', '/Ű/', '/ü/', '/Ü/', '/í/', '/Í/', '/ /');
-        $en = array('e', 'E', 'a', 'A', 'o', 'O', 'o', 'O', 'o', 'O', 'u', 'U', 'u', 'U', 'u', 'U', 'i', 'I', '-');
-
-        $slug = strtolower(preg_replace($hu, $en, $request->name));
 
         $category = Category::create([
             'name' => $request->name,
-            'slug' => $slug,
+            'slug' => Str::of($request->name)->slug('-'),
         ]);
 
         $category->brands()->attach($request->brands);
@@ -115,14 +113,9 @@ class CategoriesController extends Controller
     {
         $mod_cat = $category->withTrashed()->find($id);
 
-        $hu = array('/é/', '/É/', '/á/', '/Á/', '/ó/', '/Ó/', '/ö/', '/Ö/', '/ő/', '/Ő/', '/ú/', '/Ú/', '/ű/', '/Ű/', '/ü/', '/Ü/', '/í/', '/Í/', '/ /');
-        $en = array('e', 'E', 'a', 'A', 'o', 'O', 'o', 'O', 'o', 'O', 'u', 'U', 'u', 'U', 'u', 'U', 'i', 'I', '-');
-
-        $slug = strtolower(preg_replace($hu, $en, $request->name));
-
         $mod_cat->name = $request->name;
-        $mod_cat->slug = $slug;
-
+        $mod_cat->slug = Str::of($request->name)->slug('-');
+        
         $mod_cat->save();
 
         $mod_cat->brands()->sync($request->brands);
