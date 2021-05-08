@@ -74,12 +74,13 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category, $id)
+    public function show($id)
     {
+        $category = Category::withTrashed()->find($id);
         $products = new Product();
 
         return view('admin.kategoriak.mutat')->with([
-            'category' => $category->withTrashed()->find($id),
+            'category' => $category,
             'products' => $products->getProducts($id, 15),
         ]);
     }
@@ -90,13 +91,14 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category, $id)
+    public function edit($id)
     {
+        $category = Category::withTrashed()->find($id);
         $brands = Brand::withTrashed()->orderBy('name')->get();
         $properties = Property::withTrashed()->orderBy('name')->get();
 
         return view('admin.kategoriak.szerkeszt')->with([
-            'category' => $category->withTrashed()->find($id),
+            'category' => $category,
             'brands' => $brands,
             'properties' => $properties,
         ]);
@@ -109,17 +111,17 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminNewCategoryRequest $request, Category $category, $id)
+    public function update(AdminNewCategoryRequest $request, $id)
     {
-        $mod_cat = $category->withTrashed()->find($id);
+        $category = Category::withTrashed()->find($id);;
 
-        $mod_cat->name = $request->name;
-        $mod_cat->slug = Str::of($request->name)->slug('-');
+        $category->name = $request->name;
+        $category->slug = Str::of($request->name)->slug('-');
         
-        $mod_cat->save();
+        $category->save();
 
-        $mod_cat->brands()->sync($request->brands);
-        $mod_cat->properties()->sync($request->properties);
+        $category->brands()->sync($request->brands);
+        $category->properties()->sync($request->properties);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Kategória sikeresen módosítva!');
     }
@@ -130,22 +132,22 @@ class CategoriesController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function delete(Category $category, $id)
+    public function delete(Category $category)
     {
-        $category->find($id)->delete();
+        $category->delete();
 
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória törlésre került!');
     }
 
-    public function restore(Category $category, $id)
+    public function restore($id)
     {
-        $category->withTrashed()->find($id)->restore();
+        Category::withTrashed()->find($id)->restore();
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória sikeresen visszaállítva!');
     }
 
-    public function destroy(Category $category, $id)
+    public function destroy($id)
     {
-        $category->withTrashed()->find($id)->forceDelete();
+        Category::withTrashed()->find($id)->forceDelete();
 
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória végleg törlésre került!');
     }

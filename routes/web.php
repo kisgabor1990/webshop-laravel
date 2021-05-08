@@ -86,7 +86,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('/kategoriak/uj', [CategoriesController::class, 'store'] );
     Route::get('/kategoriak/szerkeszt/{id}', [CategoriesController::class, 'edit'] );
     Route::post('/kategoriak/szerkeszt/{id}', [CategoriesController::class, 'update'] );
-    Route::get('/kategoriak/torol/{id}', [CategoriesController::class, 'delete'] );
+    Route::get('/kategoriak/torol/{category}', [CategoriesController::class, 'delete'] );
     Route::get('/kategoriak/vegleg-torol/{id}', [CategoriesController::class, 'destroy'] );
     Route::get('/kategoriak/visszaallit/{id}', [CategoriesController::class, 'restore'] );
     
