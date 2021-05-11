@@ -40,16 +40,28 @@
                                         Az ár megadása kötelező!
                                     </div>
                                 </div>
-                                @foreach ($product->properties as $property)
+                                @foreach ($product->category->properties as $property)
+                                    @if ($property->hasList)
                                     <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
-                                        <input type="text" class="form-control" id="property_{{ $property->name }}"
-                                            name="properties[{{ $property->id }}][value]"
-                                            placeholder="{{ $property->name }}" value="{{ $property->pivot->value }}" required>
+                                        <select class="form-select" id="property_{{ $property->name }}" name="values[{{ $property->id }}][value]">
+                                            @foreach ($property->values()->get()->sortBy('name') as $value)
+                                                <option value="{{ $value->name }}"@if ($product->properties->find($property->id)->pivot->value == $value->name) selected @endif>{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
                                         <label for="property_{{ $property->name }}">{{ $property->name }}</label>
-                                        <div class="invalid-feedback">
-                                            A(z) {{ $property->name }} megadása kötelező!
-                                        </div>
                                     </div>
+                                    @else
+                                        <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
+                                            <input type="text" class="form-control" id="property_{{ $property->name }}"
+                                                name="values[{{ $property->id }}][value]"
+                                                placeholder="{{ $property->name }}"
+                                                value="{{ $product->properties->find($property->id)->pivot->value }}" required>
+                                            <label for="property_{{ $property->name }}">{{ $property->name }}</label>
+                                            <div class="invalid-feedback">
+                                                A(z) {{ $property->name }} megadása kötelező!
+                                            </div>
+                                        </div>
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="col-12 col-lg-6">
