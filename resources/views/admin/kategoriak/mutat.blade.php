@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-12 col-lg-5 mb-5">
             <div class="card">
-                <div class="card-header text-center user-select-none h3">{{ $category->id }} - {{ $category->name }} @if ($category->trashed()) (inaktív) @endif</div>
+                <div class="card-header text-center user-select-none h3">{{ $category->id }} - {{ $category->name }}
+                    @if ($category->trashed()) (inaktív) @endif
+                </div>
                 <div class="card-body">
                     <table class="table table-hover">
                         <tbody>
@@ -34,9 +36,10 @@
                                 <td>
                                     <ul>
                                         @forelse ($category->properties as $property)
-                                        <li>{{ $property->name }} @if ($property->trashed()) (inaktív) @endif</li>
+                                            <li>{{ $property->name }} @if ($property->trashed()) (inaktív) @endif
+                                            </li>
                                         @empty
-                                        Nincs tulajdonság társítva!
+                                            Nincs tulajdonság társítva!
                                         @endforelse
                                     </ul>
                                 </td>
@@ -46,9 +49,10 @@
                                 <td>
                                     <ul>
                                         @forelse ($category->brands as $brand)
-                                        <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif</li>
+                                            <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif
+                                            </li>
                                         @empty
-                                        Nincs gyártó társítva!
+                                            Nincs gyártó társítva!
                                         @endforelse
                                     </ul>
                                 </td>
@@ -72,15 +76,19 @@
                                     <tr>
                                         <th>Gyártó</th>
                                         <th>Termékazonosító</th>
-                                        <th>Tulajdonság</th>
+                                        @foreach ($category->properties as $property)
+                                            <th>{{ $property->name }}</th>
+                                        @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($products as $product)
                                         <tr>
-                                            <td>{{ $product->brand }}</td>
-                                            <td></td>
-                                            <td class="text-nowrap">{{ $product->property }}</td>
+                                            <td>{{ $product->brand->name }}</td>
+                                            <td>{{ $product->model }}</td>
+                                            @foreach ($product->properties as $property)
+                                                <td class="text-nowrap">{{ $property->pivot->value }}</td>
+                                            @endforeach
                                         </tr>
                                     @empty
                                         <tr>
