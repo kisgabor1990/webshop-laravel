@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminPropertyRequest;
 use App\Models\Category;
 use App\Models\Property;
+use App\Models\Property_value;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class PropertyController extends Controller
 {
@@ -40,9 +43,18 @@ class PropertyController extends Controller
      */
     public function store(AdminPropertyRequest $request)
     {
-        Property::updateOrCreate([
+        $property = Property::updateOrCreate([
             'name' => $request->name,
+            'hasList' => $request->add_values ? '1' : '0',
         ]);
+
+        if ($request->values) {
+            foreach ($request->values as $key => $value) {
+                $property->values()->updateOrCreate([
+                    'name' => $value,
+                ]);
+            }
+        }
 
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Új tulajdonság sikeresen létrehozva!');
     }
@@ -92,10 +104,19 @@ class PropertyController extends Controller
         if (!Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
-        $mod_property = Property::withTrashed()->find($id);
 
-        $mod_property->name = $request->name;
-        $mod_property->save();
+        $property = Property::withTrashed()->find($id);
+        $property->name = $request->name;
+        $property->hasList = $request->add_values ? '1' : '0';
+        $property->save();
+        if ($request->values) {
+            $property->values()->whereNotIn('name', $request->values)->delete();
+            foreach ($request->values as $key => $value) {
+                $property->values()->updateOrCreate([
+                    'name' => $value,
+                ]);
+            }
+        }
 
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság sikeresen módosítva!');
     }

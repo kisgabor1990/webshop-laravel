@@ -12,9 +12,18 @@ class Property extends Model
 
     protected $fillable = [
         'name',
+        'hasList',
     ];
 
     public function categories() {
         return $this->belongsToMany(Category::class)->withTrashed();
+    }
+
+    public function values() {
+        return $this->hasMany(Property_value::class);
+    }
+
+    public function products() {
+        return $this->belongsToMany(Product::class);
     }
 }

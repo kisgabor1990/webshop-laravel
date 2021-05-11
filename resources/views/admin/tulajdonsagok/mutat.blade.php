@@ -12,13 +12,13 @@
                             <tr>
                                 <th scope="row" class="user-select-none">Kategóriákhoz rendelve:</th>
                                 <td>
-                                    <ul>
-                                        @forelse ($property->categories as $category)
-                                        <li>{{ $category->name }}</li>
-                                        @empty
-                                        <li>Nincs kategóriához rendelve!</li>
-                                        @endforelse
-                                    </ul>
+                                    {{ $property->categories->implode('name', ', ') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Értékek:</th>
+                                <td>
+                                    {{ $property->values->implode('name', ', ') }}
                                 </td>
                             </tr>
                             <tr>

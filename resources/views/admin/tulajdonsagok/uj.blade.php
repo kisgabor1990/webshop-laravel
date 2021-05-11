@@ -13,12 +13,26 @@
                     @csrf
                     <div class="card-body">
                         <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Tulajdonság név" value="{{ old('name') }}" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Tulajdonság név"
+                                value="{{ old('name') }}" required>
                             <label for="name">Tulajdonság név</label>
                             <div class="invalid-feedback">
                                 A név megadása kötelező!
                             </div>
                         </div>
+                        <div class="col-12 col-lg-6 form-check form-switch mb-3 mx-auto">
+                            <input class="form-check-input" type="checkbox" id="add_values" name="add_values">
+                            <label class="form-check-label" for="add_values">Lista létrehozása a tulajdonsághoz</label>
+                        </div>
+                        <fieldset disabled>
+                            <div class="col-12 col-lg-6 mb-3 mx-auto" id="values" style="display: none">
+                                <div class="col-12 d-block-inline mb-3 text-center">
+                                    <a class="btn btn-primary btn-sm" id="add_value" href="#" role="button">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-success btn-sm">Mentés</button>
