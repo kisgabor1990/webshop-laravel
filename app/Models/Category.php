@@ -18,6 +18,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'order',
     ];
 
     public function brands() {
@@ -25,7 +26,7 @@ class Category extends Model
     }
 
     public function properties() {
-        return $this->belongsToMany(Property::class)->withTrashed();
+        return $this->hasMany(Property::class)->withTrashed();
     }
 
     public function products() {

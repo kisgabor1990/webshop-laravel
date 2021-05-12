@@ -20,7 +20,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::withTrashed()->orderBy('id')->get();
+        $properties = Property::withTrashed()->orderBy('category_id')->get();
 
         return view('admin.tulajdonsagok.index')->with('properties', $properties);
     }
@@ -32,7 +32,9 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('admin.tulajdonsagok.uj');
+        return view('admin.tulajdonsagok.uj')->with([
+            'categories' => Category::withTrashed()->get(),
+        ]);
     }
 
     /**
@@ -43,10 +45,13 @@ class PropertyController extends Controller
      */
     public function store(AdminPropertyRequest $request)
     {
+        $category = Category::find($request->selected_category);
         $property = Property::updateOrCreate([
             'name' => $request->name,
             'hasList' => $request->add_values ? '1' : '0',
         ]);
+        $property->category()->associate($category);
+        $property->save();
 
         if ($request->values) {
             foreach ($request->values as $key => $value) {

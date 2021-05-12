@@ -34,20 +34,6 @@
                                 <p class="h6">Jelenleg nincs gyártó rögzítve!</p>
                             @endforelse
                         </div>
-                        <div class="col-12 col-lg-6 mb-3 mx-auto">
-                            <p class="h4">Tulajdonságok:</p>
-                            @forelse ($properties as $property)
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $property->id }}"
-                                        id="property_{{ $property->name }}" name="properties[]" @if(is_array(old('properties')) && in_array($property->id, old('brands'))) checked @endif>
-                                    <label class="form-check-label" for="property_{{ $property->name }}">
-                                        {{ $property->name }} @if ($property->trashed()) (inaktív) @endif
-                                    </label>
-                                </div>
-                            @empty
-                                <p class="h6">Jelenleg nincs tulajdonság rögzítve!</p>
-                            @endforelse
-                        </div>
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-success btn-sm">Mentés</button>

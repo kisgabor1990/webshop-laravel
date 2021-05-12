@@ -25,6 +25,7 @@
                     <thead class="thead-inverse user-select-none">
                         <tr>
                             <th>#</th>
+                            <th>Kategória</th>
                             <th class="w-50">Név</th>
                             <th>Értékek</th>
                             <th class="text-end">Műveletek</th>
@@ -34,6 +35,7 @@
                         @forelse ($properties as $property)
                             <tr class="{{ $property->trashed() ? 'table-dark' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $property->id }}</td>
+                                <td class="text-nowrap">{{ $property->category->name }}</td>
                                 <td class="text-nowrap">{{ $property->name }}</td>
                                 <td class="text-nowrap"> {{ $property->values->implode('name', ', ') }} </td>
                                 <td class="text-end">

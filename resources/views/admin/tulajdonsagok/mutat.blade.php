@@ -10,9 +10,9 @@
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <th scope="row" class="user-select-none">Kategóriákhoz rendelve:</th>
+                                <th scope="row" class="user-select-none">Kategória:</th>
                                 <td>
-                                    {{ $property->categories->implode('name', ', ') }}
+                                    {{ $property->category->name }}
                                 </td>
                             </tr>
                             <tr>

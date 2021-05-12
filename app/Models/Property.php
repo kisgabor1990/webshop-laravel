@@ -11,12 +11,13 @@ class Property extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'category_id',
         'name',
         'hasList',
     ];
 
-    public function categories() {
-        return $this->belongsToMany(Category::class)->withTrashed();
+    public function category() {
+        return $this->belongsTo(Category::class)->withTrashed();
     }
 
     public function values() {
