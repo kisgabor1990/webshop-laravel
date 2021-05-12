@@ -22,7 +22,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::withTrashed()->get();
+        $categories = Category::withTrashed()->orderBy('order')->get();
         $brands = Brand::withTrashed()->get();
         $properties = Property::withTrashed()->get();
 
@@ -31,6 +31,35 @@ class CategoriesController extends Controller
             'brands' => $brands,
             'properties' => $properties,
         ]);
+    }
+
+    public function order() {
+        $categories = Category::withTrashed()->orderBy('order')->get();
+
+        if (count($categories) < 2) {
+            return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Túl kevés kategória a rendezéshez!']);
+        }
+
+        return view('admin.kategoriak.rendez')->with([
+            'categories' => $categories,
+        ]);
+    }
+
+    public function setOrder(Request $request) {
+        $categories = Category::withTrashed()->get();
+        if (count($categories) != count($request->categories)) {
+            return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Hiba történt! Próbálja újra!']);
+        }
+        
+        foreach ($request->categories as $key => $category) {
+            if (!$mod_category = Category::withTrashed()->where('name', $category)->first()) {
+                return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Hiba történt! Próbálja újra!']);
+            }
+            $mod_category->order = $key + 1;
+            $mod_category->save();
+        }
+
+        return redirect()->to('admin/kategoriak')->withSuccess('Kategória sorrend sikeresen módosítva!');
     }
 
     /**
@@ -60,6 +89,7 @@ class CategoriesController extends Controller
         $category = Category::create([
             'name' => $request->name,
             'slug' => Str::of($request->name)->slug('-'),
+            'order' => Category::withTrashed()->count() + 1,
         ]);
 
         $category->brands()->attach($request->brands);

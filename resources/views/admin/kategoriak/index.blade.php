@@ -11,6 +11,13 @@
                         Kategóriák
                     </p>
                 </div>
+                @if (count($categories) > 1)
+                <div class="col-auto">
+                    <a class="btn btn-outline-primary btn-lg mb-5" href="{{ url('admin/kategoriak/rendez') }}" role="button">
+                        <i class="fas fa-sort-numeric-down fa-lg fa-fw"></i> Sorba rendezés
+                    </a>
+                </div>
+                @endif
                 <div class="col-auto">
                     <a class="btn btn-outline-primary btn-lg mb-5" href="{{ url('admin/kategoriak/uj') }}" role="button">
                         <i class="fas fa-plus fa-lg fa-fw"></i> Új kategória
@@ -33,7 +40,7 @@
                     <tbody>
                         @foreach ($categories as $category)
                             <tr class="{{ $category->trashed() ? 'table-dark' : '' }}">
-                                <td scope="row" class="user-select-none fw-bold">{{ $category->id }}</td>
+                                <td scope="row" class="user-select-none fw-bold">{{ $category->order }}</td>
                                 <td class="text-nowrap">{{ $category->name }}</td>
                                 <td class="text-nowrap">{{ $category->slug }}</td>
                                 <td class="text-end">

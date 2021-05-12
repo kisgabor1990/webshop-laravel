@@ -82,6 +82,8 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     
     Route::get('/kategoriak', [CategoriesController::class, 'index'] );
     Route::get('/kategoriak/mutat/{id}', [CategoriesController::class, 'show'] );
+    Route::get('/kategoriak/rendez', [CategoriesController::class, 'order'] );
+    Route::post('/kategoriak/rendez', [CategoriesController::class, 'setOrder'] );
     Route::get('/kategoriak/uj', [CategoriesController::class, 'create'] );
     Route::post('/kategoriak/uj', [CategoriesController::class, 'store'] );
     Route::get('/kategoriak/szerkeszt/{id}', [CategoriesController::class, 'edit'] );
