@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,7 +33,7 @@ class AppServiceProvider extends ServiceProvider {
             'kapcsolat' => ['fa-address-card', 'Kapcsolat'],
         ];
 
-        $categories = Category::get();
+        $categories = Category::orderBy('order')->get();
 
         View::share([
             'menu' => $menu,
@@ -39,6 +41,15 @@ class AppServiceProvider extends ServiceProvider {
         ]);
 
         Paginator::useBootstrap();
+
+        if(env('APP_DEBUG')) {
+            DB::listen(function($query) {
+                File::append(
+                    storage_path('/logs/query.log'),
+                    $query->sql . ' [' . implode(', ', $query->bindings) . ']' . PHP_EOL
+               );
+            });
+        }
     }
 
 }
