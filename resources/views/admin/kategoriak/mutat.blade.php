@@ -29,7 +29,7 @@
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Termékek száma:</th>
-                                <td>{{ $products->total() }} db.</td>
+                                <td>{{ count($category->products) }} db.</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Tulajdonságok:</th>
@@ -82,7 +82,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($products as $product)
+                                    @forelse ($category->products as $product)
                                         <tr>
                                             <td>{{ $product->brand->name }}</td>
                                             <td>{{ $product->model }}</td>
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-center">
-                {{ $products->onEachSide(1)->links() }}
+                {{-- {{ $products->onEachSide(1)->links() }} --}}
             </div>
         </div>
     </div>

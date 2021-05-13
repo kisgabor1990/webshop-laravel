@@ -43,7 +43,7 @@
                                     @if ($property->hasList)
                                     <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
                                         <select class="form-select" id="property_{{ $property->name }}" name="values[{{ $property->id }}][value]">
-                                            @foreach ($property->values()->get()->sortBy('name') as $value)
+                                            @foreach ($property->values->sortBy('name') as $value)
                                                 <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>

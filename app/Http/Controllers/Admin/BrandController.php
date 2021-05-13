@@ -39,11 +39,9 @@ class BrandController extends Controller
      */
     public function store(AdminBrandRequest $request)
     {
-        $brand = [
+        Brand::create([
             'name' => $request->name,
-        ];
-        
-        Brand::create($brand);
+        ]);
 
         return redirect()->to('admin/gyartok')->withSuccess('Új gyártó sikeresen létrehozva!');
     }
@@ -56,10 +54,10 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        if (! Brand::withTrashed()->find($id)) {
+        if (!$brand = Brand::withTrashed()->find($id)) {
             return redirect()->to("/admin/gyartok")->withErrors(['message' => 'Nem létező gyártó!']);
         }
-        return view('admin.gyartok.mutat')->with('brand', Brand::withTrashed()->find($id));
+        return view('admin.gyartok.mutat')->with('brand', $brand);
     }
 
     /**
@@ -70,10 +68,10 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        if (! Brand::withTrashed()->find($id)) {
+        if (!$brand = Brand::withTrashed()->find($id)) {
             return redirect()->to("/admin/gyartok")->withErrors(['message' => 'Nem létező gyártó!']);
         }
-        return view('admin.gyartok.szerkeszt')->with('brand', Brand::withTrashed()->find($id));
+        return view('admin.gyartok.szerkeszt')->with('brand', $brand);
     }
 
     /**
@@ -85,12 +83,12 @@ class BrandController extends Controller
      */
     public function update(AdminBrandRequest $request, $id)
     {
-        if (! Brand::withTrashed()->find($id)) {
+        if (!$brand = Brand::withTrashed()->find($id)) {
             return redirect()->to("/admin/gyartok")->withErrors(['message' => 'Nem létező gyártó!']);
         }
-        $mod_brand = Brand::withTrashed()->find($id);
-        $mod_brand->name = $request->name;
-        $mod_brand->save();
+        $brand = Brand::withTrashed()->find($id);
+        $brand->name = $request->name;
+        $brand->save();
 
         return redirect()->to('admin/gyartok')->withSuccess('gyártó sikeresen módosítva!');
     }
@@ -113,19 +111,19 @@ class BrandController extends Controller
 
     public function restore($id)
     {
-        if (! Brand::withTrashed()->find($id)) {
+        if (!$brand = Brand::withTrashed()->find($id)) {
             return redirect()->to("/admin/gyartok")->withErrors(['message' => 'Nem létező gyártó!']);
         }
-        Brand::withTrashed()->find($id)->restore();
+        $brand->restore();
         return redirect()->to('admin/gyartok')->withSuccess('A gyártó sikeresen visszaállítva!');
     }
 
     public function destroy($id)
     {
-        if (! Brand::withTrashed()->find($id)) {
+        if (!$brand = Brand::withTrashed()->find($id)) {
             return redirect()->to("/admin/gyartok")->withErrors(['message' => 'Nem létező gyártó!']);
         }
-        Brand::withTrashed()->find($id)->forceDelete();
+        $brand->forceDelete();
 
         return redirect()->to('admin/gyartok')->withSuccess('A gyártó végleg törlésre került!');
     }

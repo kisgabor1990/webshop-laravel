@@ -20,7 +20,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::withTrashed()->orderBy('category_id')->get();
+        $properties = Property::withTrashed()->with(['category', 'values'])->orderBy('category_id')->get();
 
         return view('admin.tulajdonsagok.index')->with('properties', $properties);
     }
@@ -72,11 +72,11 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        if (!Property::withTrashed()->find($id)) {
+        if (!$property = Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
         return view('admin.tulajdonsagok.mutat')->with([
-            'property' => Property::withTrashed()->find($id)
+            'property' => $property,
         ]);
     }
 
@@ -88,12 +88,12 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        if (! Property::withTrashed()->find($id)) {
+        if (!$property = Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
         return view('admin.tulajdonsagok.szerkeszt')->with([
-            'property' => Property::withTrashed()->find($id),
+            'property' => $property,
         ]);
     }
 
@@ -106,11 +106,10 @@ class PropertyController extends Controller
      */
     public function update(AdminPropertyRequest $request, $id)
     {
-        if (!Property::withTrashed()->find($id)) {
+        if (!$property = Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
-        $property = Property::withTrashed()->find($id);
         $property->name = $request->name;
         $property->hasList = $request->add_values ? '1' : '0';
         $property->save();
@@ -144,21 +143,21 @@ class PropertyController extends Controller
 
     public function restore($id)
     {
-        if (!Property::withTrashed()->find($id)) {
+        if (!$property = Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
-        Property::withTrashed()->find($id)->restore();
+        $property->restore();
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság sikeresen visszaállítva!');
     }
 
     public function destroy($id)
     {
-        if (!Property::withTrashed()->find($id)) {
+        if (!$property = Property::withTrashed()->find($id)) {
             return redirect()->to("/admin/tulajdonsagok")->withErrors(['message' => 'Nem létező tulajdonság!']);
         }
 
-        Property::withTrashed()->find($id)->forceDelete();
+        $property->forceDelete();
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság végleg törölve!');
     }
 }

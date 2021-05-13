@@ -18,7 +18,7 @@ class BillingAddessController extends Controller
      */
     public function index()
     {
-        $billing_addresses = Billing_address::withTrashed()->orderBy('user_id')->get();
+        $billing_addresses = Billing_address::withTrashed()->with(['address', 'user'])->orderBy('user_id')->get();
 
         return view('admin.szamlazasi-cimek.index')->with('billing_addresses', $billing_addresses);
     }
@@ -73,11 +73,11 @@ class BillingAddessController extends Controller
      */
     public function show($id)
     {
-        if (!Billing_address::withTrashed()->find($id)) {
+        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
         return view('admin.szamlazasi-cimek.mutat')->with([
-            'billing_address' => Billing_address::withTrashed()->find($id)
+            'billing_address' => $billing_address
         ]);
     }
 
@@ -89,13 +89,13 @@ class BillingAddessController extends Controller
      */
     public function edit($id)
     {
-        if (!Billing_address::withTrashed()->find($id)) {
+        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
         $users = User::get();
 
         return view('admin.szamlazasi-cimek.szerkeszt')->with([
-            'billing_address' => Billing_address::withTrashed()->find($id),
+            'billing_address' => $billing_address,
             'users' => $users,
         ]);
     }
@@ -109,7 +109,7 @@ class BillingAddessController extends Controller
      */
     public function update(AdminBillingAddressRequest $request, $id)
     {
-        if (! Billing_address::withTrashed()->find($id)) {
+        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
 
@@ -121,8 +121,6 @@ class BillingAddessController extends Controller
             'address2' => $request->address2,
             'zip' => $request->zip,
         ]);
-
-        $billing_address = Billing_address::withTrashed()->find($id);
 
         $billing_address->choose_company = $request->choose_company;
         $billing_address->name = $request->name;
@@ -160,10 +158,10 @@ class BillingAddessController extends Controller
      */
     public function restore($id)
     {
-        if (!Billing_address::withTrashed()->find($id)) {
+        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
-        Billing_address::withTrashed()->find($id)->restore();
+        $billing_address->restore();
 
         return redirect()->to('admin/szamlazasi-cimek')->withSuccess('A számlázási cím sikeresen visszaállítva!');
     }
@@ -176,10 +174,10 @@ class BillingAddessController extends Controller
      */
     public function destroy($id)
     {
-        if (!Billing_address::withTrashed()->find($id)) {
+        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
-        Billing_address::withTrashed()->find($id)->forceDelete();
+        $billing_address->forceDelete();
 
         return redirect()->to('admin/szamlazasi-cimek')->withSuccess('A számlázási cím végleg törlésre került!');
     }
