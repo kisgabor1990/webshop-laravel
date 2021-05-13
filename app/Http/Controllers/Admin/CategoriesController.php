@@ -52,12 +52,17 @@ class CategoriesController extends Controller
         }
         
         foreach ($request->categories as $key => $category) {
-            if (!$mod_category = Category::withTrashed()->where('name', $category)->first()) {
+            if (!$mod_category = $categories->where('name', $category)->first()) {
                 return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Hiba történt! Próbálja újra!']);
             }
-            $mod_category->order = $key + 1;
-            $mod_category->save();
+            $update_order[] = [
+                'id' => $mod_category->id,
+                'name' => $mod_category->name,
+                'slug' => $mod_category->slug,
+                'order' => $key + 1,
+            ];
         }
+        Category::upsert($update_order, ['id'], ['order']);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Kategória sorrend sikeresen módosítva!');
     }
@@ -93,7 +98,6 @@ class CategoriesController extends Controller
         ]);
 
         $category->brands()->attach($request->brands);
-        $category->properties()->attach($request->properties);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Új kategória sikeresen létrehozva!');
     }
@@ -106,15 +110,14 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        if (! Category::withTrashed()->find($id)) {
+        if (!$category = Category::withTrashed()->with(['products.brand', 'products.properties'])->find($id)) {
             return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Nem létező kategória!']);
         }
-        $category = Category::withTrashed()->find($id);
         $products = new Product();
 
         return view('admin.kategoriak.mutat')->with([
             'category' => $category,
-            'products' => $products->getProducts($id, 15),
+            // 'products' => $products->getProducts($id, 15),
         ]);
     }
 
@@ -126,17 +129,14 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        if (! Category::withTrashed()->find($id)) {
+        if (!$category = Category::withTrashed()->find($id)) {
             return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Nem létező kategória!']);
         }
-        $category = Category::withTrashed()->find($id);
         $brands = Brand::withTrashed()->orderBy('name')->get();
-        $properties = Property::withTrashed()->orderBy('name')->get();
 
         return view('admin.kategoriak.szerkeszt')->with([
             'category' => $category,
             'brands' => $brands,
-            'properties' => $properties,
         ]);
     }
 
@@ -149,10 +149,9 @@ class CategoriesController extends Controller
      */
     public function update(AdminNewCategoryRequest $request, $id)
     {
-        if (! Category::withTrashed()->find($id)) {
+        if (!$category = Category::withTrashed()->find($id)) {
             return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Nem létező kategória!']);
         }
-        $category = Category::withTrashed()->find($id);;
 
         $category->name = $request->name;
         $category->slug = Str::of($request->name)->slug('-');
@@ -160,7 +159,6 @@ class CategoriesController extends Controller
         $category->save();
 
         $category->brands()->sync($request->brands);
-        $category->properties()->sync($request->properties);
 
         return redirect()->to('admin/kategoriak')->withSuccess('Kategória sikeresen módosítva!');
     }
@@ -183,19 +181,19 @@ class CategoriesController extends Controller
 
     public function restore($id)
     {
-        if (! Category::withTrashed()->find($id)) {
+        if (!$category = Category::withTrashed()->find($id)) {
             return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Nem létező kategória!']);
         }
-        Category::withTrashed()->find($id)->restore();
+        $category->restore();
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória sikeresen visszaállítva!');
     }
 
     public function destroy($id)
     {
-        if (! Category::withTrashed()->find($id)) {
+        if (!$category = Category::withTrashed()->find($id)) {
             return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Nem létező kategória!']);
         }
-        Category::withTrashed()->find($id)->forceDelete();
+        $category->forceDelete();
 
         return redirect()->to('admin/kategoriak')->withSuccess('A kategória végleg törlésre került!');
     }
