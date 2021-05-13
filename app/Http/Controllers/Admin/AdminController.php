@@ -21,7 +21,7 @@ class AdminController extends Controller
         $categories = Category::withTrashed()->get();
         $brands = Brand::withTrashed()->get();
         $properties = Property::withTrashed()->get();
-        $products = Product::get(); // TODO: withTrashed()
+        $products = Product::withTrashed()->get();
         $orders = null;
 
         return view('admin.dashboard')->with([
