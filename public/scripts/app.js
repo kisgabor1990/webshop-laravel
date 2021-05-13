@@ -215,7 +215,7 @@ $(function () {
         $(".value"+value_count+" input").val("");
     });
 
-    $("#values").on('click', 'a.remove_value', function (e) {
+    $("#maincontent").on('click', 'a.remove_value', function (e) {
         e.preventDefault();
         let id = $(this).data("id");
         $("."+id).remove();

@@ -80,7 +80,7 @@
     </nav>
     
 
-    <div class="container my-5">
+    <div class="container my-5" id="maincontent">
         @yield('content')
     </div>
 
