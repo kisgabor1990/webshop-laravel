@@ -38,13 +38,15 @@
                 @foreach ($newest as $product)
                     <div class="col mb-5 card-group">
                         <div class="card shadow">
-                            <img class="card-img-top px-3 pt-3"
-                                src="https://via.placeholder.com/180x250/DDDDDD/808080?text=Kép+termékről"
-                                alt="Card image cap">
                             <div class="card-body">
+                                <div class="col-auto text-center">
+                                    <img class="img-fluid px-3 pt-3"
+                                        src="{{ url($product->coverImage()->path) }}"
+                                        alt="Card image cap" style="height: 300px">
+                                </div>
                                 <div class="col-auto h5 user-select-none text-center mt-0" style="color: gold">
                                     @php
-                                        $rating = $product->ratingsAvg();
+                                        $rating = $product->ratings->avg();
                                     @endphp
                                     @foreach (range(1, 5) as $i)
                                         <span class="fa-stack" style="width:1em">
@@ -60,20 +62,19 @@
                                         </span>
                                     @endforeach
                                 </div>
-                                <a href="{{ url('/termekek/' . $product->id) }}"
+                                <a href="{{ url('/termekek/' . $product->category->slug . '/' . $product->subCategory->slug . '/' . $product->slug) }}"
                                     class="text-reset text-decoration-none stretched-link">
-                                    <h5 class="card-title">{{ $product->property }} {{ $product->type }}</h5>
+                                    <h5 class="card-title">{{ $product->name }}</h5>
+                                    <p class="h6">{{ $product->brand->name }}</p>
                                 </a>
-                                <p class="card-text">{{ $product->brand }}</p>
-                                <p class="card-text mt-5">
+                                {{-- <p class="card-text mt-3">
                                 <h6>Termékjellemzők:</h6>
                                 <ul>
-                                    <li>Lorem ipsum dolor sit amet.</li>
-                                    <li>Lorem ipsum dolor sit amet.</li>
-                                    <li>Lorem ipsum dolor sit amet.</li>
-                                    <li>Lorem ipsum dolor sit amet.</li>
+                                    @foreach ($product->properties as $property)
+                                    <li><span class="fw-bold">{{ $property->name }}:</span> {{ $property->pivot->value }}</li>
+                                    @endforeach
                                 </ul>
-                                </p>
+                                </p> --}}
                             </div>
                             <div class="card-footer text-end">
                                 <b class="h4 text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>

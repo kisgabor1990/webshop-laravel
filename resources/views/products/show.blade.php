@@ -8,26 +8,16 @@
             <div id="carousel-thumb" class="carousel shadow slide carousel-thumbnails" data-bs-ride="carousel">
                 <!--Slides-->
                 <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100"
-                            src="https://via.placeholder.com/350x500/DDDDDD/808080?text=Kép+termékről" alt="First slide">
+                    <div class="carousel-item text-center active">
+                        <img class="img-fluid"
+                        src="{{ url($product->coverImage()->path) }}" alt="{{ $product->name }}" style="height: 550px; object-fit: contain;">
                     </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100"
-                            src="https://via.placeholder.com/350x500/DDDDDD/808080?text=Kép+termékről" alt="Second slide">
+                    @foreach ($product->images->where('isCover', 0) as $image)
+                    <div class="carousel-item text-center">
+                        <img class="img-fluid"
+                        src="{{ url($image->path) }}" alt="{{ $product->name }}" style="height: 550px; object-fit: contain;">
                     </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100"
-                            src="https://via.placeholder.com/350x500/DDDDDD/808080?text=Kép+termékről" alt="Third slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100"
-                            src="https://via.placeholder.com/350x500/DDDDDD/808080?text=Kép+termékről" alt="Third slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100"
-                            src="https://via.placeholder.com/350x500/DDDDDD/808080?text=Kép+termékről" alt="Third slide">
-                    </div>
+                    @endforeach
                 </div>
                 <!--/.Slides-->
                 <!--Controls-->
@@ -41,17 +31,12 @@
                 </a>
                 <!--/.Controls-->
                 <ol class="carousel-indicators">
-                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="0" class="active"> <img
-                            class="d-block w-100 img-fluid"
-                            src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="1"><img class="d-block w-100 img-fluid"
-                            src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="2"><img class="d-block w-100 img-fluid"
-                            src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="3"><img class="d-block w-100 img-fluid"
-                            src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
-                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="4"><img class="d-block w-100 img-fluid"
-                            src="https://via.placeholder.com/35x50/DDDDDD/808080?text=Kép+termékről"></li>
+                    @foreach ($product->images as $key => $image)
+                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="{{ $key }}" class="active"> <img
+                        class="d-block w-100 img-fluid"
+                        src="{{ url($image->path) }}">
+                    </li>
+                    @endforeach
                 </ol>
             </div>
             <!--/.Carousel Wrapper-->
@@ -80,12 +65,12 @@
                     ({{ number_format($product->ratingsAvg(), 1, '.', ' ') }} /
                     {{ $product->ratingsCount() }} értékelés)</div>
             </div>
-            <p class="h2">{{ $product->property }} {{ $product->type }}</p>
-            <p class="h6">{{ $product->brand }}</p>
+            <p class="h2">{{ $product->name }}</p>
+            <p class="h6">{{ $product->brand->name }}</p>
             <hr>
             <p class="h1">{{ number_format($product->price, 0, ',', ' ') }} Ft.</p>
             <p class="mt-5"><a id="addToCartButton" class="btn btn-outline-success rounded-circle shadow"
-                    href="{{ url('/kosarba-rakom/' . $product->id) }}" data-bs-tooltip="tooltip" data-placement="right"
+                    href="{{ url('/kosarba-rakom/' . $product->slug) }}" data-bs-tooltip="tooltip" data-placement="right"
                     title="Kosárba rakom!"><i class="fas fa-cart-plus fa-fw"></i></a></p>
         </div>
     </div>
@@ -112,33 +97,19 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="description" role="tabpanel"
                             aria-labelledby="description-tab">
-                            Leírás
+                            {{ $product->description }}
                         </div>
                         <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
                             <div class="col-12 col-lg-4">
 
                                 <table class="table table-hover">
                                     <tbody>
+                                        @foreach ($product->properties as $property)
                                         <tr class="border-top-0">
-                                            <th class="user-select-none" scope="row">Márka:</th>
-                                            <td>márka</td>
+                                            <th class="user-select-none" scope="row">{{ $property->name }}:</th>
+                                            <td>{{ $property->pivot->value }}</td>
                                         </tr>
-                                        <tr>
-                                            <th class="user-select-none" scope="row">Típus:</th>
-                                            <td>típus</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="user-select-none" scope="row">Méretek:</th>
-                                            <td>szé x ho x ma Cm</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="user-select-none" scope="row">Szín:</th>
-                                            <td>Fehér</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="user-select-none" scope="row">Garancia: </th>
-                                            <td>2 év</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -268,50 +239,51 @@
         <div class="alert alert-warning mb-5">Hasonló termékek!</div>
         <div class="row row-cols-1 row-cols-lg-4">
             @foreach ($similar as $product)
-                <div class="col mb-5 card-group">
-                    <div class="card shadow">
-                        <img class="card-img-top px-3 pt-3"
-                            src="https://via.placeholder.com/362x500/DDDDDD/808080?text=Kép+termékről"
-                            alt="Card image cap">
-                        <div class="card-body">
-                            <div class="col-auto h5 user-select-none text-center" style="color: gold">
-                                @php
-                                    $rating = $product->ratingsAvg();
-                                @endphp
-                                @foreach (range(1, 5) as $i)
-                                    <span class="fa-stack" style="width:1em">
-                                        <i class="far fa-star fa-stack-1x"></i>
-                                        @if ($rating > 0)
-                                            @if ($rating > 0.5)
-                                                <i class="fas fa-star fa-stack-1x"></i>
-                                            @else
-                                                <i class="fas fa-star-half fa-stack-1x"></i>
-                                            @endif
+            <div class="col mb-5 card-group">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="col-auto text-center">
+                            <img class="img-fluid px-3 pt-3"
+                                src="{{ url($product->coverImage()->path) }}"
+                                alt="Card image cap" style="height: 300px">
+                        </div>
+                        <div class="col-auto h5 user-select-none text-center mt-0" style="color: gold">
+                            @php
+                                $rating = $product->ratings->avg();
+                            @endphp
+                            @foreach (range(1, 5) as $i)
+                                <span class="fa-stack" style="width:1em">
+                                    <i class="far fa-star fa-stack-1x"></i>
+                                    @if ($rating > 0)
+                                        @if ($rating > 0.5)
+                                            <i class="fas fa-star fa-stack-1x"></i>
+                                        @else
+                                            <i class="fas fa-star-half fa-stack-1x"></i>
                                         @endif
-                                        @php $rating--; @endphp
-                                    </span>
-                                @endforeach
-                            </div>
-                            <a href="{{ url('/termekek/' . $product->id) }}"
-                                class="text-reset text-decoration-none stretched-link">
-                                <h5 class="card-title">{{ $product->property }} {{ $product->type }}</h5>
-                            </a>
-                            <p class="card-text">{{ $product->brand }}</p>
-                            <p class="card-text mt-5">
-                                <h6>Termékjellemzők:</h6>
-                                <ul>
-                                    <li>Lorem ipsum dolor sit amet.</li>
-                                    <li>Lorem ipsum dolor sit amet.</li>
-                                    <li>Lorem ipsum dolor sit amet.</li>
-                                    <li>Lorem ipsum dolor sit amet.</li>
-                                </ul>
-                            </p>
+                                    @endif
+                                    @php $rating--; @endphp
+                                </span>
+                            @endforeach
                         </div>
-                        <div class="card-footer text-end">
-                            <b class="h4 text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
-                        </div>
+                        <a href="{{ url('/termekek/' . $product->category->slug . '/' . $product->subCategory->slug . '/' . $product->slug) }}"
+                            class="text-reset text-decoration-none stretched-link">
+                            <h5 class="card-title">{{ $product->name }}</h5>
+                            <p class="h6">{{ $product->brand->name }}</p>
+                        </a>
+                        {{-- <p class="card-text mt-3">
+                        <h6>Termékjellemzők:</h6>
+                        <ul>
+                            @foreach ($product->properties as $property)
+                            <li><span class="fw-bold">{{ $property->name }}:</span> {{ $property->pivot->value }}</li>
+                            @endforeach
+                        </ul>
+                        </p> --}}
+                    </div>
+                    <div class="card-footer text-end">
+                        <b class="h4 text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
                     </div>
                 </div>
+            </div>
             @endforeach
 
 
