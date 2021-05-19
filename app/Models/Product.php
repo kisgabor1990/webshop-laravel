@@ -14,6 +14,8 @@ class Product extends Model {
 
     protected $fillable = [
         'model',
+        'name',
+        'slug',
         'category_id',
         'brand_id',
         'description',
@@ -31,7 +33,15 @@ class Product extends Model {
     public function properties() {
         return $this->belongsToMany(Property::class)->withPivot('value')->withTrashed();
     }
-    
+
+    public function images() {
+        return $this->hasMany(Image::class);
+    }
+
+    public function coverImage() {
+        return $this->images->where('isCover', 1)->first();
+    }
+
     public function getProduct($id) {
         return $this::find($id);
     }

@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-12 mb-5">
             <div class="card">
-                <div class="card-header text-center user-select-none h3">{{ $product->id }} - {{ $product->model }} @if ($product->trashed()) (inaktív) @endif</div>
+                <div class="card-header text-center user-select-none h3">{{ $product->id }} - {{ $product->name }}
+                    @if ($product->trashed()) (inaktív) @endif
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-lg-5">
@@ -27,16 +29,16 @@
                                         <tr>
                                             <th scope="row" class="user-select-none">Tulajdonságok:</th>
                                             <td>
-                                                    <table>
-                                                        @forelse ($product->properties as $property)
+                                                <table>
+                                                    @forelse ($product->properties as $property)
                                                         <tr class="@if ($property->trashed()) bg-dark text-white @endif">
                                                             <th class="user-select-none">{{ $property->name }} </th>
                                                             <td class="ps-3">{{ $property->pivot->value }}</td>
                                                         </tr>
-                                                        @empty
+                                                    @empty
                                                         Nincs tulajdonság társítva!
-                                                        @endforelse
-                                                    </table>
+                                                    @endforelse
+                                                </table>
                                             </td>
                                         </tr>
                                         <tr>
@@ -56,8 +58,27 @@
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 offset-lg-1">
-                            <p class="h4 user-select-none">Leírás</p>
-                            {{ $product->description }}
+                            <div class="col-12">
+                                <p class="h4 user-select-none">Leírás</p>
+                                {{ $product->description }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 my-5">
+                            <p class="h4 user-select-none mb-3">Képek</p>
+                            <div class="row">
+                                @forelse ($product->images->sortBy('id') as $image)
+                                    <div class="col-6 col-lg-4 mb-5 text-center">
+                                        @if ($image->isCover) <p class="text-center mb-0">Borítókép</p> @endif
+                                        <img src="{{ url($image->path) }}" class="img-fluid" alt="{{ $product->model }}">
+                                    </div>
+                                @empty
+                                    <div class="col-12 mb-3">
+                                        Nincsenek képek!
+                                    </div>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>
