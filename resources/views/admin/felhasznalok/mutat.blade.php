@@ -46,7 +46,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="card-footer text-start">
+                <div class="card-footer text-center">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/felhasznalok') }}" role="button">Vissza</a>
                 </div>
             </div>
@@ -67,8 +67,8 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($user->billing_addresses as $billing)
-                                        <tr class="@if ($billing->trashed()) table-dark @endif">
-                                            <td class="text-nowrap">{{ $billing->name }}</td>
+                                        <tr class="@if ($billing->trashed()) table-dark @endif" style="transform: rotate(0);">
+                                            <td class="text-nowrap"><a href="{{ url('admin/szamlazasi-cimek/mutat/' . $billing->id) }}" class="stretched-link text-reset text-decoration-none">{{ $billing->name }}</a></td>
                                             <td class="text-nowrap">{{ $billing->tax_num }}</td>
                                             <td class="text-nowrap">{{ $billing->address->city }}</td>
                                             <td class="text-nowrap">{{ $billing->address->address }}</td>
@@ -101,8 +101,8 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($user->shipping_addresses as $shipping)
-                                        <tr class="@if ($shipping->trashed()) table-dark @endif">
-                                            <td class="text-nowrap">{{ $shipping->name }}</td>
+                                        <tr class="@if ($shipping->trashed()) table-dark @endif" style="transform: rotate(0);">
+                                            <td class="text-nowrap"><a href="{{ url('admin/szallitasi-cimek/mutat/' . $shipping->id) }}" class="stretched-link text-reset text-decoration-none">{{ $shipping->name }}</a></td>
                                             <td class="text-nowrap">+36{{ $shipping->phone }}</td>
                                             <td class="text-nowrap">{{ $shipping->address->city }}</td>
                                             <td class="text-nowrap">{{ $shipping->address->address }}</td>
@@ -135,7 +135,7 @@
                                 </thead>
                                 <tbody>
                                     {{-- @forelse ($billing_addresses as $billing_address)
-                                        <tr>
+                                        <tr style="transform: rotate(0);">
                                             <td></td>
                                             <td></td>
                                             <td></td>
