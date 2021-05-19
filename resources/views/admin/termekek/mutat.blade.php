@@ -82,8 +82,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-start">
-                    <a class="btn btn-primary btn-sm " href="{{ url('admin/termekek') }}" role="button">Vissza</a>
+                <div class="card-footer text-center">
+                    <a class="btn btn-primary btn-sm" href="{{ url()->previous() }}" role="button">Vissza</a>
                 </div>
             </div>
         </div>
