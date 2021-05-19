@@ -2,7 +2,6 @@
 
 @section('content')
 
-{{ $user }}
 
 @endsection
 
