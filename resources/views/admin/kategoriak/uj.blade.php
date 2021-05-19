@@ -34,6 +34,19 @@
                                 <p class="h6">Jelenleg nincs gyártó rögzítve!</p>
                             @endforelse
                         </div>
+                        <div class="col-12 col-lg-6 form-check form-switch mb-3 mx-auto">
+                            <input class="form-check-input" type="checkbox" id="add_values" name="add_values">
+                            <label class="form-check-label" for="add_values">Alkategóriák létrehozása</label>
+                        </div>
+                        <fieldset disabled>
+                            <div class="col-12 col-lg-6 mb-3 mx-auto" id="values" style="display: none">
+                                <div class="col-12 d-block-inline mb-3 text-center">
+                                    <a class="btn btn-primary btn-sm" id="add_value" href="#" role="button">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-success btn-sm">Mentés</button>

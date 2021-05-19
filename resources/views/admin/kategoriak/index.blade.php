@@ -33,7 +33,7 @@
                         <tr>
                             <th>#</th>
                             <th class="w-50">Név</th>
-                            <th>URL</th>
+                            <th>Alkategóriák</th>
                             <th class="text-end">Műveletek</th>
                         </tr>
                     </thead>
@@ -42,7 +42,7 @@
                             <tr class="{{ $category->trashed() ? 'table-dark' : '' }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $category->order }}</td>
                                 <td class="text-nowrap">{{ $category->name }}</td>
-                                <td class="text-nowrap">{{ $category->slug }}</td>
+                                <td class="text-nowrap">{{ $category->subCategories->implode('name', ', ') }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($category->trashed())

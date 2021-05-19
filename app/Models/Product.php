@@ -16,14 +16,16 @@ class Product extends Model {
         'model',
         'name',
         'slug',
-        'category_id',
-        'brand_id',
         'description',
         'price',
     ];
 
     public function category() {
         return $this->belongsTo(Category::class)->withTrashed();
+    }
+
+    public function subCategory() {
+        return $this->belongsTo(Category_subcategory::class, 'subcategory_id');
     }
     
     public function brand() {
@@ -52,16 +54,9 @@ class Product extends Model {
     }
     
     public function getNewest() {
-        return $this::limit(8)->orderByDesc('id')->get();
+        return $this::limit(8)->with(['images', 'ratings', 'category'])->orderByDesc('id')->get();
     }
     
-    public function getSimilar($product) {
-        return $this::limit(4)
-                ->inRandomOrder()
-                ->where('category_id', $product->category_id)
-                ->where('property', $product->property)
-                ->get();
-    }
 
     public function getBrands($category_id) {
         return $this::select('brand as name', $this::raw('count(brand) as count'))

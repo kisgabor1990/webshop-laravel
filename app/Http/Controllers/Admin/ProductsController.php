@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Category_subcategory;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Property;
@@ -22,7 +23,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::withTrashed()->with(['brand', 'category'])->get();
+        $products = Product::withTrashed()->with(['brand', 'category', 'subCategory'])->get();
 
         return view('admin.termekek.index')->with([
             'products' => $products,
@@ -58,8 +59,9 @@ class ProductsController extends Controller
 
         $category = Category::withTrashed()->find($request->category_id);
         $brand = Brand::withTrashed()->find($request->brand_id);
+        $subcategory = Category_subcategory::find($request->subcategory_id);
 
-        $product_name = $brand->name . ' ' . $request->model . ' ' . $category->name;
+        $product_name = $brand->name . ' ' . $request->model . ' ' . $subcategory->name;
 
         $product = Product::updateOrCreate([
             'model' => $request->model,
@@ -100,6 +102,7 @@ class ProductsController extends Controller
 
         $product->properties()->sync($request->values);
         $product->category()->associate($category);
+        $product->subCategory()->associate($subcategory);
         $product->brand()->associate($brand);
         $product->save();
 
@@ -150,8 +153,9 @@ class ProductsController extends Controller
 
         $brand = Brand::withTrashed()->find($request->brand_id);
         $category = Category::withTrashed()->find($request->category_id);
+        $subcategory = Category_subcategory::find($request->subcategory_id);
 
-        $product_name = $brand->name . ' ' . $request->model . ' ' . $category->name;
+        $product_name = $brand->name . ' ' . $request->model . ' ' . $subcategory->name;
 
         $product->model = $request->model;
         $product->name = $product_name;
@@ -199,6 +203,7 @@ class ProductsController extends Controller
 
         $product->properties()->sync($request->values);
         $product->brand()->associate($brand);
+        $product->subCategory()->associate($subcategory);
         $product->save();
 
         return redirect()->to('admin/termekek')->withSuccess('A termék sikeresen módosítva!');

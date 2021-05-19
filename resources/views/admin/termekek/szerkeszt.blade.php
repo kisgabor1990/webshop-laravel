@@ -17,6 +17,14 @@
                         <div class="row">
                             <div class="col-12 col-lg-6">
                                 <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
+                                    <select class="form-select" id="subcategory_id" name="subcategory_id">
+                                        @foreach ($product->category->subCategories as $subCategory)
+                                            <option value="{{ $subCategory->id }}" @if ($subCategory->id == $product->subCategory?->id) selected @endif>{{ $subCategory->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <label for="subcategory_id">Alkategória</label>
+                                </div>
+                                <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
                                     <select class="form-select" id="brand_id" name="brand_id">
                                         @foreach ($product->category->brands as $brand)
                                             <option value="{{ $brand->id }}" @if ($brand->id == $product->brand->id) selected @endif>{{ $brand->name }}</option>

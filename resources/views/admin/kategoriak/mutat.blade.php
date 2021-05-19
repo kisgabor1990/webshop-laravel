@@ -16,6 +16,42 @@
                                 <td>{{ $category->slug }}</td>
                             </tr>
                             <tr>
+                                <th scope="row" class="user-select-none">Alkategóriák:</th>
+                                <td>
+                                    {{ $category->subCategories->implode('name', ', ') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Termékek száma:</th>
+                                <td>{{ count($category->products) }} db.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Tulajdonságok:</th>
+                                <td>
+                                    <ul>
+                                        @forelse ($category->properties as $property)
+                                        <li>{{ $property->name }} @if ($property->trashed()) (inaktív) @endif
+                                        </li>
+                                        @empty
+                                        Nincs tulajdonság társítva!
+                                        @endforelse
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Gyártók:</th>
+                                <td>
+                                    <ul>
+                                        @forelse ($category->brands as $brand)
+                                        <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif
+                                        </li>
+                                        @empty
+                                        Nincs gyártó társítva!
+                                        @endforelse
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th scope="row" class="user-select-none">Kategória létrehozva:</th>
                                 <td>{{ $category->created_at }}</td>
                             </tr>
@@ -27,42 +63,12 @@
                                 <th scope="row" class="user-select-none">Törölve:</th>
                                 <td>{{ $category->deleted_at ? 'Igen' : 'Nem' }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row" class="user-select-none">Termékek száma:</th>
-                                <td>{{ count($category->products) }} db.</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="user-select-none">Tulajdonságok:</th>
-                                <td>
-                                    <ul>
-                                        @forelse ($category->properties as $property)
-                                            <li>{{ $property->name }} @if ($property->trashed()) (inaktív) @endif
-                                            </li>
-                                        @empty
-                                            Nincs tulajdonság társítva!
-                                        @endforelse
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="user-select-none">Gyártók:</th>
-                                <td>
-                                    <ul>
-                                        @forelse ($category->brands as $brand)
-                                            <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif
-                                            </li>
-                                        @empty
-                                            Nincs gyártó társítva!
-                                        @endforelse
-                                    </ul>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer text-center">
                     <a class="btn btn-primary btn-sm" href="{{ url('admin/kategoriak') }}"
-                        role="button">Vissza</a>
+                    role="button">Vissza</a>
                 </div>
             </div>
         </div>

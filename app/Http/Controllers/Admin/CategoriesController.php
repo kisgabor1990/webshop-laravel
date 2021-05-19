@@ -75,10 +75,8 @@ class CategoriesController extends Controller
     public function create()
     {
         $brands = Brand::withTrashed()->orderBy('name')->get();
-        $properties = Property::withTrashed()->orderBy('name')->get();
         return view('admin.kategoriak.uj')->with([
             'brands' => $brands,
-            'properties' => $properties,
         ]);
     }
 
@@ -95,9 +93,19 @@ class CategoriesController extends Controller
             'name' => $request->name,
             'slug' => Str::of($request->name)->slug('-'),
             'order' => Category::withTrashed()->count() + 1,
+            'hasSubCategories' => $request->add_values ? '1' : '0',
         ]);
 
         $category->brands()->attach($request->brands);
+
+        if ($request->values) {
+            foreach ($request->values as $key => $value) {
+                $category->subCategories()->updateOrCreate([
+                    'name' => $value,
+                    'slug' => Str::of($value)->slug('-'),
+                ]);
+            }
+        }
 
         return redirect()->to('admin/kategoriak')->withSuccess('Új kategória sikeresen létrehozva!');
     }
@@ -117,7 +125,6 @@ class CategoriesController extends Controller
 
         return view('admin.kategoriak.mutat')->with([
             'category' => $category,
-            // 'products' => $products->getProducts($id, 15),
         ]);
     }
 
@@ -155,10 +162,22 @@ class CategoriesController extends Controller
 
         $category->name = $request->name;
         $category->slug = Str::of($request->name)->slug('-');
-        
+        $category->hasSubCategories = $request->add_values ? '1' : '0';
         $category->save();
 
         $category->brands()->sync($request->brands);
+
+        if ($request->values) {
+            $category->subCategories()->whereNotIn('name', $request->values)->delete();
+            foreach ($request->values as $key => $value) {
+                $category->subCategories()->updateOrCreate([
+                    'name' => $value,
+                    'slug' => Str::of($value)->slug('-'),
+                ]);
+            }
+        } else {
+            $category->subCategories()->delete();
+        }
 
         return redirect()->to('admin/kategoriak')->withSuccess('Kategória sikeresen módosítva!');
     }

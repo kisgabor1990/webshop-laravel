@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Category_subcategory;
 use App\Models\Opinion;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,17 +47,16 @@ class ProductsController extends Controller
             ->with('filterProperty', $filterProperty);
     }
 
-    public function show($id)
+    public function show(Category $category, Category_subcategory $subcategory, Product $product)
     {
-        $model = new Product();
         $user = null;
         $opinionModel = new Opinion();
         $myOpinion = null;
 
-        if (!($product = $model->getProduct($id))) {
+        if (!$product) {
             return view('pages.404');
         }
-        $similar = $model->getSimilar($product);
+        $similar = Product::where('id', '!=', $product->id)->where('subcategory_id', $product->subCategory->id)->limit(4)->get();
 
         if (Auth::check()) {
             $user  = User::find(auth()->user()->id);

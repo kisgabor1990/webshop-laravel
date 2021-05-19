@@ -19,6 +19,7 @@ class Category extends Model
         'name',
         'slug',
         'order',
+        'hasSubCategories',
     ];
 
     public function brands() {
@@ -31,6 +32,10 @@ class Category extends Model
 
     public function products() {
         return $this->hasMany(Product::class)->withTrashed();
+    }
+
+    public function subCategories() {
+        return $this->hasMany(Category_subcategory::class);
     }
     
     public function getCategories() {

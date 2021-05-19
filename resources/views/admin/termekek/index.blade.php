@@ -24,22 +24,22 @@
                 <table class="table table-striped table-hover">
                     <thead class="thead-inverse user-select-none">
                         <tr>
-                            <th>#</th>
                             <th>Model</th>
                             <th>Kategória</th>
+                            <th>Alkategória</th>
                             <th>Gyártó</th>
-                            <th>Ár</th>
+                            <th class="text-end">Ár</th>
                             <th class="text-end">Műveletek</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($products as $product)
                             <tr class="{{ $product->trashed() ? 'table-dark' : '' }}">
-                                <td scope="row" class="user-select-none fw-bold">{{ $product->id }}</td>
                                 <td class="text-nowrap">{{ $product->model }}</td>
                                 <td class="text-nowrap @if ($product->category->trashed()) table-dark @endif">{{ $product->category->name }}</td>
+                                <td class="text-nowrap ">{{ $product->subCategory?->name }}</td>
                                 <td class="text-nowrap @if ($product->brand->trashed()) table-dark @endif">{{ $product->brand->name }}</td>
-                                <td class="text-nowrap">{{ $product->price }} Ft.</td>
+                                <td class="text-nowrap text-end">{{ number_format($product->price, 0, ',', ' ') }} Ft.</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($product->trashed())

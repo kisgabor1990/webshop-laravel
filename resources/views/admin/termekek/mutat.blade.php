@@ -19,12 +19,16 @@
                                             <td>{{ $product->category->name }}</td>
                                         </tr>
                                         <tr>
+                                            <th scope="row" class="user-select-none">Alkategória:</th>
+                                            <td>{{ $product->subCategory->name }}</td>
+                                        </tr>
+                                        <tr>
                                             <th scope="row" class="user-select-none">Gyártó:</th>
                                             <td>{{ $product->brand->name }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="user-select-none">Ár:</th>
-                                            <td>{{ $product->price }} Ft.</td>
+                                            <td>{{ number_format($product->price, 0, ',', ' ') }} Ft.</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="user-select-none">Tulajdonságok:</th>
