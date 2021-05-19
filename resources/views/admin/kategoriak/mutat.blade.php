@@ -60,8 +60,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer text-start">
-                    <a class="btn btn-primary btn-sm " href="{{ url('admin/kategoriak') }}" role="button">Vissza</a>
+                <div class="card-footer text-center">
+                    <a class="btn btn-primary btn-sm" href="{{ url('admin/kategoriak') }}"
+                        role="button">Vissza</a>
                 </div>
             </div>
         </div>
@@ -83,12 +84,13 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($category->products as $product)
-                                        <tr>
-                                            <td>{{ $product->brand->name }}</td>
-                                            <td>{{ $product->model }}</td>
-                                            @foreach ($product->properties as $property)
-                                                <td class="text-nowrap">{{ $property->pivot->value }}</td>
-                                            @endforeach
+                                        <tr style="transform: rotate(0);">
+                                            
+                                                <td><a href="{{ url('admin/termekek/mutat/' . $product->id) }}" class="stretched-link text-reset text-decoration-none">{{ $product->brand->name }}</a></td>
+                                                <td>{{ $product->model }}</td>
+                                                @foreach ($product->properties as $property)
+                                                    <td class="text-nowrap">{{ $property->pivot->value }}</td>
+                                                @endforeach
                                         </tr>
                                     @empty
                                         <tr>
