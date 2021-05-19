@@ -120,6 +120,8 @@ class PropertyController extends Controller
                     'name' => $value,
                 ]);
             }
+        } else {
+            $property->values()->delete();
         }
 
         return redirect()->to('admin/tulajdonsagok')->withSuccess('Tulajdonság sikeresen módosítva!');
