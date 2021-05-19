@@ -4,7 +4,7 @@
 
 
     <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-8">
             <div class="row justify-content-center">
                 <div class="col-auto me-sm-auto">
                     <p class="h1 user-select-none">
