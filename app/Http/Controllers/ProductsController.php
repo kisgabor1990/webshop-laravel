@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Symfony\Component\String\b;
 use function view;
 
 class ProductsController extends Controller
@@ -25,33 +26,42 @@ class ProductsController extends Controller
             ->with('categories', $categories);
     }
 
-    public function list(Category $category)
+    public function list($category_slug, $subcategory_slug = null)
     {
-        if (!$category) {
-            return view('pages.404');
+        $category = Category::where('slug', $category_slug)->with(['properties.values'])->first();
+        if (!empty($subcategory_slug)) {
+            $subcategory = Category_subcategory::where('slug', $subcategory_slug)->with(['category.properties.values'])->first();
+            $model = $subcategory;
+        } else {
+            $model = $category;
         }
 
         // $filterBrand = $productModel->getBrands($categoryData->id);
         // $filterProperty = $productModel->getProperties($categoryData->id);
 
         return view('products.list')->with([
-            'category' => $category,
-            'products' => $category->products()->with(['category', 'subCategory', 'images', 'ratings', 'brand', 'properties'])->paginate(6),
+            'category' => $model,
+            'products' => $model->products()->with(['category', 'subCategory', 'images', 'ratings', 'brand', 'properties.values'])->paginate(6),
             ]);
             // ->with('filterBrand', $filterBrand)
             // ->with('filterProperty', $filterProperty);
     }
 
-    public function show(Category $category, Category_subcategory $subcategory, Product $product)
+    public function show(string $product_slug)
     {
         $user = null;
         $opinionModel = new Opinion();
         $myOpinion = null;
 
-        if (!$product) {
+        if (!$product = Product::where('slug', $product_slug)->first()) {
             return view('pages.404');
         }
-        $similar = Product::where('id', '!=', $product->id)->where('subcategory_id', $product->subCategory->id)->limit(4)->get();
+
+        $similar = Product::where('id', '!=', $product->id)
+                            ->where(function ($query) use ($product) {
+                                $query->where('subcategory_id', $product->subCategory?->id)
+                                        ->orWhere('category_id', $product->category->id);
+                            })->limit(4)->get();
 
         if (Auth::check()) {
             $user  = User::find(auth()->user()->id);

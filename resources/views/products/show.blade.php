@@ -265,7 +265,7 @@
                                 </span>
                             @endforeach
                         </div>
-                        <a href="{{ url('/termekek/' . $product->category->slug . '/' . $product->subCategory->slug . '/' . $product->slug) }}"
+                        <a href="{{ url('/termek/' . $product->slug) }}"
                             class="text-reset text-decoration-none stretched-link">
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <p class="h6">{{ $product->brand->name }}</p>
@@ -309,8 +309,8 @@
 
 @section('scripts')
 <script>
-    var myModal = new bootstrap.Modal(document.getElementById('addToCartSuccess'))
     @if (session()->has('success'))
+    var myModal = new bootstrap.Modal(document.getElementById('addToCartSuccess'))
         myModal.show();
         setTimeout(function () {
         myModal.hide();

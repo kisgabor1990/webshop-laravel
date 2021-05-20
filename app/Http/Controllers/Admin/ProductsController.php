@@ -61,7 +61,7 @@ class ProductsController extends Controller
         $brand = Brand::withTrashed()->find($request->brand_id);
         $subcategory = Category_subcategory::find($request->subcategory_id);
 
-        $product_name = $brand->name . ' ' . $request->model . ' ' . $subcategory->name;
+        $product_name = $brand->name . ' ' . $request->model . ' ' . ($subcategory->name ?? $category->name);
 
         $product = Product::updateOrCreate([
             'model' => $request->model,
@@ -155,7 +155,7 @@ class ProductsController extends Controller
         $category = Category::withTrashed()->find($request->category_id);
         $subcategory = Category_subcategory::find($request->subcategory_id);
 
-        $product_name = $brand->name . ' ' . $request->model . ' ' . $subcategory->name;
+        $product_name = $brand->name . ' ' . $request->model . ' ' . ($subcategory->name ?? $category->name);
 
         $product->model = $request->model;
         $product->name = $product_name;
