@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PagesController::class, 'index']);
 
-Route::redirect('/home', '/');
+Route::redirect('/home', url('/'));
 
 Route::get('/termekek', [ProductsController::class, 'index']);
 Route::get('/termek/{product:slug}', [ProductsController::class, 'show']);
