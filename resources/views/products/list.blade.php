@@ -61,13 +61,13 @@
                             <label for="minPrice" class="form-label">Min: <span id="minPrice_value" class="fw-bold"></span></label>
                             <input type="range" class="form-range" id="minPrice" name="price[min]"
                             min="0" max="{{ $products->max('price') }}"
-                            step="5000" value="{{ $products->min('price') }}">
+                            step="1000" value="0">
                         </div>
                         <div class="form-group">
                             <label for="maxPrice" class="form-label">Max: <span id="maxPrice_value" class="fw-bold"></span></label>
                             <input type="range" class="form-range" id="maxPrice" name="price[max]"
-                            min="0" max="{{ $products->max('price') }}"
-                            step="5000" value="{{ $products->max('price') }}">
+                            min="0" max="{{ round($products->max('price'), -3) }}"
+                            step="1000" value="{{ round($products->max('price'), -3) }}">
                         </div>
                     </div>
                 </div>
