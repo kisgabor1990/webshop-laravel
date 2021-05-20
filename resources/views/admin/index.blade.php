@@ -128,6 +128,8 @@
     <script src="https://kit.fontawesome.com/e8e7489ac2.js" crossorigin="anonymous"></script>
     <script src="{{ URL::asset('scripts/jquery.ui.touch-punch.js') }}"></script>
     <script src="{{ URL::asset('scripts/app.js') }}"></script>
+    <script src="{{ URL::asset('scripts/admin.js') }}"></script>
+    <script src="{{ URL::asset('scripts/admin_confirmModal.js') }}"></script>
     @yield('scripts')
 </body>
 

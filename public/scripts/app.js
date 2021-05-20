@@ -1,13 +1,18 @@
-$(function () {
+function numberFormat(numberString) {
+    numberString += '';
+    var x = numberString.split('.'),
+        x1 = x[0],
+        x2 = x.length > 1 ? ',' + x[1] : '',
+        rgxp = /(\d+)(\d{3})/;
 
-    function topFunction() {
-        $("html").stop().animate({
-            scrollTop: 0
-        }); // , ($(window).scrollTop() * 0.5) Ha a bootstrap 5 is úgy akarja....
-        return false;
+    while (rgxp.test(x1)) {
+        x1 = x1.replace(rgxp, '$1' + ' ' + '$2');
     }
 
-    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    return x1 + x2;
+}
+
+$(function () {
 
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-tooltip="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -63,9 +68,11 @@ $(function () {
         }
     });
 
-    $("#topButton").click(function (e) {
+    $('#topButton').on('click', function (e) {
         e.preventDefault();
-        topFunction();
+        $('html, body').animate({
+            scrollTop: 0
+        });
     });
 
     if ($("#shipping_same").prop('checked')) {
@@ -86,7 +93,7 @@ $(function () {
         $("#taxnumDiv").hide();
         $("#taxnum").attr("disabled", "disabled");
     }
-        
+
 
     $(document)
         .on("click", function (e) {
@@ -125,10 +132,16 @@ $(function () {
         }
         )
         .on('submit', '#regForm', function () {
-
-
-
         })
+
+        // Termék szűrő
+        .on('input', '#minPrice', function () {
+            $('#minPrice_value').html(numberFormat($(this).val()) + " Ft.");
+        })
+        .on('input', '#maxPrice', function () {
+            $('#maxPrice_value').html(numberFormat($(this).val()) + " Ft.");
+        })
+
         .on('click', '#resetButton', function () {
             $(".form-check-input").removeAttr("checked");
         })
@@ -136,89 +149,8 @@ $(function () {
             $(this).find(":input").filter(function () {
                 return !this.value;
             }).attr("disabled", "disabled");
-        })
+        });
 
-    // Confirm Modal
 
-    .on("click", ".table .delete", function (e) {
-        e.preventDefault();
-        $("#confirmModal a.delete")
-            .data("href", $(this).data("href"))
-            .data("header", $(this).data("header"))
-            .data("id", $(this).data("id"))
-            .data("name", $(this).data("name"))
-            .data("user", $(this).data("user"))
-            .data("address", $(this).data("address"))
-            .data("brand", $(this).data("brand"))
-            .data("category", $(this).data("category"))
-            .data("email", $(this).data("email"));
-        $("#confirmModal .modal_header").html($(this).data("header"));
-        $("#confirmModal .id").html($(this).data("id"));
-        $("#confirmModal .name").html($(this).data("name"));
-        $("#confirmModal .user").html($(this).data("user"));
-        $("#confirmModal .address").html($(this).data("address"));
-        $("#confirmModal .email").html($(this).data("email"));
-        $("#confirmModal .brand").html($(this).data("brand"));
-        $("#confirmModal .category").html($(this).data("category"));
-        confirmModal.show();
-    });
-
-    $("#confirmModal a.delete").click(function (e) {
-        e.preventDefault();
-        confirmModal.hide();
-        window.location.replace($(this).data("href"));
-    });
-
-    // Admin - Tulajdonságok létrehozása, értékekkel
-    
-    if ($("#add_values").prop("checked")) {
-        $("div#values").fadeIn(500);
-        $("fieldset").removeAttr("disabled");
-    } else {
-        $("div#values").fadeOut(500);
-        $("fieldset").attr("disabled", "disabled");
-    }
-
-    $("#add_values").click(function () {
-        if ($("#add_values").prop("checked")) {
-            $("div#values").fadeIn(500);
-            $("fieldset").removeAttr("disabled");
-        } else {
-            $("div#values").fadeOut(500);
-            $("fieldset").attr("disabled", "disabled");
-        }
-    });
- 
-    let value_count = 0;
-    
-    $("#add_value").click(function (e) {
-        e.preventDefault();
-        value_count++;
-        let input_field =   '<div class="input-group mb-5 value'+ value_count +'">'
-                            + '<div class="col form-floating position-relative">'
-                            + '<input type="tel" class="form-control" name="values[]" placeholder="Érték" required>'
-                            + '<label>Érték</label>'
-                            + '<div class="invalid-tooltip">'
-                            + 'Az érték megadása kötelező!'
-                            + '</div>'
-                            + '</div>'
-                            + '<div class="input-group-prepend d-flex align-items-stretch">'
-                            + '<div class="input-group-text" id="btnGroupAddon">'
-                            + '<a class="btn btn-danger btn-sm remove_value" data-id="value'+ value_count +'" href="#" role="button">'
-                            + '<i class="fa fa-minus" aria-hidden="true"></i>'
-                            + '</a>'
-                            + '</div>'
-                            + '</div>'
-                            + '</div>"';
-
-        $(input_field).appendTo("#values");
-        $(".value"+value_count+" input").val("");
-    });
-
-    $("#maincontent").on('click', 'a.remove_value', function (e) {
-        e.preventDefault();
-        let id = $(this).data("id");
-        $("."+id).remove();
-    });
 
 });
