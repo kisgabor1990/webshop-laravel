@@ -15,14 +15,16 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-lg-6">
+                                @if ($category->subCategories->count())
                                 <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
                                     <select class="form-select" id="subcategory_id" name="subcategory_id">
                                         @foreach ($category->subCategories as $subCategory)
                                             <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
                                         @endforeach
                                     </select>
-                                    <label for="subcategory_id">Gyártó</label>
+                                    <label for="subcategory_id">Alkategória</label>
                                 </div>
+                                @endif
                                 <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
                                     <select class="form-select" id="brand_id" name="brand_id">
                                         @foreach ($category->brands as $brand)

@@ -20,7 +20,7 @@
                                         </tr>
                                         <tr>
                                             <th scope="row" class="user-select-none">Alkategória:</th>
-                                            <td>{{ $product->subCategory->name }}</td>
+                                            <td>{{ $product->subCategory?->name }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="user-select-none">Gyártó:</th>
