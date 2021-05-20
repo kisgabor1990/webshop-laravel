@@ -270,14 +270,15 @@
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <p class="h6">{{ $product->brand->name }}</p>
                         </a>
-                        {{-- <p class="card-text mt-3">
-                        <h6>Termékjellemzők:</h6>
-                        <ul>
-                            @foreach ($product->properties as $property)
-                            <li><span class="fw-bold">{{ $property->name }}:</span> {{ $property->pivot->value }}</li>
-                            @endforeach
-                        </ul>
-                        </p> --}}
+                        <p class="card-text mt-3">
+                            <h6>Termékjellemzők:</h6>
+                            <ul>
+                                @foreach ($product->properties->where('hasList', 1) as $property)
+                                    <li><span class="fw-bold">{{ $property->name }}:</span> {{ $property->pivot->value }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                            </p>
                     </div>
                     <div class="card-footer text-end">
                         <b class="h4 text-muted">{{ number_format($product->price, 0, ',', ' ') }} Ft.</b>
