@@ -35,7 +35,7 @@ Route::redirect('/home', '/');
 
 Route::get('/termekek', [ProductsController::class, 'index']);
 Route::get('/termekek/{category:slug}/{subcategory:slug}/{product:slug}', [ProductsController::class, 'show']);
-Route::get('/termekek/{category}', [ProductsController::class, 'list'])->where('category', '[a-z-]+');
+Route::get('/termekek/{category:slug}', [ProductsController::class, 'list']);
 
 
 Route::get('/kosar', [CartController::class, 'index']);
