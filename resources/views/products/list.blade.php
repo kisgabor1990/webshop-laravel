@@ -2,8 +2,8 @@
 
 @section('content')
 
-<h2 class="text-center user-select-none pb-3">{{ $category_name }}</h2>
-<div id="filter" class="card my-3 rounded-lg">
+<h2 class="text-center user-select-none pb-3">{{ $category->name }}</h2>
+{{-- <div id="filter" class="card my-3 rounded-lg">
     <div class="card-header bg-warning text-uppercase user-select-none d-flex justify-content-between" data-toggle="collapse" data-target="#collapseFilter">
         Szűrő
         <span><i class="far fa-arrow-alt-circle-down"></i></span>
@@ -52,7 +52,7 @@
             </div>
         </form>
     </div>
-</div>
+</div> --}}
 <hr>
 <h4 class="text-center my-3">{{ $products->total() }} db. termék</h4>
 
@@ -61,11 +61,15 @@
     @foreach ($products as $product)
     <div class="col mb-5 card-group">
         <div class="card shadow">
-            <img class="card-img-top px-3 pt-3" src="https://via.placeholder.com/362x500/DDDDDD/808080?text=Kép+termékről" alt="Card image cap">
             <div class="card-body">
-                <div class="col-auto h5 user-select-none text-center" style="color: gold">
+                <div class="col-auto text-center">
+                    <img class="img-fluid px-3 pt-3"
+                        src="{{ url($product->coverImage()->path) }}"
+                        alt="{{ $product->name }}" style="height: 300px">
+                </div>
+                <div class="col-auto h5 user-select-none text-center mt-0" style="color: gold">
                     @php
-                        $rating = $product->ratingsAvg();
+                        $rating = $product->ratings->avg();
                     @endphp
                     @foreach (range(1, 5) as $i)
                         <span class="fa-stack" style="width:1em">
@@ -81,18 +85,18 @@
                         </span>
                     @endforeach
                 </div>
-                <a href="{{ url('/termekek/' . $product->id) }}" class="text-reset text-decoration-none stretched-link">
-                    <h5 class="card-title">{{ $product->property }} {{ $product->type }}</h5>
+                <a href="{{ url('/termekek/' . $product->category->slug . '/' . $product->subCategory->slug . '/' . $product->slug) }}"
+                    class="text-reset text-decoration-none stretched-link">
+                    <h5 class="card-title">{{ $product->name }}</h5>
+                    <p class="h6">{{ $product->brand->name }}</p>
                 </a>
-                <p class="card-text">{{ $product->brand }}</p>
-                <p class="card-text mt-5">
-                    <h6>Termékjellemzők:</h6>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                    </ul>
+                <p class="card-text mt-3">
+                <h6>Termékjellemzők:</h6>
+                <ul>
+                    @foreach ($product->properties->where('hasList', 1) as $property)
+                    <li><span class="fw-bold">{{ $property->name }}:</span> {{ $property->pivot->value }}</li>
+                    @endforeach
+                </ul>
                 </p>
             </div>
             <div class="card-footer text-end">

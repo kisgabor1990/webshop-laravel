@@ -25,26 +25,21 @@ class ProductsController extends Controller
             ->with('categories', $categories);
     }
 
-    public function list($category)
+    public function list(Category $category)
     {
-        $categoryModel = new Category();
-        $productModel = new Product();
-        
-
-        if (!($categoryData = $categoryModel->getCategoryData($category))) {
+        if (!$category) {
             return view('pages.404');
         }
 
-        
-        $products = $productModel->getProducts($categoryData->id);
-        $filterBrand = $productModel->getBrands($categoryData->id);
-        $filterProperty = $productModel->getProperties($categoryData->id);
+        // $filterBrand = $productModel->getBrands($categoryData->id);
+        // $filterProperty = $productModel->getProperties($categoryData->id);
 
-        return view('products.list')
-            ->with('products', $products)
-            ->with('category_name', $categoryData->name)
-            ->with('filterBrand', $filterBrand)
-            ->with('filterProperty', $filterProperty);
+        return view('products.list')->with([
+            'category' => $category,
+            'products' => $category->products()->with(['category', 'subCategory', 'images', 'ratings', 'brand', 'properties'])->paginate(6),
+            ]);
+            // ->with('filterBrand', $filterBrand)
+            // ->with('filterProperty', $filterProperty);
     }
 
     public function show(Category $category, Category_subcategory $subcategory, Product $product)
