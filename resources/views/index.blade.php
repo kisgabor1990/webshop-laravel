@@ -290,7 +290,7 @@
                     <div class="card-body btn-group-vertical p-0">
 
                         @foreach ($categories as $category)
-                            <a class="btn {{ request()->is('termekek/' . $category->slug) ? 'active' : '' }}"
+                            <a class="btn {{ request()->is('termekek/' . $category->slug . '*') ? 'active' : '' }}"
                                 href="{{ url('/termekek/' . $category->slug) }}">{{ $category->name }}</a>
                         @endforeach
                     </div>
@@ -319,8 +319,9 @@
         @yield('newest')
         @yield('similar')
 
-        <button class="btn btn-dark" id="topButton" data-bs-tooltip="tooltip" data-bs-placement="left"
-            title="Az oldal tetejére!"><i class="far fa-hand-point-up"></i></button>
+        <a href="/top" class="btn btn-outline-secondary" id="topButton">
+            <i class="fas fa-chevron-up fa-fw"></i>
+        </a>
 
     </div>
     <div class="container-fluid bg-dark bg-gradient p-5">
@@ -367,9 +368,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/e8e7489ac2.js" crossorigin="anonymous"></script>
-    < src="{{ URL::asset('scripts/app.js') }}"></>
+    <script src="{{ URL::asset('scripts/app.js') }}"></script>
     @yield('scripts')
 </body>
 
