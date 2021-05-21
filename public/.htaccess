@@ -4,6 +4,7 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteBase /myworks/webshop-laravel/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
