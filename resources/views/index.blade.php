@@ -301,7 +301,7 @@
 
     <div class="container">
         <div class="row mt-3 my-lg-4">
-            <div class="col-12 col-lg-3">
+            <div class="col-12 col-lg-3 mb-3" id="left">
                 <div id="sideCategory" class="card shadow-lg border border-dark rounded-lg d-none d-lg-block">
                     <div class="card-header p-3 bg-dark bg-gradient text-light text-uppercase user-select-none">
                         Kategóriák
@@ -320,7 +320,6 @@
                     <div id="loading">
                         <h2 class="mt-5 text-center">
                             <i class="fas fa-spinner fa-spin"></i>
-
                         </h2>
                     </div>
                 </div>

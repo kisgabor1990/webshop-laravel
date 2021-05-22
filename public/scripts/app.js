@@ -14,6 +14,8 @@ function numberFormat(numberString) {
 
 $(function () {
 
+    var topButtonDisplay;
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-tooltip="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -49,14 +51,11 @@ $(function () {
 
     $(window).scroll(function () {
         // Az oldal tetejére gomb
-        if ($(window).scrollTop() > 500) {
-            $("#topButton").css("display", "block");
-        } else {
-            $("#topButton").css("display", "none");
-        }
+        topButtonDisplay = $(this).scrollTop() > 500 ? "block" : "none";
+        $("#topButton").css("display", topButtonDisplay);
 
         // Az oldalsó menü követi a görgetést
-        if ($(window).scrollTop() < $("#mainContent").height() + 10) {
+        if ($(this).scrollTop() < $("#left").height() - $("#sideCategory").height() + ($("#left").offset().top - 60)) {
 
             $("#sideCategory")
                 .addClass("sticky-top")
@@ -64,7 +63,7 @@ $(function () {
         } else {
             $('#sideCategory')
                 .removeClass("sticky-top")
-                .css("top", ($("#mainContent").height() - $("#sideCategory").height()) > 0 ? $("#mainContent").height() - $("#sideCategory").height() : "0");
+                .css("top", ($("#left").height() - $("#sideCategory").height()) > 0 ? $("#left").height() - $("#sideCategory").height() : "0");
         }
     });
 
