@@ -182,3 +182,10 @@
   }
 /* Star rating end */
 
+#sortable li, #sortable input {
+  cursor: grab;
+}
+
+#sortable li:active, #sortable input:active {
+  cursor: grabbing;
+}
