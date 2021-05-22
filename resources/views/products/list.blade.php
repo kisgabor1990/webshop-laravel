@@ -19,66 +19,70 @@
             </a>
         </div>
     @endif
-    <div id="filter" class="card my-3 rounded-lg">
-        <div class="card-header bg-warning text-uppercase user-select-none d-flex justify-content-between"
-            data-bs-toggle="collapse" data-bs-target="#collapseFilter">
-            Szűrő
-            <span><i class="far fa-arrow-alt-circle-down"></i></span>
-        </div>
-        <div class="card-body collapse p-0" id="collapseFilter">
-            <form id="productFilter" action="">
-                <div class="row row-cols-2 row-cols-lg-4 mx-3">
-                    <div class="col">
-                        <h6 class="my-3">Gyártók</h6>
-                        @foreach ($category->brands ?? $category->category->brands as $brand)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ $brand->name }}"
-                                    id="brand_{{ $brand->name }}" name="brand[]">
-                                <label class="form-check-label" for="brand_{{ $brand->name }}">
-                                    {{ $brand->name }} ({{ $products->where('brand_id', $brand->id)->count() }})
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                    @foreach (($category->properties ?? $category->category->properties)->where('hasList', 1) as $property)
+    
+    <div class="accordion accordion-flush my-5" id="filter">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed bg-warning type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                <i class="fas fa-filter fa-fw me-1"></i> Szűrő
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#filter">
+            <div class="accordion-body">
+                <form id="productFilter" action="">
+                    <div class="row row-cols-2 row-cols-lg-4 mx-3">
                         <div class="col">
-                            <h6 class="my-3">{{ $property->name }}</h6>
-                            @foreach ($property->values->sortBy('name') as $value)
+                            <h6 class="my-3">Gyártók</h6>
+                            @foreach ($category->brands ?? $category->category->brands as $brand)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $value->name }}"
-                                        id="{{ $property->name }}_{{ $value->name }}"
-                                        name="{{ $property->name }}[]">
-                                    <label class="form-check-label" for="{{ $property->name }}_{{ $value->name }}">
-                                        {{ $value->name }}
+                                    <input class="form-check-input" type="checkbox" value="{{ $brand->name }}"
+                                        id="brand_{{ $brand->name }}" name="brand[]">
+                                    <label class="form-check-label" for="brand_{{ $brand->name }}">
+                                        {{ $brand->name }} ({{ !$category->category_id ? $brand->products->where('category_id', $category->id)->count() : $brand->products->where('subcategory_id', $category->id)->count() }})
                                     </label>
                                 </div>
                             @endforeach
                         </div>
-                    @endforeach
-                    <div class="col">
-                        <h5 class="my-3">Ár</h5>
-                        <div class="form-group">
-                            <label for="minPrice" class="form-label">Min: <span id="minPrice_value" class="fw-bold"></span></label>
-                            <input type="range" class="form-range" id="minPrice" name="price[min]"
-                            min="0" max="{{ $products->max('price') }}"
-                            step="1000" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="maxPrice" class="form-label">Max: <span id="maxPrice_value" class="fw-bold"></span></label>
-                            <input type="range" class="form-range" id="maxPrice" name="price[max]"
-                            min="0" max="{{ round($products->max('price'), -3) }}"
-                            step="1000" value="{{ round($products->max('price'), -3) }}">
+                        @foreach (($category->properties ?? $category->category->properties)->where('hasList', 1) as $property)
+                            <div class="col">
+                                <h6 class="my-3">{{ $property->name }}</h6>
+                                @foreach ($property->values->sortBy('name') as $value)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{ $value->name }}"
+                                            id="{{ $property->name }}_{{ $value->name }}"
+                                            name="{{ $property->name }}[]">
+                                        <label class="form-check-label" for="{{ $property->name }}_{{ $value->name }}">
+                                            {{ $value->name }} ({{ $category->hasSubCategories ? $property->products->where('pivot.value', $value->name)->count() : $property->products->where('subcategory_id', $category->id)->where('pivot.value', $value->name)->count() }})
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                        <div class="col">
+                            <h5 class="my-3">Ár</h5>
+                            <div class="form-group">
+                                <label for="minPrice" class="form-label">Min: <span id="minPrice_value" class="fw-bold"></span></label>
+                                <input type="range" class="form-range" id="minPrice" name="price[min]"
+                                min="0" max="{{ $products->max('price') }}"
+                                step="1000" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="maxPrice" class="form-label">Max: <span id="maxPrice_value" class="fw-bold"></span></label>
+                                <input type="range" class="form-range" id="maxPrice" name="price[max]"
+                                min="0" max="{{ round($products->max('price'), -3) }}"
+                                step="1000" value="{{ round($products->max('price'), -3) }}">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary m-3">Szűrés</button>
-                    <button type="reset" id="resetButton" class="btn btn-danger m-3">Összes szűrő törlése</button>
-
-                </div>
-            </form>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary m-3">Szűrés</button>
+                        <button type="reset" id="resetButton" class="btn btn-danger m-3">Összes szűrő törlése</button>
+                    </div>
+                </form>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
     <hr>
     <h4 class="text-center my-3">{{ $products->total() }} db. termék</h4>
 

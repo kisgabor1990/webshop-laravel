@@ -26,11 +26,11 @@ class ProductsController extends Controller
             ->with('categories', $categories);
     }
 
-    public function list($category_slug, $subcategory_slug = null)
+    public function list(Request $request, $category_slug, $subcategory_slug = null)
     {
-        $category = Category::where('slug', $category_slug)->with(['properties.values'])->first();
+        $category = Category::where('slug', $category_slug)->with(['properties.values', 'brands.products', 'properties.products'])->first();
         if (!empty($subcategory_slug)) {
-            $subcategory = Category_subcategory::where('slug', $subcategory_slug)->with(['category.properties.values'])->first();
+            $subcategory = Category_subcategory::where('slug', $subcategory_slug)->with(['category.properties.values', 'category.properties.products', 'category.brands.products'])->first();
             $model = $subcategory;
         } else {
             $model = $category;
