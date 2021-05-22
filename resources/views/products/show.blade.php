@@ -11,8 +11,8 @@
                     @foreach ($product->images as $key => $image)
                     <div class="carousel-item text-center @if ($key == 0) active @endif" data-bs-toggle="modal" data-bs-target="#galleryModal">
                         <img class="d-block w-100"
-                        src="{{ url($image->path) }}" alt="{{ $product->name }}" data-bs-target="#galleryCarousel" data-bs-slide-to="{{ $key }}"
-                        style="height: 450px; object-fit: contain; cursor: zoom-in">
+                        src="{{ url($image->path) }}" alt="{{ $product->name }}" 
+                        data-bs-target="#galleryCarousel" data-bs-slide-to="{{ $key }}">
                     </div>
                     @endforeach
                 </div>
@@ -31,7 +31,7 @@
                 <!--/.Controls-->
                 <ol class="carousel-indicators">
                     @foreach ($product->images as $key => $image)
-                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="{{ $key }}" class="active"> <img
+                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="{{ $key }}" class="@if ($key == 0) active @endif"> <img
                         class="d-block w-100 img-fluid"
                         src="{{ url($image->path) }}">
                     </li>
@@ -42,7 +42,7 @@
         </div>
         {{-- Modal galéria --}}
         <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-body">
                   {{-- Carousel galéria --}}
