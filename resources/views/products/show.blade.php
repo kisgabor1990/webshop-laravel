@@ -3,24 +3,22 @@
 @section('content')
 
     <div class="row">
-        <div class="col-12 col-lg-5">
+        <div class="col-12 col-lg-4">
             <!--Carousel Wrapper-->
             <div id="carousel-thumb" class="carousel shadow slide carousel-thumbnails" data-bs-ride="carousel">
                 <!--Slides-->
                 <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item text-center active">
-                        <img class="img-fluid"
-                        src="{{ url($product->coverImage()->path) }}" alt="{{ $product->name }}" style="height: 550px; object-fit: contain;">
-                    </div>
-                    @foreach ($product->images->where('isCover', 0) as $image)
-                    <div class="carousel-item text-center">
-                        <img class="img-fluid"
-                        src="{{ url($image->path) }}" alt="{{ $product->name }}" style="height: 550px; object-fit: contain;">
+                    @foreach ($product->images as $key => $image)
+                    <div class="carousel-item text-center @if ($key == 0) active @endif" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                        <img class="d-block w-100"
+                        src="{{ url($image->path) }}" alt="{{ $product->name }}" data-bs-target="#galleryCarousel" data-bs-slide-to="{{ $key }}"
+                        style="height: 450px; object-fit: contain; cursor: zoom-in">
                     </div>
                     @endforeach
                 </div>
                 <!--/.Slides-->
                 <!--Controls-->
+                @if (count($product->images) > 1)
                 <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -29,6 +27,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+                @endif
                 <!--/.Controls-->
                 <ol class="carousel-indicators">
                     @foreach ($product->images as $key => $image)
@@ -41,6 +40,37 @@
             </div>
             <!--/.Carousel Wrapper-->
         </div>
+        {{-- Modal galéria --}}
+        <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body">
+                  {{-- Carousel galéria --}}
+                  <div id="galleryCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach ($product->images as $key => $image)
+                        <div class="carousel-item @if ($key == 0) active @endif">
+                            <img src="{{ url($image->path) }}" class="d-block w-100" alt="..." data-bs-dismiss="modal">
+                        </div>
+                        @endforeach
+                    </div>
+                    @if (count($product->images) > 1)
+                    <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                    @endif
+                  </div>
+                  {{-- /.Carousel galéria --}}
+                </div>
+              </div>
+            </div>
+          </div>
+        {{-- /.Modal galéria --}}
         <div class="col-12 col-lg-7 mt-3">
             <div class="row">
                 <div class="col-auto h2 user-select-none" style="color: gold">
