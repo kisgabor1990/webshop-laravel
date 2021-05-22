@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ URL::asset('styles/style.css') }}">
     <title>Webshop</title>
 </head>
@@ -28,14 +29,15 @@
                         <i class="fas fa-home fa-lg fa-fw me-2"></i> Főoldal
                     </a>
                     @foreach ($menu as $key => $menu_item)
-                        <a class="nav-link {{ request()->is($key) ? 'active' : '' }} me-3" href="{{ url('/' . $key) }}">
+                        <a class="nav-link {{ request()->is($key) ? 'active' : '' }} me-3"
+                            href="{{ url('/' . $key) }}">
                             <i class="fas {{ $menu_item[0] }} fa-lg fa-fw me-2"></i> {{ $menu_item[1] }}
                         </a>
                     @endforeach
                     @if (auth()->check() && auth()->user()->is_admin)
-                    <a class="nav-link ms-auto" href="{{ url('/admin') }}">
-                        <i class="fas fa-user-lock fa-lg fa-fw me-2"></i> Admin
-                    </a>
+                        <a class="nav-link ms-auto" href="{{ url('/admin') }}">
+                            <i class="fas fa-user-lock fa-lg fa-fw me-2"></i> Admin
+                        </a>
                     @endif
                 </div>
             </div>
@@ -67,9 +69,9 @@
                         </a>
                     @endforeach
                     @if (auth()->check() && auth()->user()->is_admin)
-                    <a class="list-group-item list-group-item-action" href="{{ url('/admin') }}">
-                        <i class="fas fa-user-lock fa-lg fa-fw me-2"></i> Admin
-                    </a>
+                        <a class="list-group-item list-group-item-action" href="{{ url('/admin') }}">
+                            <i class="fas fa-user-lock fa-lg fa-fw me-2"></i> Admin
+                        </a>
                     @endif
                     <div class="row">
                         {{-- Kosár --}}
@@ -189,15 +191,51 @@
                         </div>
 
                         {{-- Profil --}}
-                        <div class="col-auto my-auto">
-                            <div class="dropdown" data-bs-tooltip="tooltip" data-bs-placement="left" title="Profil!">
-                                <button class="btn btn-outline-success rounded-circle" type="button" id="profilButton"
-                                    data-bs-offset="-150,10">
-                                    <i class="fas fa-user fa-fw"></i>
-                                </button>
-                                <div class="dropdown-menu py-4 profil" aria-labelledby="profilButton">
+                        @auth
+                            <div class="col-auto my-auto border border-end-0 border-success border-2 rounded-pill me-3">
+                                <div class="row align-items-center justify-content-between">
+                                    <div class="col-auto h5 mb-0 user-select-none text-center ms-3">
+                                        Üdvözöljük <br><b>{{ auth()->user()->name }}</b>
+                                    </div>
+                                    <div class="col-auto pe-0">
+                                        <div class="dropdown" data-bs-tooltip="tooltip" data-bs-placement="top"
+                                            title="Profil">
+                                            <button class="btn btn-success rounded-circle" type="button"
+                                                id="profilButton" data-bs-offset="-150,10">
+                                                <i class="fas fa-user fa-fw"></i>
+                                            </button>
+                                            <div class="dropdown-menu py-4 profil" aria-labelledby="profilButton">
 
-                                    @guest
+                                                <div class="card mx-3 text-center border-0" style="width: 200px">
+                                                    <div class="list-group list-group-flush">
+                                                        <a href="{{ url('/profil') }}"
+                                                            class="list-group-item list-group-item-action"
+                                                            aria-current="true">
+                                                            Profil karbantartása
+                                                        </a>
+                                                    </div>
+                                                    <div class="card-footer bg-white border-top pt-3">
+                                                        <a href="{{ url('/kijelentkezes') }}"
+                                                            class="btn btn-warning">Kijelentkezés</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endauth
+
+
+                        @guest
+                            <div class="col-auto my-auto">
+                                <div class="dropdown" data-bs-tooltip="tooltip" data-bs-placement="top" title="Profil">
+                                    <button class="btn btn-outline-success rounded-circle" type="button" id="profilButton"
+                                        data-bs-offset="-150,10">
+                                        <i class="fas fa-user fa-fw"></i>
+                                    </button>
+                                    <div class="dropdown-menu py-4 profil" aria-labelledby="profilButton">
+
                                         <form class="px-3" action="{{ url('/bejelentkezes') }}" method="post">
                                             @csrf
                                             <div class="form-group mb-3">
@@ -217,32 +255,13 @@
                                             Regisztráljon!</a>
                                         <a class="dropdown-item" href="{{ url('/elfelejtett-jelszo') }}">Elfelejtette
                                             jelszavát?</a>
-                                    @endguest
-
-                                    @auth
-                                        <div class="card mx-3 text-center border-0" style="width: 200px">
-                                            <div class="card-header bg-white pb-3">
-                                                Üdvözöljük <br><b>{{ auth()->user()->name }}</b>
-                                            </div>
-                                            <div class="list-group list-group-flush">
-                                                <a href="{{ url('/profil') }}"
-                                                    class="list-group-item list-group-item-action" aria-current="true">
-                                                    Profil karbantartása
-                                                </a>
-                                            </div>
-                                            <div class="card-footer bg-white border-top pt-3">
-                                                <a href="{{ url('/kijelentkezes') }}"
-                                                    class="btn btn-warning">Kijelentkezés</a>
-                                            </div>
-                                        </div>
-                                    @endauth
-
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endguest
 
                         {{-- Kosár --}}
-                        <div class="col-auto my-auto border border-danger border-2 rounded-pill">
+                        <div class="col-auto my-auto border border-end-0 border-danger border-2 rounded-pill">
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-auto h5 mb-0 user-select-none">
                                     @php
@@ -261,8 +280,8 @@
                                 <div class="col-auto pe-0">
                                     <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
                                         href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
-                                        data-bs-placement="bottom" title="Kosaram!">
-                                        <i class="fas fa-shopping-cart"></i>
+                                        data-bs-placement="top" title="Kosaram">
+                                        <i class="fas fa-shopping-cart fa-fw"></i>
                                     </a>
                                 </div>
                             </div>
@@ -279,7 +298,7 @@
 
 
 
-    
+
     <div class="container">
         <div class="row mt-3 my-lg-4">
             <div class="col-12 col-lg-3">
@@ -368,8 +387,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous">
+    </script>
     <script src="https://kit.fontawesome.com/e8e7489ac2.js" crossorigin="anonymous"></script>
     <script src="{{ URL::asset('scripts/app.js') }}"></script>
     @yield('scripts')
