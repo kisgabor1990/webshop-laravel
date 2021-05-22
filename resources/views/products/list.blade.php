@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-auto h5 user-select-none text-center mt-0" style="color: gold">
                             @php
-                                $rating = $product->ratings->avg();
+                                $rating = $product->ratingsAvg();
                             @endphp
                             @foreach (range(1, 5) as $i)
                                 <span class="fa-stack" style="width:1em">
