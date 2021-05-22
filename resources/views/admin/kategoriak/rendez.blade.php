@@ -15,11 +15,11 @@
                         <div class="col-12 col-lg-6 mb-3">
                             <ol id="sortable">
                                 @foreach ($categories as $category)
-                                <li class="mb-3" style="cursor: move">
+                                <li class="mb-3">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" id="category_{{ $category->id }}"
                                         name="categories[]" placeholder="Kategróia név" value="{{ $category->name }}"
-                                        readonly style="cursor: move">
+                                        readonly>
                                         <span class="input-group-text"><i class="fa fa-sort fa-fw fa-lg" aria-hidden="true"></i></span>
                                       </div>
                                 </li>
