@@ -10,8 +10,7 @@ use function view;
 class PagesController extends Controller {
 
     public function index() {
-        $model = new Product();
-        $newest = $model->getNewest();
+        $newest = Product::with(['images', 'brand', 'properties', 'ratings'])->orderByDesc('id')->limit(8)->get();
         return view('pages.home')->with('newest', $newest);
     }
 
