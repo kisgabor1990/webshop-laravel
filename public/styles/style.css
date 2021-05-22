@@ -93,9 +93,16 @@
     text-decoration: none;
 }
 
+.carousel-thumbnails .carousel-inner img {
+  height: 450px; 
+  object-fit: contain; 
+  cursor: zoom-in
+}
+
 .carousel-thumbnails .carousel-indicators img {
     max-width: 35px;
     height: 50px;
+    object-fit: contain;
     overflow: hidden;
     display: block;
 }
@@ -188,4 +195,8 @@
 
 #sortable li:active, #sortable input:active {
   cursor: grabbing;
+}
+
+#galleryCarousel img {
+  cursor: zoom-out;
 }
