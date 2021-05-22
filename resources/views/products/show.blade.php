@@ -46,7 +46,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   {{-- Carousel galéria --}}
-                  <div id="galleryCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                  <div id="galleryCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
                     <div class="carousel-inner">
                         @foreach ($product->images as $key => $image)
                         <div class="carousel-item @if ($key == 0) active @endif">
