@@ -64,7 +64,7 @@ class ProductsController extends Controller
                             ->where(function ($query) use ($product) {
                                 $query->where('subcategory_id', $product->subCategory?->id)
                                         ->orWhere('category_id', $product->category->id);
-                            })->limit(4)->get();
+                            })->inRandomOrder()->limit(4)->get();
 
         if (Auth::check()) {
             $user  = User::find(auth()->user()->id);
