@@ -58,6 +58,9 @@ class ProductsController extends Controller
         }
 
         $similar = Product::where('id', '!=', $product->id)
+                            ->whereHas('brand', function($q) {
+                                $q->whereNull('deleted_at');
+                            })
                             ->where(function ($query) use ($product) {
                                 $query->where('subcategory_id', $product->subCategory?->id)
                                         ->orWhere('category_id', $product->category->id);

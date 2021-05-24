@@ -10,7 +10,7 @@ use function view;
 class PagesController extends Controller {
 
     public function index() {
-        $newest = Product::with(['images', 'brand', 'properties', 'ratings'])->orderByDesc('id')->limit(8)->get();
+        $newest = Product::with(['images', 'brand', 'properties', 'ratings'])->whereHas('brand', function($q) {$q->whereNull('deleted_at');})->orderByDesc('id')->limit(8)->get();
         return view('pages.home')->with('newest', $newest);
     }
 
