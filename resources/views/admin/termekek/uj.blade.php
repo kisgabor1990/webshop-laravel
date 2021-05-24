@@ -51,8 +51,8 @@
                                 </div>
                                 @foreach ($category->properties as $property)
                                     @if ($property->hasList)
-                                    <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
-                                        <select class="form-select" id="property_{{ $property->name }}" name="values[{{ $property->id }}][value]">
+                                    <div class="col-12 col-lg-8 form-floating mb-3 mx-auto @if ($property->trashed()) text-white @endif">
+                                        <select class="form-select @if ($property->trashed()) bg-dark text-white @endif" id="property_{{ $property->name }}" name="values[{{ $property->id }}][value]">
                                             @foreach ($property->values->sortBy('name') as $value)
                                                 <option value="{{ $value->name }}">{{ $value->name }}</option>
                                             @endforeach
@@ -60,8 +60,8 @@
                                         <label for="property_{{ $property->name }}">{{ $property->name }}</label>
                                     </div>
                                     @else
-                                        <div class="col-12 col-lg-8 form-floating mb-3 mx-auto">
-                                            <input type="text" class="form-control" id="property_{{ $property->name }}"
+                                        <div class="col-12 col-lg-8 form-floating mb-3 mx-auto @if ($property->trashed()) text-white @endif">
+                                            <input type="text" class="form-control @if ($property->trashed()) bg-dark text-white @endif" id="property_{{ $property->name }}"
                                                 name="values[{{ $property->id }}][value]"
                                                 placeholder="{{ $property->name }}" required>
                                             <label for="property_{{ $property->name }}">{{ $property->name }}</label>
