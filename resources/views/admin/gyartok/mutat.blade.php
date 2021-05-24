@@ -11,19 +11,17 @@
                         <tbody>
                             <tr>
                                 <th scope="row" class="user-select-none">Kategóriákhoz rendelve:</th>
-                                <td>
-                                    <ul>
+                                <td class="text-nowrap">
                                         @forelse ($brand->categories as $category)
                                         <li>{{ $category->name }}</li>
                                         @empty
-                                        <li>Nincs kategóriához rendelve!</li>
+                                        Nincs kategóriához rendelve!
                                         @endforelse
-                                    </ul>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Termékek:</th>
-                                <td>TODO</td>
+                                <td>{{ $brand->products->count() }} db.</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Gyártó létrehozva:</th>
