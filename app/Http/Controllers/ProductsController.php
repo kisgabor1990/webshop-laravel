@@ -28,9 +28,9 @@ class ProductsController extends Controller
 
     public function list(Request $request, $category_slug, $subcategory_slug = null)
     {
-        $category = Category::where('slug', $category_slug)->with(['properties.values', 'brands.products', 'properties.products'])->first();
+        $category = Category::where('slug', $category_slug)->with(['properties.values', 'brands.products', 'properties.products.brand'])->first();
         if (!empty($subcategory_slug)) {
-            $subcategory = Category_subcategory::where('slug', $subcategory_slug)->with(['category.properties.values', 'category.properties.products', 'category.brands.products'])->first();
+            $subcategory = Category_subcategory::where('slug', $subcategory_slug)->with(['category.properties.values', 'category.properties.products.brand', 'category.brands.products'])->first();
             $model = $subcategory;
         } else {
             $model = $category;
@@ -41,7 +41,7 @@ class ProductsController extends Controller
 
         return view('products.list')->with([
             'category' => $model,
-            'products' => $model->products()->with(['category', 'subCategory', 'images', 'ratings', 'brand', 'properties.values'])->paginate(6),
+            'products' => $model->products()->with(['category', 'subCategory', 'images', 'ratings', 'brand', 'properties.values'])->whereHas('brand', function($q) {$q->whereNull('deleted_at');})->paginate(6),
             ]);
             // ->with('filterBrand', $filterBrand)
             // ->with('filterProperty', $filterProperty);

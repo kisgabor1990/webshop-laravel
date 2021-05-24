@@ -33,7 +33,7 @@
                     <div class="row row-cols-2 row-cols-lg-4 mx-3">
                         <div class="col">
                             <h6 class="my-3">Gyártók</h6>
-                            @foreach ($category->brands ?? $category->category->brands as $brand)
+                            @foreach ($category->brands?->whereNull('deleted_at') ?? $category->category->brands->whereNull('deleted_at') as $brand)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="{{ $brand->name }}"
                                         id="brand_{{ $brand->name }}" name="brand[]">
@@ -43,7 +43,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        @foreach (($category->properties ?? $category->category->properties)->where('hasList', 1) as $property)
+                        @foreach (($category->properties?->whereNull('deleted_at') ?? $category->category->properties->whereNull('deleted_at'))->where('hasList', 1) as $property)
                             <div class="col">
                                 <h6 class="my-3">{{ $property->name }}</h6>
                                 @foreach ($property->values->sortBy('name') as $value)
@@ -52,7 +52,7 @@
                                             id="{{ $property->name }}_{{ $value->name }}"
                                             name="{{ $property->name }}[]">
                                         <label class="form-check-label" for="{{ $property->name }}_{{ $value->name }}">
-                                            {{ $value->name }} ({{ $category->hasSubCategories ? $property->products->where('pivot.value', $value->name)->count() : $property->products->where('subcategory_id', $category->id)->where('pivot.value', $value->name)->count() }})
+                                            {{ $value->name }} ({{ $category->hasSubCategories ? $property->products->whereNull('brand.deleted_at')->where('pivot.value', $value->name)->count() : $property->products->whereNull('brand.deleted_at')->where('subcategory_id', $category->id)->where('pivot.value', $value->name)->count() }})
                                         </label>
                                     </div>
                                 @endforeach
@@ -88,7 +88,7 @@
 
 
     <div class="row row-cols-1 row-cols-lg-3">
-        @foreach ($products as $product)
+        @foreach ($products->whereNull('brand.deleted_at') as $product)
             @include('pages.product_card')
         @endforeach
     </div>
