@@ -21,7 +21,7 @@
             @include('alerts.error')
             @include('alerts.success')
             <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover" id="list">
                     <thead class="thead-inverse user-select-none">
                         <tr>
                             <th>#</th>
@@ -37,33 +37,38 @@
                                 <td scope="row" class="user-select-none fw-bold">{{ $property->id }}</td>
                                 <td class="text-nowrap">{{ $property->category->name }}</td>
                                 <td class="text-nowrap">{{ $property->name }}</td>
-                                <td class="text-nowrap"> {{ $property->values->implode('name', ', ') }} </td>
+                                <td class="text-nowrap"> {{ $property->values->sortBy('name')->implode('name', ', ') }} </td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($property->trashed())
                                         <a class="btn btn-danger btn-sm delete me-3" href="#"
                                                 data-href="{{ url('admin/tulajdonsagok/vegleg-torol/' . $property->id) }}"
                                                 data-header="tulajdonság" data-name="{{ $property->name }}"
-                                                data-id="{{ $property->id }}" role="button">
+                                                data-id="{{ $property->id }}" role="button"
+                                                data-bs-tooltip="tooltip" data-placement="top" title="Végleges törlés">
                                                 <i class="fas fa-trash fa-sm fa-fw"></i>
                                             </a>
                                         @endif
                                         <a class="btn btn-primary btn-sm "
-                                            href="{{ url('admin/tulajdonsagok/mutat/' . $property->id) }}" role="button">
+                                            href="{{ url('admin/tulajdonsagok/mutat/' . $property->id) }}" role="button"
+                                            data-bs-tooltip="tooltip" data-placement="top" title="Megtekintés">
                                             <i class="fas fa-eye fa-sm fa-fw"></i>
                                         </a>
                                         <a class="btn btn-warning btn-sm "
-                                            href="{{ url('admin/tulajdonsagok/szerkeszt/' . $property->id) }}" role="button">
+                                            href="{{ url('admin/tulajdonsagok/szerkeszt/' . $property->id) }}" role="button"
+                                            data-bs-tooltip="tooltip" data-placement="top" title="Szerkesztés">
                                             <i class="fas fa-edit fa-sm fa-fw"></i>
                                         </a>
                                         @if ($property->trashed())
                                             <a class="btn btn-success btn-sm"
-                                                href="{{ url('admin/tulajdonsagok/visszaallit/' . $property->id) }}" role="button">
+                                                href="{{ url('admin/tulajdonsagok/visszaallit/' . $property->id) }}" role="button"
+                                                data-bs-tooltip="tooltip" data-placement="top" title="Visszaállítás">
                                                 <i class="fas fa-trash-restore fa-sm fa-fw"></i>
                                             </a>
                                             @else
                                             <a class="btn btn-danger btn-sm"
-                                                href="{{ url('admin/tulajdonsagok/torol/' . $property->id) }}" role="button">
+                                                href="{{ url('admin/tulajdonsagok/torol/' . $property->id) }}" role="button"
+                                                data-bs-tooltip="tooltip" data-placement="top" title="Törlés">
                                                 <i class="fas fa-trash fa-sm fa-fw"></i>
                                             </a>
                                         @endif
