@@ -18,7 +18,12 @@
                             <tr>
                                 <th scope="row" class="user-select-none">Alkategóriák:</th>
                                 <td>
-                                    {{ $category->subCategories->implode('name', ', ') }}
+                                        @forelse ($category->subCategories as $subCategory)
+                                        <li>{{ $subCategory->name }}
+                                        </li>
+                                        @empty
+                                        Nincs alkategória!
+                                        @endforelse
                                 </td>
                             </tr>
                             <tr>
@@ -28,27 +33,23 @@
                             <tr>
                                 <th scope="row" class="user-select-none">Tulajdonságok:</th>
                                 <td>
-                                    <ul>
                                         @forelse ($category->properties as $property)
                                         <li>{{ $property->name }} @if ($property->trashed()) (inaktív) @endif
                                         </li>
                                         @empty
                                         Nincs tulajdonság társítva!
                                         @endforelse
-                                    </ul>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none">Gyártók:</th>
                                 <td>
-                                    <ul>
                                         @forelse ($category->brands as $brand)
                                         <li>{{ $brand->name }} @if ($brand->trashed()) (inaktív) @endif
                                         </li>
                                         @empty
                                         Nincs gyártó társítva!
                                         @endforelse
-                                    </ul>
                                 </td>
                             </tr>
                             <tr>
@@ -78,7 +79,7 @@
                     <div class="card-header text-center user-select-none h3">Termékek</div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="list">
                                 <thead class="user-select-none">
                                     <tr>
                                         <th>Gyártó</th>
