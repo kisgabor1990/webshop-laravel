@@ -32,7 +32,7 @@
             <p class="card-text mt-3">
                 <h6>Termékjellemzők:</h6>
                 <ul>
-                    @foreach ($product->properties->where('hasList', 1) as $property)
+                    @foreach ($product->properties->whereNull('deleted_at')->where('hasList', 1) as $property)
                         <li><span class="fw-bold">{{ $property->name }}:</span> {{ $property->pivot->value }}
                         </li>
                     @endforeach

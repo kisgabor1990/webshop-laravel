@@ -134,7 +134,7 @@
 
                                 <table class="table table-hover">
                                     <tbody>
-                                        @foreach ($product->properties as $property)
+                                        @foreach ($product->properties->whereNull('deleted_at') as $property)
                                         <tr class="border-top-0">
                                             <th class="user-select-none" scope="row">{{ $property->name }}:</th>
                                             <td>{{ $property->pivot->value }}</td>
