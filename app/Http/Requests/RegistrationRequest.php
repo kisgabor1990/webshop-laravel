@@ -22,6 +22,7 @@ class RegistrationRequest extends FormRequest {
      */
     public function rules() {
         return [
+            'name' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'phone' => 'required|numeric',
@@ -31,6 +32,11 @@ class RegistrationRequest extends FormRequest {
             'billing_city' => 'required|string',
             'billing_address' => 'required|string',
             'billing_zip' => 'required|digits:4',
+            'taxnum' => (request()->choose_company == "is_company" ? 'required|regex:/\d{8}-[1-5]-\d{2}/' : ''),
+            'shipping_name' => 'required|string',
+            'shipping_city' => 'required|string',
+            'shipping_address' => 'required|string',
+            'shipping_zip' => 'required|digits:4',
         ];
     }
 

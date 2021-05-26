@@ -74,16 +74,6 @@ $(function () {
         });
     });
 
-    if ($("#shipping_same").prop('checked')) {
-        $("#shippingData :input").each(function () {
-            $(this).attr("disabled", "disabled");
-        });
-    } else {
-        $("#shippingData :input").each(function () {
-            $(this).removeAttr("disabled");
-        });
-    }
-
     if ($("#is_company").prop('checked')) {
         $("#taxnumDiv").show();
         $("#taxnum").removeAttr("disabled");
@@ -112,22 +102,20 @@ $(function () {
             $("#taxnum").attr("disabled", "disabled");
         })
         .on('click', '#shipping_same', function () {
-            $("#shippingData").fadeToggle(500);
             if ($("#shipping_same").prop('checked')) {
-                $("#shippingData :input").each(function () {
-                    $(this).attr("disabled", "disabled");
-                });
+                $("#shipping_name").val($("#billing_name").val());
+                $("#shipping_city").val($("#billing_city").val());
+                $("#shipping_address").val($("#billing_address").val());
+                $("#shipping_address2").val($("#billing_address2").val());
+                $("#shipping_zip").val($("#billing_zip").val());
             } else {
-                $("#shippingData :input").each(function () {
-                    $(this).removeAttr("disabled");
-                });
-
+                $("#shipping_name").val("");
+                $("#shipping_city").val("");
+                $("#shipping_address").val("");
+                $("#shipping_address2").val("");
+                $("#shipping_zip").val("");
             }
 
-            $("#shipping_name").val($("#billing_name").val());
-            $("#shipping_city").val($("#billing_city").val());
-            $("#shipping_address").val($("#billing_address").val());
-            $("#shipping_zip").val($("#billing_zip").val());
         }
         )
         .on('submit', '#regForm', function () {

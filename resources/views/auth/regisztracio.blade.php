@@ -17,107 +17,128 @@
 
                         <div class="col-12 col-lg-6 mb-5">
                             <p class="h3 mb-5">Regisztrációs adatok</p>
-
-                            <div class="form-group mb-3">
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Teljes név" value="{{ old('name') }}" required>
+                                <label for="name">Név</label>
+                                <div class="invalid-tooltip">
+                                    A név megadása kötelező!
+                                </div>
+                            </div>
+                            <div class="form-floating mb-5">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="valami@valami.hu" value="{{ old('email') }}"
+                                    required>
                                 <label for="email">Email cím</label>
-                                <input type="email" class="form-control" id="reg_email" name="email"
-                                    value="{{ old('email') }}" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     Az email cím megadása kötelező és valósnak kell lennie!
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="password">Jelszó</label>
-                                <input type="password" class="form-control" id="reg_password" name="password" required>
-                                <div class="invalid-feedback">
-                                    A jelszó megadása kötelező!
+                            <div class="row">
+                                <div class="col-12 col-lg-6 mb-5">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Jelszó"
+                                            required>
+                                        <label for="password">Jelszó</label>
+                                        <div class="invalid-tooltip">
+                                            A jelszó megadása kötelező!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-5">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="password_confirmation"
+                                            name="password_confirmation" placeholder="Jelszó újra" required>
+                                        <label for="password_confirmation">Jelszó újra</label>
+                                        <div class="invalid-tooltip">
+                                            A jelszó megadása kötelező!
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="password_confirmation">Jelszó mégegyszer</label>
-                                <input type="password" class="form-control" id="password_confirmation"
-                                    name="password_confirmation" required>
-                                <div class="invalid-feedback">
-                                    A jelszó megadása kötelező!
-                                </div>
-                            </div>
-                            <div class="form-check">
+                            <div class="form-check position-relative">
                                 <input class="form-check-input" type="radio" name="choose_company" id="is_company"
                                     value="is_company" required @if (old('choose_company') == 'is_company') checked @endif>
                                 <label class="form-check-label" for="is_company">
                                     Cég
                                 </label>
                             </div>
-                            <div class="form-check">
+                            <div class="form-check position-relative">
                                 <input class="form-check-input" type="radio" name="choose_company" id="is_person"
                                     value="is_person" required @if (old('choose_company') == 'is_person') checked @endif>
                                 <label class="form-check-label" for="is_person">
                                     Magánszemély
                                 </label>
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     Egyet kötelező választani!
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 mb-5">
                             <p class="h3 mb-5">Kapcsolattartó adatok</p>
-                            <div class="form-group mb-3">
-                                <label for="phone">Telefonszám</label>
+                            <div class="col mb-3">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <div class="input-group-text" id="btnGroupAddon">+36</div>
+                                        <div class="input-group-text h-100" id="btnGroupAddon">+36</div>
                                     </div>
-                                    <input type="tel" class="form-control" id="phone" name="phone"
-                                        value="{{ old('phone') }}" required>
-                                    <div class="invalid-feedback">
-                                        A telefonszám megadása kötelező!
+                                    <div class="col form-floating">
+                                        <input type="tel" class="form-control" id="phone" name="phone" value="{{ old('phone') }}"
+                                        placeholder="Telefonszám" required>
+                                        <label for="phone">Telefonszám</label>
+                                        <div class="invalid-tooltip">
+                                            A telefonszám megadása kötelező!
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 mb-5">
                             <p class="h3 mb-5">Számlázási adatok</p>
-                            <div class="form-group mb-3">
-                                <label for="billing_name">Teljes név</label>
-                                <input type="text" class="form-control" id="billing_name" name="billing_name"
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="billing_name" name="billing_name" placeholder="Név"
                                     value="{{ old('billing_name') }}" required>
-                                <div class="invalid-feedback">
+                                <label for="billing_name">Név</label>
+                                <div class="invalid-tooltip">
                                     A név megadása kötelező!
                                 </div>
                             </div>
-                            <div id="taxnumDiv" class="form-group mb-3" @if (old('choose_company') == 'is_person') style="display: none" @endif>
-                                <label for="taxnum">Cég esetén adószám</label>
-                                <input type="number" class="form-control" id="taxnum" name="taxnum"
-                                    value="{{ old('taxnum') }}" required>
-                                <div class="invalid-feedback">
-                                    Az adószám megadása cég esetén kötelező!
+                            <div class="form-floating mb-5" id="taxnumDiv">
+                                <input type="text" class="form-control" id="taxnum" name="taxnum" placeholder="Adószám"
+                                    value="{{ old('taxnum') }}" pattern="\d{8}-[1-5]-\d{2}" required>
+                                <label for="taxnum">Adószám</label>
+                                <div class="form-text">Helyes formátum: xxxxxxxx-y-zz</div>
+                                <div class="invalid-tooltip">
+                                    Cég esetén az adószám nem lehet üres, vagy a formátum nem megfelelő!
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="billing_city">Város</label>
-                                <input type="text" class="form-control" id="billing_city" name="billing_city"
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="billing_city" name="billing_city" placeholder="Város"
                                     value="{{ old('billing_city') }}" required>
-                                <div class="invalid-feedback">
+                                <label for="billing_city">Város</label>
+                                <div class="invalid-tooltip">
                                     A város megadása kötelező!
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="billing_address">Utca / Házszám</label>
-                                <input type="text" class="form-control" id="billing_address" name="billing_address"
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="billing_address" name="billing_address" placeholder="Utca / Házszám"
                                     value="{{ old('billing_address') }}" required>
-                                <div class="invalid-feedback">
-                                    A lakcím megadása kötelező!
+                                <label for="billing_address">Utca / Házszám</label>
+                                <div class="invalid-tooltip">
+                                    A cím megadása kötelező!
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="billing_address2" name="billing_address2"
+                                    placeholder="Emelet / Ajtó" value="{{ old('billing_address2') }}">
+                                <label for="billing_address2">Emelet / Ajtó</label>
+                            </div>
+                            <div class="form-floating mb-5">
+                                <input type="number" class="form-control" id="billing_zip" name="billing_zip" placeholder="Irányítószám"
+                                    value="{{ old('billing_zip') }}" min="1000" max="9999" required>
                                 <label for="billing_zip">Irányítószám</label>
-                                <input type="number" class="form-control" id="billing_zip" name="billing_zip"
-                                    value="{{ old('billing_zip') }}" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     Az irányítószám megadása kötelező!
                                 </div>
                             </div>
-                            <div class="form-check">
+                            <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="shipping_same" name="shipping_same"
                                     value="true" @if (old('shipping_same')) checked @endif>
                                 <label class="form-check-label" for="shipping_same">
@@ -127,46 +148,55 @@
                         </div>
                         <div id="shippingData" class="col-12 col-lg-6 mb-5" @if (old('shipping_same')) style="display: none" @endif>
                             <p class="h3 mb-5">Szállítási adatok</p>
-                            <div class="form-group mb-3">
-                                <label for="shipping_name">Teljes név</label>
-                                <input type="text" class="form-control" id="shipping_name" name="shipping_name"
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="shipping_name" name="shipping_name" placeholder="Név"
                                     value="{{ old('shipping_name') }}" required>
-                                <div class="invalid-feedback">
+                                <label for="shipping_name">Név</label>
+                                <div class="invalid-tooltip">
                                     A név megadása kötelező!
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="shipping_city">Város</label>
-                                <input type="text" class="form-control" id="shipping_city" name="shipping_city"
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="shipping_city" name="shipping_city" placeholder="Város"
                                     value="{{ old('shipping_city') }}" required>
-                                <div class="invalid-feedback">
+                                <label for="shipping_city">Város</label>
+                                <div class="invalid-tooltip">
                                     A város megadása kötelező!
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="shipping_address">Utca / Házszám</label>
-                                <input type="text" class="form-control" id="shipping_address" name="shipping_address"
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="shipping_address" name="shipping_address" placeholder="Utca / Házszám"
                                     value="{{ old('shipping_address') }}" required>
-                                <div class="invalid-feedback">
-                                    A lakcím megadása kötelező!
+                                <label for="shipping_address">Utca / Házszám</label>
+                                <div class="invalid-tooltip">
+                                    A cím megadása kötelező!
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
+                            <div class="form-floating mb-5">
+                                <input type="text" class="form-control" id="shipping_address2" name="shipping_address2"
+                                    placeholder="Emelet / Ajtó" value="{{ old('shipping_address2') }}">
+                                <label for="shipping_address2">Emelet / Ajtó</label>
+                            </div>
+                            <div class="form-floating mb-5">
+                                <input type="number" class="form-control" id="shipping_zip" name="shipping_zip" placeholder="Irányítószám"
+                                    value="{{ old('shipping_zip') }}" min="1000" max="9999" required>
                                 <label for="shipping_zip">Irányítószám</label>
-                                <input type="number" class="form-control" id="shipping_zip" name="shipping_zip"
-                                    value="{{ old('shipping_zip') }}" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     Az irányítószám megadása kötelező!
                                 </div>
                             </div>
+                            <div class="form-floating mb-5">
+                                <textarea class="form-control" placeholder="Megjegyzés" id="comment" name="comment" style="height: 100px">{{ old('comment') }}</textarea>
+                                <label for="comment">Megjegyzés</label>
+                            </div>
                         </div>
-                        <div class="col-12 mb-5">
+                        <div class="col-12 mb-5 position-relative">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="aszf" name="aszf" value="true" required>
                                 <label class="form-check-label" for="aszf">
                                     Elfogadom az Általános szerződési feltételeket és az Adatkezelési tájékoztatót.
                                 </label>
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     Az ÁSZF elfogadása kötelező!
                                 </div>
                             </div>
