@@ -182,6 +182,7 @@ $(function () {
                         $(this).remove();
                         if ($("#products").children('div').length == 0) {
                             $('hr').remove();
+                            $('#orderButtonDiv').remove();
                             $('#products').html('<p class="h3">A kosár üres!</p>');
                         }
                     });

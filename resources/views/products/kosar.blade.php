@@ -75,7 +75,7 @@
                 </tfoot>
             </table>
             @if (session('cart'))
-            <div class="text-end my-3">
+            <div class="text-end my-3" id="orderButtonDiv">
                 <a class="btn btn-success btn-lg " href="#" role="button">Megrendelés</a>
             </div>
             @endif
