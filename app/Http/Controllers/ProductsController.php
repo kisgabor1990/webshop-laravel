@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Category_subcategory;
+use App\Models\Image;
 use App\Models\Opinion;
 use App\Models\Product;
 use App\Models\User;
@@ -76,6 +77,8 @@ class ProductsController extends Controller
             return view('pages.404');
         }
 
+        $images = $product->images()->orderBy('isCover', 'desc')->get();
+
         $similar = Product::where('id', '!=', $product->id)
             ->whereHas('brand', function ($q) {
                 $q->whereNull('deleted_at');
@@ -83,7 +86,7 @@ class ProductsController extends Controller
             ->where(function ($query) use ($product) {
                 $query->where('subcategory_id', $product->subCategory?->id)
                     ->orWhere('category_id', $product->category->id);
-            })->inRandomOrder()->limit(4)->get();
+            })->with(['images', 'ratings', 'brand', 'properties'])->inRandomOrder()->limit(4)->get();
 
         if (Auth::check()) {
             $user  = User::find(auth()->user()->id);
@@ -94,6 +97,7 @@ class ProductsController extends Controller
 
         return view('products.show')->with([
             'product' => $product,
+            'images' => $images,
             'similar' => $similar,
             'user' => $user,
             'opinions' => $opinions,

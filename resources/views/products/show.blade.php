@@ -8,7 +8,7 @@
             <div id="carousel-thumb" class="carousel shadow slide carousel-thumbnails" data-bs-ride="carousel">
                 <!--Slides-->
                 <div class="carousel-inner" role="listbox">
-                    @foreach ($product->images as $key => $image)
+                    @foreach ($images as $key => $image)
                         <div class="carousel-item text-center @if ($key==0) active @endif" data-bs-toggle="modal" data-bs-target="#galleryModal">
                             <img class="d-block w-100" src="{{ url($image->path) }}" alt="{{ $product->name }}"
                                 data-bs-target="#galleryCarousel" data-bs-slide-to="{{ $key }}">
@@ -17,7 +17,7 @@
                 </div>
                 <!--/.Slides-->
                 <!--Controls-->
-                @if (count($product->images) > 1)
+                @if (count($images) > 1)
                     <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
@@ -29,7 +29,7 @@
                 @endif
                 <!--/.Controls-->
                 <ol class="carousel-indicators">
-                    @foreach ($product->images as $key => $image)
+                    @foreach ($images as $key => $image)
                         <li data-bs-target="#carousel-thumb" data-bs-slide-to="{{ $key }}" class="@if ($key==0) active @endif"> <img
                                 class="d-block w-100 img-fluid" src="{{ url($image->path) }}">
                         </li>
@@ -47,14 +47,14 @@
                         <div id="galleryCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel"
                             data-bs-interval="false">
                             <div class="carousel-inner">
-                                @foreach ($product->images as $key => $image)
+                                @foreach ($images as $key => $image)
                                     <div class="carousel-item @if ($key==0) active @endif">
                                         <img src="{{ url($image->path) }}" class="d-block w-100" alt="..."
                                             data-bs-dismiss="modal">
                                     </div>
                                 @endforeach
                             </div>
-                            @if (count($product->images) > 1)
+                            @if (count($images) > 1)
                                 <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel"
                                     data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
