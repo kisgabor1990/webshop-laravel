@@ -29,20 +29,23 @@
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#filter">
             <div class="accordion-body">
-                <form id="productFilter" action="">
+                <form id="productFilter">
                     <div class="row row-cols-2 row-cols-lg-4 mx-3">
                         <div class="col">
                             <h6 class="my-3">Gyártók</h6>
                             @foreach ($category->brands?->whereNull('deleted_at') ?? $category->category->brands->whereNull('deleted_at') as $brand)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="{{ $brand->name }}"
-                                        id="brand_{{ $brand->name }}" name="brand[]">
+                                        id="brand_{{ $brand->name }}" name="brand[]" @if (is_array(old('brand')) && in_array($brand->name, old('brand'))) checked @endif>
                                     <label class="form-check-label" for="brand_{{ $brand->name }}">
                                         {{ $brand->name }} ({{ !$category->category_id ? $brand->products->where('category_id', $category->id)->count() : $brand->products->where('subcategory_id', $category->id)->count() }})
                                     </label>
                                 </div>
                             @endforeach
                         </div>
+                        @php
+                            $old_properties = old('properties');
+                        @endphp
                         @foreach (($category->properties?->whereNull('deleted_at') ?? $category->category->properties->whereNull('deleted_at'))->where('hasList', 1) as $property)
                             <div class="col">
                                 <h6 class="my-3">{{ $property->name }}</h6>
@@ -50,7 +53,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="{{ $value->name }}"
                                             id="{{ $property->name }}_{{ $value->name }}"
-                                            name="{{ $property->name }}[]">
+                                            name="properties[{{ $property->id }}][]" @if (is_array(old('properties')) && isset($old_properties[$property->id]) && in_array($value->name, $old_properties[$property->id])) checked @endif>
                                         <label class="form-check-label" for="{{ $property->name }}_{{ $value->name }}">
                                             {{ $value->name }} ({{ $category->hasSubCategories ? $property->products->whereNull('brand.deleted_at')->where('pivot.value', $value->name)->count() : $property->products->whereNull('brand.deleted_at')->where('subcategory_id', $category->id)->where('pivot.value', $value->name)->count() }})
                                         </label>
@@ -61,16 +64,16 @@
                         <div class="col">
                             <h5 class="my-3">Ár</h5>
                             <div class="form-group">
-                                <label for="minPrice" class="form-label">Min: <span id="minPrice_value" class="fw-bold"></span></label>
+                                <label for="minPrice" class="form-label">Min: <span id="minPrice_value" class="fw-bold">{{ number_format(old('price.min'), 0, ',', ' ') ?? '0' }} Ft.</span></label>
                                 <input type="range" class="form-range" id="minPrice" name="price[min]"
-                                min="0" max="{{ $products->max('price') }}"
-                                step="1000" value="0">
+                                min="0" max="{{ old('price.max') ?? $category->products->max('price') }}"
+                                step="1000" value="{{ old('price.min') ?? '0' }}">
                             </div>
                             <div class="form-group">
-                                <label for="maxPrice" class="form-label">Max: <span id="maxPrice_value" class="fw-bold"></span></label>
+                                <label for="maxPrice" class="form-label">Max: <span id="maxPrice_value" class="fw-bold">{{ number_format(old('price.max') ?? round($category->products->max('price'), -3), 0, ',', ' ') }} Ft.</span></label>
                                 <input type="range" class="form-range" id="maxPrice" name="price[max]"
-                                min="0" max="{{ round($products->max('price'), -3) }}"
-                                step="1000" value="{{ round($products->max('price'), -3) }}">
+                                min="{{ old('price.min') ?? '0' }}" max="{{ round($category->products->max('price'), -3) }}"
+                                step="1000" value="{{ old('price.max') ?? round($category->products->max('price'), -3) }}">
                             </div>
                         </div>
                     </div>
@@ -88,13 +91,13 @@
 
 
     <div class="row row-cols-1 row-cols-lg-3">
-        @foreach ($products->whereNull('brand.deleted_at') as $product)
+        @foreach ($products as $product)
             @include('pages.product_card')
         @endforeach
     </div>
     <div class="row">
         <div class="col d-flex justify-content-center">
-            {{ $products->onEachSide(1)->links() }}
+            {{ $products->onEachSide(1)->appends(request()->all())->links() }}
         </div>
     </div>
 

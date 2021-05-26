@@ -36,15 +36,34 @@ class ProductsController extends Controller
             $model = $category;
         }
 
-        // $filterBrand = $productModel->getBrands($categoryData->id);
-        // $filterProperty = $productModel->getProperties($categoryData->id);
+        $products = $model->products()->with(['category', 'subCategory', 'images', 'ratings', 'brand', 'properties.values'])
+            ->whereHas('brand', function ($q) {
+                $q->whereNull('deleted_at');
+            })->orderBy('id')->getQuery();
 
+        if ($request->brand) {
+            $products->whereHas('brand', function ($q) use ($request) {
+                $q->whereNull('deleted_at');
+                $q->whereIn('name', $request->brand);
+            });
+        }
+        if ($request->properties) {
+            foreach ($request->properties as $key => $property) {
+                $products->whereHas('properties', function ($q) use ($key, $property) {
+                    $q->where('property_id', $key)
+                        ->whereIn('value', $property);
+                });
+            }
+        }
+        if ($request->price) {
+            $products->whereBetween('price', [$request->price['min'], $request->price['max']]);
+        }
+
+        $request->flash();
         return view('products.list')->with([
             'category' => $model,
-            'products' => $model->products()->with(['category', 'subCategory', 'images', 'ratings', 'brand', 'properties.values'])->whereHas('brand', function($q) {$q->whereNull('deleted_at');})->paginate(6),
-            ]);
-            // ->with('filterBrand', $filterBrand)
-            // ->with('filterProperty', $filterProperty);
+            'products' => $products->paginate(6),
+        ]);
     }
 
     public function show(string $product_slug)
@@ -58,13 +77,13 @@ class ProductsController extends Controller
         }
 
         $similar = Product::where('id', '!=', $product->id)
-                            ->whereHas('brand', function($q) {
-                                $q->whereNull('deleted_at');
-                            })
-                            ->where(function ($query) use ($product) {
-                                $query->where('subcategory_id', $product->subCategory?->id)
-                                        ->orWhere('category_id', $product->category->id);
-                            })->inRandomOrder()->limit(4)->get();
+            ->whereHas('brand', function ($q) {
+                $q->whereNull('deleted_at');
+            })
+            ->where(function ($query) use ($product) {
+                $query->where('subcategory_id', $product->subCategory?->id)
+                    ->orWhere('category_id', $product->category->id);
+            })->inRandomOrder()->limit(4)->get();
 
         if (Auth::check()) {
             $user  = User::find(auth()->user()->id);
@@ -81,5 +100,4 @@ class ProductsController extends Controller
             'myOpinion' => $myOpinion
         ]);
     }
-
 }

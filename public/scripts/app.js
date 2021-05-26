@@ -136,20 +136,26 @@ $(function () {
         // Termék szűrő
         .on('input', '#minPrice', function () {
             $('#minPrice_value').html(numberFormat($(this).val()) + " Ft.");
+            $('#maxPrice').attr('min', $('#minPrice').val());
         })
         .on('input', '#maxPrice', function () {
             $('#maxPrice_value').html(numberFormat($(this).val()) + " Ft.");
+            $('#minPrice').attr('max', $('#maxPrice').val());
         })
 
-        .on('click', '#resetButton', function () {
-            $(".form-check-input").removeAttr("checked");
+        .on('click', '#resetButton', function (e) {
+            e.preventDefault();
+            $('#minPrice').attr('value', 0);
+            $('#minPrice_value').html("0 Ft.");
+            $('#maxPrice').attr('value', $('#maxPrice').attr('max'));
+            $('#maxPrice_value').html(numberFormat($('#maxPrice').attr('max')) + " Ft.");
+            $('input:checkbox').prop('checked', false);
         })
         .on('submit', '#productFilter', function () {
-            $(this).find(":input").filter(function () {
-                return !this.value;
-            }).attr("disabled", "disabled");
+            if ($('#minPrice').val() == 0 && $('#maxPrice').val() == $('#maxPrice').attr('max')) {
+                $('#minPrice').prop('disabled', true);
+                $('#maxPrice').prop('disabled', true);
+            }
         });
-
-
 
 });
