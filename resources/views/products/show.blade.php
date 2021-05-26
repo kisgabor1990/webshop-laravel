@@ -9,32 +9,30 @@
                 <!--Slides-->
                 <div class="carousel-inner" role="listbox">
                     @foreach ($product->images as $key => $image)
-                    <div class="carousel-item text-center @if ($key == 0) active @endif" data-bs-toggle="modal" data-bs-target="#galleryModal">
-                        <img class="d-block w-100"
-                        src="{{ url($image->path) }}" alt="{{ $product->name }}" 
-                        data-bs-target="#galleryCarousel" data-bs-slide-to="{{ $key }}">
-                    </div>
+                        <div class="carousel-item text-center @if ($key==0) active @endif" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                            <img class="d-block w-100" src="{{ url($image->path) }}" alt="{{ $product->name }}"
+                                data-bs-target="#galleryCarousel" data-bs-slide-to="{{ $key }}">
+                        </div>
                     @endforeach
                 </div>
                 <!--/.Slides-->
                 <!--Controls-->
                 @if (count($product->images) > 1)
-                <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carousel-thumb" role="button" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                    <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel-thumb" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 @endif
                 <!--/.Controls-->
                 <ol class="carousel-indicators">
                     @foreach ($product->images as $key => $image)
-                    <li data-bs-target="#carousel-thumb" data-bs-slide-to="{{ $key }}" class="@if ($key == 0) active @endif"> <img
-                        class="d-block w-100 img-fluid"
-                        src="{{ url($image->path) }}">
-                    </li>
+                        <li data-bs-target="#carousel-thumb" data-bs-slide-to="{{ $key }}" class="@if ($key==0) active @endif"> <img
+                                class="d-block w-100 img-fluid" src="{{ url($image->path) }}">
+                        </li>
                     @endforeach
                 </ol>
             </div>
@@ -43,33 +41,37 @@
         {{-- Modal galéria --}}
         <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-body">
-                  {{-- Carousel galéria --}}
-                  <div id="galleryCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
-                    <div class="carousel-inner">
-                        @foreach ($product->images as $key => $image)
-                        <div class="carousel-item @if ($key == 0) active @endif">
-                            <img src="{{ url($image->path) }}" class="d-block w-100" alt="..." data-bs-dismiss="modal">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        {{-- Carousel galéria --}}
+                        <div id="galleryCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel"
+                            data-bs-interval="false">
+                            <div class="carousel-inner">
+                                @foreach ($product->images as $key => $image)
+                                    <div class="carousel-item @if ($key==0) active @endif">
+                                        <img src="{{ url($image->path) }}" class="d-block w-100" alt="..."
+                                            data-bs-dismiss="modal">
+                                    </div>
+                                @endforeach
+                            </div>
+                            @if (count($product->images) > 1)
+                                <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            @endif
                         </div>
-                        @endforeach
+                        {{-- /.Carousel galéria --}}
                     </div>
-                    @if (count($product->images) > 1)
-                    <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                    @endif
-                  </div>
-                  {{-- /.Carousel galéria --}}
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
         {{-- /.Modal galéria --}}
         <div class="col-12 col-lg-7 mt-3">
             <div class="row">
@@ -100,8 +102,8 @@
             <hr>
             <p class="h1">{{ number_format($product->price, 0, ',', ' ') }} Ft.</p>
             <p class="mt-5"><a id="addToCartButton" class="btn btn-outline-success rounded-circle shadow"
-                    href="{{ url('/kosarba-rakom/' . $product->slug) }}" data-bs-tooltip="tooltip" data-placement="right"
-                    title="Kosárba rakom!"><i class="fas fa-cart-plus fa-fw"></i></a></p>
+                    data-href="{{ url('/kosarba-rakom/' . $product->slug) }}" data-bs-tooltip="tooltip"
+                    data-bs-placement="right" title="Kosárba rakom!"><i class="fas fa-cart-plus fa-fw"></i></a></p>
         </div>
     </div>
     <div class="row mt-5">
@@ -135,10 +137,10 @@
                                 <table class="table table-hover">
                                     <tbody>
                                         @foreach ($product->properties->whereNull('deleted_at') as $property)
-                                        <tr class="border-top-0">
-                                            <th class="user-select-none" scope="row">{{ $property->name }}:</th>
-                                            <td>{{ $property->pivot->value }}</td>
-                                        </tr>
+                                            <tr class="border-top-0">
+                                                <th class="user-select-none" scope="row">{{ $property->name }}:</th>
+                                                <td>{{ $property->pivot->value }}</td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -278,30 +280,16 @@
     </div>
 </div>
 
-@if (session()->has('success'))
-    <div class="modal fade" id="addToCartSuccess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center h4">
-                    {{ session('success') }}
-                </div>
+{{-- Modal sikeres kosárba helyezés --}}
+<div class="modal fade" id="addToCartSuccess" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center h4">
+                A termék sikeresen hozzá lett adva a kosárhoz!
             </div>
         </div>
     </div>
+</div>
+{{-- /.Modal sikeres kosárba helyezés --}}
 
-@endif
-
-@endsection
-
-@section('scripts')
-<script>
-    @if (session()->has('success'))
-    var myModal = new bootstrap.Modal(document.getElementById('addToCartSuccess'))
-        myModal.show();
-        setTimeout(function () {
-        myModal.hide();
-        },2000)
-    @endif
-
-</script>
 @endsection

@@ -132,6 +132,62 @@ $(function () {
         )
         .on('submit', '#regForm', function () {
         })
+        .on('click', '#addToCartButton', function () {
+            let this_r = $(this);
+
+            $.get(this_r.data('href'), function (data) {
+                let cart_quantity = Number($('.cart_quantity').html());
+                let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
+                $('.cart_quantity').html(cart_quantity + 1);
+                $('.cart_price').html(numberFormat(cart_price + Number(data.price)));
+                var myModal = new bootstrap.Modal(document.getElementById('addToCartSuccess'))
+                myModal.show();
+                setTimeout(function () {
+                    myModal.hide();
+                }, 1500)
+            });
+
+        })
+        .on('click', '.cart-increase', function () {
+            let this_r = $(this);
+
+            $.get(this_r.data('href'), function (data) {
+                let cart_quantity = Number($('.cart_quantity').html());
+                let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
+                let cart_total_price = Number($('.cart_total_price').html().replace(/\s+/g, ''));
+                let product_total_price = Number($('.product' + this_r.data('id') + ' .product_total_price').html().replace(/\s+/g, ''));
+                $('.cart_quantity').html(cart_quantity + 1);
+                $('.cart_price').html(numberFormat(cart_price + Number(data.price)));
+                $('.cart_total_price').html(numberFormat(cart_total_price + Number(data.price)));
+                $('.product' + this_r.data('id') + ' .product_total_price').html(numberFormat(product_total_price + Number(data.price)));
+                $('.product' + this_r.data('id') + ' input').attr('value', data.quantity);
+            });
+        })
+        .on('click', '.cart-decrease', function () {
+            let this_r = $(this);
+
+            $.get(this_r.data('href'), function (data) {
+                let cart_quantity = Number($('.cart_quantity').html());
+                let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
+                let cart_total_price = Number($('.cart_total_price').html().replace(/\s+/g, ''));
+                let product_total_price = Number($('.product' + this_r.data('id') + ' .product_total_price').html().replace(/\s+/g, ''));
+                $('.cart_quantity').html(cart_quantity - 1);
+                $('.cart_price').html(numberFormat(cart_price - Number(data.price)));
+                $('.cart_total_price').html(numberFormat(cart_total_price - Number(data.price)));
+                if (data.quantity > 0) {
+                    $('.product' + this_r.data('id') + ' .product_total_price').html(numberFormat(product_total_price - Number(data.price)));
+                    $('.product' + this_r.data('id') + ' input').attr('value', data.quantity);
+                } else {
+                    $('.product' + this_r.data('id')).fadeOut(500, function() {
+                        $(this).remove();
+                        if ($("#products").children('div').length == 0) {
+                            $('hr').remove();
+                            $('#products').html('<p class="h3">A kosár üres!</p>');
+                        }
+                    });
+                }
+            });
+        })
 
         // Termék szűrő
         .on('input', '#minPrice', function () {

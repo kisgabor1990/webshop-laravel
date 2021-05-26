@@ -12,38 +12,44 @@ class CartController extends Controller
         return view('products.kosar');
     }
 
-    public function addToCart($id)
+    public function addToCart($slug)
     {
-        $productModel = new Product();
+        
 
-        if (!($product = $productModel->getProduct($id))) {
+        if (!($product = Product::where('slug', $slug)->first())) {
             return view('pages.404');
         }
 
-        $product_name = $product->brand . " " . $product->property . " " . $product->type;
         $cart = session()->get('cart');
 
         if (!$cart) {
             $cart = [
-                $id => [
-                    'name' => $product_name,
+                $product->id => [
+                    'name' => $product->name,
                     'quantity' => 1,
-                    'price' => $product->price
+                    'price' => $product->price,
+                    'image' => $product->coverImage()->path,
+                    'slug' => $product->slug,
+                    'brand' => $product->brand->name,
                 ]
             ];
-        } else if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+        } else if (isset($cart[$product->id])) {
+            $cart[$product->id]['quantity']++;
         } else {
-            $cart[$id] = [
-                'name' => $product_name,
+            $cart[$product->id] = [
+                'name' => $product->name,
                 'quantity' => 1,
-                'price' => $product->price
+                'price' => $product->price,
+                'image' => $product->coverImage()->path,
+                'slug' => $product->slug,
+                'brand' => $product->brand->name,
             ];
         }
 
         session()->put('cart', $cart);
 
-        return redirect()->back()->withSuccess('A termék sikeresen hozzá lett adva a kosárhoz!');
+        // return redirect()->back()->withSuccess('A termék sikeresen hozzá lett adva a kosárhoz!');
+        return response()->json($product);
     }
 
     public function increase($id)
@@ -54,12 +60,14 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->back();
+        return response()->json($cart[$id]);
     }
     public function decrease($id)
     {
         $cart = session()->get('cart');
         if (isset($cart[$id])) {
+            $product = $cart[$id];
+            $product['quantity']--;
             if ($cart[$id]['quantity'] > 1) {
                 $cart[$id]['quantity']--;
             } else {
@@ -69,7 +77,7 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->back();
+        return response()->json($product);
     }
 
     public function destroy($id)

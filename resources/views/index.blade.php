@@ -88,8 +88,8 @@
                                             $quantity += $product['quantity'];
                                         @endphp
                                     @endforeach
-                                    {{ number_format($total, 0, ',', ' ') }} Ft.
-                                    ({{ $quantity }})
+                                    <span class="cart_price">{{ number_format($total, 0, ',', ' ') }}</span> Ft.
+                                    (<span class="cart_quantity">{{ $quantity }}</span>)
                                 </div>
                                 <div class="col-auto px-0">
                                     <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
@@ -274,8 +274,8 @@
                                             $quantity += $product['quantity'];
                                         @endphp
                                     @endforeach
-                                    {{ number_format($total, 0, ',', ' ') }} Ft.
-                                    ({{ $quantity }})
+                                    <span class="cart_price">{{ number_format($total, 0, ',', ' ') }}</span> Ft.
+                                    (<span class="cart_quantity">{{ $quantity }}</span>)
                                 </div>
                                 <div class="col-auto pe-0">
                                     <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
