@@ -11,7 +11,7 @@
     <title>Webshop</title>
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
 
@@ -342,7 +342,7 @@
         </a>
 
     </div>
-    <div class="container-fluid bg-dark bg-gradient p-5">
+    <div class="container-fluid bg-dark bg-gradient p-5 mt-auto">
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0 d-flex align-items-end justify-content-center">
                 <div id="also_linkek" class="row text-center text-lg-start">
