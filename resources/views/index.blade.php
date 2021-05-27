@@ -42,11 +42,32 @@
                 </div>
             </div>
 
+            {{-- Kosár offcanvas gomb --}}
+            @php
+                $total = 0;
+                $quantity = 0;
+                @endphp
+            @foreach ((array) session('cart') as $product)
+            @php
+                    $total += $product['quantity'] * $product['price'];
+                    $quantity += $product['quantity'];
+                    @endphp
+            @endforeach
+            <a class="btn btn-outline-danger border-0 d-block d-lg-none nav-kosar cartButton"
+            data-href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
+            data-bs-placement="bottom" title="Kosaram"
+            data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge rounded-pill bg-light text-dark cart_quantity">{{ $quantity }}</span>
+            </a>
+            {{-- /.Kosár offcanvas gomb --}}
+
             {{-- Főmenü oldalmenü gomb --}}
             <button class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navMenu"
-                aria-controls="offcanvasExample">
-                <i class="fa fa-bars" data-bs-toggle="offcanvas" href="#navMenu" aria-hidden="true"></i>
+            aria-controls="offcanvasExample">
+            <i class="fa fa-bars" data-bs-toggle="offcanvas" href="#navMenu" aria-hidden="true"></i>
             </button>
+            {{-- /.Főmenü oldalmenü gomb --}}
 
             {{-- Főmenü oldalmenü tartalma --}}
             <div class="offcanvas offcanvas-end text-center bg-dark text-light" tabindex="-1" id="navMenu"
@@ -74,32 +95,6 @@
                         </a>
                     @endif
                     <div class="row">
-                        {{-- Kosár --}}
-                        <div class="col-auto my-3 mx-auto border border-danger border-2 rounded-pill">
-                            <div class="row align-items-center justify-content-between">
-                                <div class="col-auto ps-3 h5 mb-0 user-select-none">
-                                    @php
-                                        $total = 0;
-                                        $quantity = 0;
-                                    @endphp
-                                    @foreach ((array) session('cart') as $product)
-                                        @php
-                                            $total += $product['quantity'] * $product['price'];
-                                            $quantity += $product['quantity'];
-                                        @endphp
-                                    @endforeach
-                                    <span class="cart_price">{{ number_format($total, 0, ',', ' ') }}</span> Ft.
-                                    (<span class="cart_quantity">{{ $quantity }}</span>)
-                                </div>
-                                <div class="col-auto px-0">
-                                    <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
-                                        href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
-                                        data-bs-placement="bottom" title="Kosaram!">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                         {{-- Profil --}}
                         <div class="col-auto my-3 mx-auto">
                             <a class="btn btn-outline-success rounded-circle profilButton"
@@ -152,6 +147,17 @@
         </div>
     </nav>
 
+    {{-- Kosár offcanvas --}}
+    <div class="offcanvas offcanvas-end bg-dark text-light" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasCartLabel">Kosár tartalma</h5>
+          <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          
+        </div>
+      </div>
+{{-- /.Kosár offcanvas --}}
 
     <div class="container-fluid  d-none d-lg-block bg-dark bg-gradient">
         <div class="container text-white ">
@@ -278,14 +284,17 @@
                                     (<span class="cart_quantity">{{ $quantity }}</span>)
                                 </div>
                                 <div class="col-auto pe-0">
-                                    <a id="cartButton" class="btn btn-danger rounded-circle nav-kosar"
-                                        href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
-                                        data-bs-placement="top" title="Kosaram">
+                                    <a class="btn btn-danger rounded-circle nav-kosar cartButton cartButton-lg"
+                                        data-href="{{ url('/kosar') }}"
+                                         data-bs-tooltip="tooltip"
+                                        data-bs-placement="top" title="Kosaram"
+                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                         <i class="fas fa-shopping-cart fa-fw"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        
 
 
                     </div>

@@ -177,6 +177,12 @@ $(function () {
                 }
             });
         })
+        .on('click', '.cartButton', function() {
+            let this_r = $(this);
+            $.get(this_r.data("href"), function(data) {
+                $("#offcanvasCart .offcanvas-body").html(data);
+            });
+        })
 
         // Termék szűrő
         .on('input', '#minPrice', function () {
