@@ -104,4 +104,22 @@ class ProductsController extends Controller
             'myOpinion' => $myOpinion
         ]);
     }
+
+    public function search(Request $request) {
+        $query_string = $request->q;
+        $query_array = explode(' ', $request->q);
+
+        $products = Product::with(['images', 'ratings', 'brand', 'properties.values'])
+            ->where(function($q) use ($query_array) {
+                foreach ($query_array as $key => $query) {
+                    $q->where('name', 'LIKE', '%' . $query . '%');
+                }
+            })->paginate(6);
+        
+        
+        return view('products.kereses')->with([
+            'query' => $query_string,
+            'products' => $products,
+        ]);
+    }
 }

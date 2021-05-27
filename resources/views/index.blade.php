@@ -54,8 +54,7 @@
                     @endphp
             @endforeach
             <a class="btn btn-outline-danger border-0 d-block d-lg-none nav-kosar cartButton"
-            data-href="{{ url('/kosar') }}" data-bs-tooltip="tooltip"
-            data-bs-placement="bottom" title="Kosaram"
+            data-href="{{ url('/kosar') }}" 
             data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
             <i class="fas fa-shopping-cart"></i>
             <span class="badge rounded-pill bg-light text-dark cart_quantity">{{ $quantity }}</span>
@@ -126,10 +125,10 @@
                     </button>
                 </div>
                 <div class="offcanvas-body list-group list-group-flush">
-                    <form action="" method="get">
+                    <form action="{{ url('termekek/kereses') }}" method="get">
                         <div class="row mb-5">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="query" placeholder="Keresés" required>
+                                <input type="text" class="form-control" name="q" placeholder="Keresés" required>
                                 <button type="submit" class="btn btn-outline-warning ml-3 searchButton"
                                     data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i
                                         class="fas fa-search"></i></button>
@@ -183,10 +182,10 @@
                                     <span><i class="far fa-envelope h5 me-1"></i> info@valami.hu</span>
                                 </div>
                             </div>
-                            <form action="" method="get">
+                            <form action="{{ url('termekek/kereses') }}" method="get">
                                 <div class="row">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="query" placeholder="Keresés"
+                                        <input type="text" class="form-control" name="q" placeholder="Keresés"
                                             required>
                                         <button type="submit" class="btn btn-outline-warning searchButton"
                                             data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i

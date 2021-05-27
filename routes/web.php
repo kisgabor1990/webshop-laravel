@@ -35,6 +35,7 @@ Route::redirect('/home', url('/'));
 
 Route::get('/termekek', [ProductsController::class, 'index']);
 Route::get('/termek/{product:slug}', [ProductsController::class, 'show']);
+Route::get('/termekek/kereses', [ProductsController::class, 'search']);
 Route::get('/termekek/{category_slug}/{subcategory_slug?}', [ProductsController::class, 'list']);
 
 
