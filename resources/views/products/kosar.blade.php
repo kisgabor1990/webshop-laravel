@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                             <div class="col-2 text-end">
-                                <a class="btn btn-danger fw-bold px-2" href="{{ url('/kosar/'. $id . '/torles') }}" role="button"><i
+                                <a class="btn btn-danger fw-bold px-2 removeFromCart" data-id="{{ $id }}" data-href="{{ url('/kosar/'. $id . '/torles') }}" role="button"><i
                                         class="fas fa-trash-alt"></i></a>
                             </div>
                         </div>

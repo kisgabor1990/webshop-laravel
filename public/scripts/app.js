@@ -177,6 +177,28 @@ $(function () {
                 }
             });
         })
+        .on('click', '.removeFromCart', function() {
+            let this_r = $(this);
+
+            $.get(this_r.data('href'), function() {
+                let cart_quantity = Number($('.cart_quantity').html());
+                let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
+                let cart_total_price = Number($('.cart_total_price').html().replace(/\s+/g, ''));
+                let product_total_quantity = Number($('.product' + this_r.data('id') + ' input').attr('value'));
+                let product_total_price = Number($('.product' + this_r.data('id') + ' .product_total_price').html().replace(/\s+/g, ''));
+                $('.cart_quantity').html(cart_quantity - product_total_quantity);
+                $('.cart_price').html(numberFormat(cart_price - product_total_price));
+                $('.cart_total_price').html(numberFormat(cart_total_price - product_total_price));
+                $('.product' + this_r.data('id')).fadeOut(500, function() {
+                    $(this).remove();
+                    if ($("#products").children('div').length == 0) {
+                        $('hr').remove();
+                        $('#orderButtonDiv').remove();
+                        $('#products').html('<p class="h3">A kosár üres!</p>');
+                    }
+                });
+            });
+        })
         .on('click', '.cartButton', function() {
             let this_r = $(this);
             $.get(this_r.data("href"), function(data) {

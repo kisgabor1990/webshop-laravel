@@ -48,7 +48,6 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
-        // return redirect()->back()->withSuccess('A termék sikeresen hozzá lett adva a kosárhoz!');
         return response()->json($product);
     }
 
@@ -88,6 +87,6 @@ class CartController extends Controller
             session()->put('cart', $cart);
         }
 
-        return redirect()->back();
+        return response(status: 200);
     }
 }
