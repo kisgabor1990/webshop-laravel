@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Billing_address;
 use App\Models\Shipping_address;
 use App\Models\User;
+use App\Notifications\Welcome;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -61,6 +62,7 @@ class RegistrationController extends Controller {
 
         $shipping_address->save();
 
+        $user->notify(new Welcome());
         Auth::login($user);
         event(new Registered($user));
 
