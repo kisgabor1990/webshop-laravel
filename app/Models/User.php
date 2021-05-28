@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Nagy\LaravelRating\Traits\Rate\CanRate;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, SoftDeletes, CanRate;
 

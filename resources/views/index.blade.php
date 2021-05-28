@@ -377,6 +377,25 @@
 </div>
 {{-- /.Kosár offcanvas --}}
 
+{{-- Email cím nincs megerősítve --}}
+@if (auth()->check() && !auth()->user()->hasVerifiedEmail())
+<div class="position-fixed bottom-0 start-50 p-3" style="z-index: 5">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body bg-danger text-center">
+            <p class="h4">Email címe nincs megerősítve!</p>
+            <p class="h6">
+                Megerősítő email újraküldése
+            </p>
+            <form action="{{ url('profil/email-megerosites') }}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-primary">Küldés</button>
+            </form>
+        </div>
+    </div>
+</div>
+@endif
+{{-- /.Email cím nincs megerősítve --}}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>

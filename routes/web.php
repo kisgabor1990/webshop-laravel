@@ -16,6 +16,8 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SessionsController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,9 +59,27 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/bejelentkezes', [SessionsController::class, 'store']);
 });
 
+Route::get('/profil/email-megerosites', function() {
+    // return view('auth.email_megerosites');
+    return redirect('/')->withErrors('Erősítse meg email címét!');
+})->name('verification.notice');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/kijelentkezes', [SessionsController::class, 'destroy']);
     Route::get('/profil', [SessionsController::class, 'index']);
+
+
+    Route::get('/profil/email-megerosites/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+    
+        return redirect('/')->withSuccess('Email címe sikeresen megerősítve!');
+    })->middleware('signed')->name('verification.verify');
+
+    Route::post('/profil/email-megerosites', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+    
+        return redirect('/')->withSuccess('Az email cím megerősítéséhez szükséges levelet kiküldtük!');
+    })->middleware('throttle:6,1')->name('verification.send');
 
     Route::post('/termekek/{id}/velemeny', [OpinionController::class, 'store']);
     Route::get('/termekek/{id}/velemeny/szerkesztes', [OpinionController::class, 'edit']);

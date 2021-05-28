@@ -7,6 +7,8 @@ use App\Models\Address;
 use App\Models\Billing_address;
 use App\Models\Shipping_address;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use function view;
 
@@ -59,7 +61,10 @@ class RegistrationController extends Controller {
 
         $shipping_address->save();
 
-        return redirect()->back()->withSuccess('Sikeres regisztráció!');
+        Auth::login($user);
+        event(new Registered($user));
+
+        return redirect('/')->withSuccess('Sikeres regisztráció! Az email cím megerősítéséhez szükséges levelet kiküldtük!');
     }
 
 }
