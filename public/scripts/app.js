@@ -128,7 +128,7 @@ $(function () {
                 let cart_quantity = Number($('.cart_quantity').html());
                 let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
                 if (cart_quantity == 0) {
-                    $('.cart_quantity').removeClass('d-none').addClass('d-inline');
+                    $('nav .cart_quantity').removeClass('d-none').addClass('d-inline');
                 }
                 $('.cart_quantity').html(cart_quantity + 1);
                 $('.cart_price').html(numberFormat(cart_price + Number(data.price)));
@@ -164,7 +164,7 @@ $(function () {
                 let cart_total_price = Number($('.cart_total_price').html().replace(/\s+/g, ''));
                 let product_total_price = Number($('.product' + this_r.data('id') + ' .product_total_price').html().replace(/\s+/g, ''));
                 if (cart_quantity == 1) {
-                    $('.cart_quantity').removeClass('d-inline').addClass('d-none');
+                    $('nav .cart_quantity').removeClass('d-inline').addClass('d-none');
                 }
                 $('.cart_quantity').html(cart_quantity - 1);
                 $('.cart_price').html(numberFormat(cart_price - Number(data.price)));
@@ -194,7 +194,7 @@ $(function () {
                 let product_total_quantity = Number($('.product' + this_r.data('id') + ' input').attr('value'));
                 let product_total_price = Number($('.product' + this_r.data('id') + ' .product_total_price').html().replace(/\s+/g, ''));
                 if (cart_quantity - product_total_quantity == 0) {
-                    $('.cart_quantity').removeClass('d-inline').addClass('d-none');
+                    $('nav .cart_quantity').removeClass('d-inline').addClass('d-none');
                 }
                 $('.cart_quantity').html(cart_quantity - product_total_quantity);
                 $('.cart_price').html(numberFormat(cart_price - product_total_price));
