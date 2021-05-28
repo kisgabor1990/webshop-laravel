@@ -344,7 +344,7 @@
 
 {{-- Profil offcanvas --}}
 @auth
-    <div class="offcanvas offcanvas-end bg-dark text-light" tabindex="-1" id="offcanvasProfil" aria-labelledby="offcanvasProfilLabel">
+    <div class="offcanvas offcanvas-end text-center bg-dark text-light" tabindex="-1" id="offcanvasProfil" aria-labelledby="offcanvasProfilLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasProfilLabel">Profil</h5>
             <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
