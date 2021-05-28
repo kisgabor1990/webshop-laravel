@@ -36,18 +36,18 @@ class AuthServiceProvider extends ServiceProvider
                 ->line('Email címének megerősítéséhez kattintson az alábbi gombra.')
                 ->action('Email cím megerősítése', $url)
                 ->line('Ha nem Ön hozta létre ezt a fiókot, hagyja levelünket figyelmen kívül!')
-                ->salutation('Üdvözlettel: ' . config('app.name') . ' csapata!');
+                ->salutation('Üdvözlettel: a(z) ' . config('app.name') . ' csapata!');
             });
             
-            ResetPassword::toMailUsing(function($user, $token) {
-                return (new MailMessage)
-                ->subject('Új jelszó beállítása')
-                ->greeting('Kedves ' . $user->name . '!')
-                ->line('Azért kapta ezt az emailt, mert Ön, vagy valaki az Ön email címével új jelszót igényelt oldalunkon.')
-                ->action('Új jelszó', url('uj-jelszo', [$token, $user->email]))
-                ->line('Az új jelszó beállításához szükséges link ' . config('auth.passwords.'.config('auth.defaults.passwords').'.expire') . ' percig érvényes.')
-                ->line('Ha nem Ön kezdeményezte az új jelszó kérését, akkor további teendője nincs.')
-                ->salutation('Üdvözlettel: ' . config('app.name') . ' csapata!');
+        ResetPassword::toMailUsing(function($notifiable, $token) {
+            return (new MailMessage)
+            ->subject('Új jelszó beállítása')
+            ->greeting('Kedves ' . $notifiable->name . '!')
+            ->line('Azért kapta ezt az emailt, mert Ön, vagy valaki az Ön email címével új jelszót igényelt oldalunkon.')
+            ->action('Új jelszó', url('uj-jelszo', [$token, $notifiable->email]))
+            ->line('Az új jelszó beállításához szükséges link ' . config('auth.passwords.'.config('auth.defaults.passwords').'.expire') . ' percig érvényes.')
+            ->line('Ha nem Ön kezdeményezte az új jelszó kérését, akkor további teendője nincs.')
+            ->salutation('Üdvözlettel: a(z) ' . config('app.name') . ' csapata!');
         });
     }
 }
