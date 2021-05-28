@@ -8,11 +8,11 @@
                     $total += $product['price'] * $product['quantity'];
                 @endphp
                 <div class="row shadow product{{ $id }}">
-                    <div class="col-12 col-lg-3 pe-0 my-3 text-center">
+                    <div class="col-12 col-lg-3 px-3 px-lg-2 my-3 text-center">
                         <img src="{{ url($product['image']) }}" alt="{{ $product['name'] }}" class="img-fluid">
                     </div>
-                    <div class="col-12 col-lg-9 my-4 d-flex flex-column">
-                        <div class="col-12 mb-auto h5">
+                    <div class="col-12 col-lg-9 my-3 d-flex flex-column">
+                        <div class="col-12 h5">
                             <a href="{{ url('termek/' . $product['slug']) }}" class="text-reset text-decoration-none">
                                 {{ $product['name'] }}
                             </a>
