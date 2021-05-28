@@ -345,7 +345,7 @@
         @yield('newest')
         @yield('similar')
 
-        <a href="/top" class="btn btn-outline-secondary" id="topButton">
+        <a class="btn btn-outline-secondary" id="topButton">
             <i class="fas fa-chevron-up fa-fw"></i>
         </a>
 

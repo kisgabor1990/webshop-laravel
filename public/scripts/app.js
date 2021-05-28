@@ -51,8 +51,11 @@ $(function () {
 
     $(window).scroll(function () {
         // Az oldal tetejére gomb
-        topButtonDisplay = $(this).scrollTop() > 500 ? "block" : "none";
-        $("#topButton").css("display", topButtonDisplay);
+        if ( $(this).scrollTop() > 500 ) {
+            $("#topButton").fadeIn();
+        } else {
+            $("#topButton").fadeOut();
+        }
 
         // Az oldalsó menü követi a görgetést
         if ($(this).scrollTop() < $("#left").height() - $("#sideCategory").height() + ($("#left").offset().top - 60)) {
@@ -69,9 +72,7 @@ $(function () {
 
     $('#topButton').on('click', function (e) {
         e.preventDefault();
-        $('html, body').animate({
-            scrollTop: 0
-        });
+        $('html, body').scrollTop(0);
     });
 
     if ($("#is_company").prop('checked')) {
