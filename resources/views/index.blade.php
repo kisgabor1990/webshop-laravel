@@ -58,15 +58,17 @@
                 data-href="{{ url('/kosar') }}"
                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="badge rounded-pill bg-light text-dark cart_quantity">{{ $quantity }}</span>
+                <span class="badge rounded-pill bg-light text-dark cart_quantity {{ $quantity == 0 ? "d-none" : "d-inline" }}">{{ $quantity }}</span>
                 </a>
                 {{-- /.Kosár offcanvas gomb --}}
+
                 {{-- Profil gomb --}}
                 <a class="btn {{ auth()->check() ? "btn-success" : "btn-outline-success" }} border-0 d-block d-lg-none"
                     data-bs-toggle="{{ auth()->check() ? "offcanvas" : "modal" }}" data-bs-target="{{ auth()->check() ? "#offcanvasProfil" : "#loginModal" }}">
                         <i class="fas fa-user"></i>
                 </a>
                 {{-- /.Profil gomb --}}
+
                 {{-- Főmenü oldalmenü gomb --}}
                 <a class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navMenu"
                 aria-controls="offcanvasExample">
