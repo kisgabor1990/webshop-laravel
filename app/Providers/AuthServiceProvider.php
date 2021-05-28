@@ -32,7 +32,6 @@ class AuthServiceProvider extends ServiceProvider
             return (new MailMessage)
                 ->subject('Email cím megerősítése')
                 ->greeting('Kedves ' . $notifiable->name . '!')
-                ->line('Ön sikeresen regisztált ' . config('app.name') . ' oldalunkon!')
                 ->line('Email címének megerősítéséhez kattintson az alábbi gombra.')
                 ->action('Email cím megerősítése', $url)
                 ->line('Ha nem Ön hozta létre ezt a fiókot, hagyja levelünket figyelmen kívül!')
