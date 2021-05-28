@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-12" id="products">
         @php $total = 0; @endphp
-        @if (session('cart'))
+        @if ($cart)
             <hr class="mt-0 mb-5">
-            @foreach (session('cart') as $id => $product)
+            @foreach ($cart as $id => $product)
                 @php
                     $total += $product['price'] * $product['quantity'];
                 @endphp

@@ -45,14 +45,12 @@
             <div class="btn-group">
                 {{-- Kosár offcanvas gomb --}}
                 @php
-                    $total = 0;
                     $quantity = 0;
-                    @endphp
+                @endphp
                 @foreach ((array) session('cart') as $product)
-                @php
-                        $total += $product['quantity'] * $product['price'];
+                    @php
                         $quantity += $product['quantity'];
-                        @endphp
+                    @endphp
                 @endforeach
                 <a class="btn btn-outline-danger border-0 d-block d-lg-none cartButton"
                 data-href="{{ url('/kosar') }}"
@@ -212,7 +210,7 @@
                                         $total = 0;
                                         $quantity = 0;
                                     @endphp
-                                    @foreach ((array) session('cart') as $product)
+                                    @foreach ((array)$cart as $product)
                                         @php
                                             $total += $product['quantity'] * $product['price'];
                                             $quantity += $product['quantity'];

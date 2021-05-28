@@ -77,7 +77,7 @@
             <div class="row">
                 <div class="col-auto h2 user-select-none" style="color: gold">
                     @php
-                        $rating = $product->ratingsAvg();
+                        $rating = $product->ratings->avg('value');
                     @endphp
                     @foreach (range(1, 5) as $i)
                         <span class="fa-stack" style="width:1em">
@@ -94,8 +94,8 @@
                     @endforeach
                 </div>
                 <div class="col-auto h5 d-flex align-items-center">
-                    ({{ number_format($product->ratingsAvg(), 1, '.', ' ') }} /
-                    {{ $product->ratingsCount() }} értékelés)</div>
+                    ({{ number_format($product->ratings->avg('value'), 1, '.', ' ') }} /
+                    {{ $product->ratings->count() }} értékelés)</div>
             </div>
             <p class="h2">{{ $product->name }}</p>
             <p class="h6">{{ $product->brand->name }}</p>
@@ -148,7 +148,7 @@
                         </div>
                         <div class="tab-pane fade" id="rate" role="tabpanel" aria-labelledby="info-tab">
                             @auth
-                                @if ($user->rated()->contains('id', $product->id))
+                                @if ($product->ratings->contains('model_id', $user->id))
                                     <div class="text-center my-3">
                                         <p class="h5 user-select-none">Az Ön véleménye:</p>
                                         <p class="user-select-none" style="color: gold">
