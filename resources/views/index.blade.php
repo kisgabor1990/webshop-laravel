@@ -42,31 +42,38 @@
                 </div>
             </div>
 
-            {{-- Kosár offcanvas gomb --}}
-            @php
-                $total = 0;
-                $quantity = 0;
-                @endphp
-            @foreach ((array) session('cart') as $product)
-            @php
-                    $total += $product['quantity'] * $product['price'];
-                    $quantity += $product['quantity'];
+            <div class="btn-group">
+                {{-- Kosár offcanvas gomb --}}
+                @php
+                    $total = 0;
+                    $quantity = 0;
                     @endphp
-            @endforeach
-            <a class="btn btn-outline-danger border-0 d-block d-lg-none nav-kosar cartButton"
-            data-href="{{ url('/kosar') }}" 
-            data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="badge rounded-pill bg-light text-dark cart_quantity">{{ $quantity }}</span>
-            </a>
-            {{-- /.Kosár offcanvas gomb --}}
-
-            {{-- Főmenü oldalmenü gomb --}}
-            <button class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navMenu"
-            aria-controls="offcanvasExample">
-            <i class="fa fa-bars" data-bs-toggle="offcanvas" href="#navMenu" aria-hidden="true"></i>
-            </button>
-            {{-- /.Főmenü oldalmenü gomb --}}
+                @foreach ((array) session('cart') as $product)
+                @php
+                        $total += $product['quantity'] * $product['price'];
+                        $quantity += $product['quantity'];
+                        @endphp
+                @endforeach
+                <a class="btn btn-outline-danger border-0 d-block d-lg-none cartButton"
+                data-href="{{ url('/kosar') }}"
+                data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge rounded-pill bg-light text-dark cart_quantity">{{ $quantity }}</span>
+                </a>
+                {{-- /.Kosár offcanvas gomb --}}
+                {{-- Profil gomb --}}
+                <a class="btn {{ auth()->check() ? "btn-success" : "btn-outline-success" }} border-0 d-block d-lg-none"
+                    data-bs-toggle="{{ auth()->check() ? "offcanvas" : "modal" }}" data-bs-target="{{ auth()->check() ? "#offcanvasProfil" : "#loginModal" }}">
+                        <i class="fas fa-user"></i>
+                </a>
+                {{-- /.Profil gomb --}}
+                {{-- Főmenü oldalmenü gomb --}}
+                <a class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navMenu"
+                aria-controls="offcanvasExample">
+                <i class="fa fa-bars" data-bs-toggle="offcanvas" href="#navMenu" aria-hidden="true"></i>
+                </a>
+                {{-- /.Főmenü oldalmenü gomb --}}
+            </div>
 
             {{-- Főmenü oldalmenü tartalma --}}
             <div class="offcanvas offcanvas-end text-center bg-dark text-light" tabindex="-1" id="navMenu"
@@ -78,40 +85,21 @@
                     </button>
                 </div>
                 <div class="offcanvas-body list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action {{ request()->is('/') ? 'active' : '' }}"
+                    <a class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('/') ? 'active' : '' }}"
                         href="{{ url('/') }}">
                         <i class="fas fa-home fa-fw"></i> Főoldal
                     </a>
                     @foreach ($menu as $key => $menu_item)
-                        <a class="list-group-item list-group-item-action {{ request()->is($key) ? 'active' : '' }}"
+                        <a class="list-group-item list-group-item-dark list-group-item-action {{ request()->is($key) ? 'active' : '' }}"
                             href="{{ url('/' . $key) }}">
                             <i class="fas {{ $menu_item[0] }} fa-fw"></i> {{ $menu_item[1] }}
                         </a>
                     @endforeach
                     @if (auth()->check() && auth()->user()->is_admin)
-                        <a class="list-group-item list-group-item-action" href="{{ url('/admin') }}">
+                        <a class="list-group-item list-group-item-dark list-group-item-action" href="{{ url('/admin') }}">
                             <i class="fas fa-user-lock fa-lg fa-fw me-2"></i> Admin
                         </a>
                     @endif
-                    <div class="row">
-                        {{-- Profil --}}
-                        <div class="col-auto my-3 mx-auto">
-                            <a class="btn btn-outline-success rounded-circle profilButton"
-                                href="{{ url('' . Auth::check() ? '/profil' : '/bejelentkezes' . '') }}">
-                                <i class="fas fa-user fa-fw"></i>
-                            </a>
-                        </div>
-                    </div>
-                    @auth
-                        <div class="col-6 mx-auto my-auto text-center border-0">
-                            <div class="card-header pb-3">
-                                Üdvözöljük <br><b>{{ auth()->user()->name }}</b>
-                            </div>
-                            <div class="card-footer border-top pt-3">
-                                <a href="{{ url('/kijelentkezes') }}" class="btn btn-warning">Kijelentkezés</a>
-                            </div>
-                        </div>
-                    @endauth
                 </div>
             </div>
 
@@ -136,7 +124,7 @@
                         </div>
                     </form>
                     @foreach ($categories as $category)
-                        <a class="list-group-item list-group-item-action {{ request()->is('termekek/' . $category->slug) ? 'active' : '' }}"
+                        <a class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('termekek/' . $category->slug) ? 'active' : '' }}"
                             href="{{ url('/termekek/' . $category->slug) }}">{{ $category->name }}</a>
                     @endforeach
 
@@ -145,18 +133,6 @@
 
         </div>
     </nav>
-
-    {{-- Kosár offcanvas --}}
-    <div class="offcanvas offcanvas-end bg-dark text-light" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasCartLabel">Kosár tartalma</h5>
-          <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          
-        </div>
-      </div>
-{{-- /.Kosár offcanvas --}}
 
     <div class="container-fluid  d-none d-lg-block bg-dark bg-gradient">
         <div class="container text-white ">
@@ -177,10 +153,12 @@
                         {{-- Kereső, telefonszám, email cím --}}
                         <div class="col-4 me-auto">
                             <div class="row mb-3">
-                                <div class="col d-flex">
-                                    <span class="me-auto"><i class="fas fa-phone-alt h5 me-1"></i> 06-1/123-45-67</span>
-                                    <span><i class="far fa-envelope h5 me-1"></i> info@valami.hu</span>
-                                </div>
+                                    <div class="col-auto me-auto">
+                                        <i class="fas fa-phone-alt h5 me-1"></i> 06-1/123-45-67
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="far fa-envelope h5 me-1"></i> info@valami.hu
+                                    </div>
                             </div>
                             <form action="{{ url('termekek/kereses') }}" method="get">
                                 <div class="row">
@@ -203,29 +181,11 @@
                                         Üdvözöljük <br><b>{{ auth()->user()->name }}</b>
                                     </div>
                                     <div class="col-auto pe-0">
-                                        <div class="dropdown" data-bs-tooltip="tooltip" data-bs-placement="top"
-                                            title="Profil">
-                                            <button class="btn btn-success rounded-circle" type="button"
-                                                id="profilButton" data-bs-offset="-150,10">
-                                                <i class="fas fa-user fa-fw"></i>
-                                            </button>
-                                            <div class="dropdown-menu py-4 profil" aria-labelledby="profilButton">
-
-                                                <div class="card mx-3 text-center border-0" style="width: 200px">
-                                                    <div class="list-group list-group-flush">
-                                                        <a href="{{ url('/profil') }}"
-                                                            class="list-group-item list-group-item-action"
-                                                            aria-current="true">
-                                                            Profil karbantartása
-                                                        </a>
-                                                    </div>
-                                                    <div class="card-footer bg-white border-top pt-3">
-                                                        <a href="{{ url('/kijelentkezes') }}"
-                                                            class="btn btn-warning">Kijelentkezés</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button class="btn btn-success rounded-circle" type="button" id="profilButton"
+                                            data-bs-tooltip="tooltip" data-bs-placement="top" title="Profil"
+                                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfil" aria-controls="offcanvasProfil">
+                                            <i class="fas fa-user fa-fw"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -234,34 +194,11 @@
 
                         @guest
                             <div class="col-auto my-auto">
-                                <div class="dropdown" data-bs-tooltip="tooltip" data-bs-placement="top" title="Profil">
-                                    <button class="btn btn-outline-success rounded-circle" type="button" id="profilButton"
-                                        data-bs-offset="-150,10">
+                                <button class="btn btn-outline-success rounded-circle" type="button" id="profilButton"
+                                    data-bs-tooltip="tooltip" data-bs-placement="top" title="Profil"
+                                    data-bs-toggle="modal" data-bs-target="#loginModal">
                                         <i class="fas fa-user fa-fw"></i>
-                                    </button>
-                                    <div class="dropdown-menu py-4 profil" aria-labelledby="profilButton">
-
-                                        <form class="px-3" action="{{ url('/bejelentkezes') }}" method="post">
-                                            @csrf
-                                            <div class="form-group mb-3">
-                                                <label for="login_email">Email cím</label>
-                                                <input type="email" class="form-control" id="login_email" name="email"
-                                                    required>
-                                            </div>
-                                            <div class="form-group mb-3">
-                                                <label for="login_password">Jelszó</label>
-                                                <input type="password" class="form-control" id="login_password"
-                                                    name="password" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary mb-3">Bejelentkezés</button>
-                                        </form>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ url('/regisztracio') }}">Nincs még fiókja?
-                                            Regisztráljon!</a>
-                                        <a class="dropdown-item" href="{{ url('/elfelejtett-jelszo') }}">Elfelejtette
-                                            jelszavát?</a>
-                                    </div>
-                                </div>
+                                </button>
                             </div>
                         @endguest
 
@@ -390,6 +327,53 @@
             </div>
         </div>
     </div>
+
+{{-- Login Modal --}}
+@guest
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                @include('auth.bejelentkezesModal')
+            </div>
+        </div>
+    </div>
+@endguest
+{{-- /.Login Modal --}}
+
+{{-- Profil offcanvas --}}
+@auth
+    <div class="offcanvas offcanvas-end bg-dark text-light" tabindex="-1" id="offcanvasProfil" aria-labelledby="offcanvasProfilLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasProfilLabel">Profil</h5>
+            <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="col-12 col-lg-8 mx-lg-auto list-group list-group-flush">
+                <a href="{{ url('/profil') }}"
+                    class="list-group-item list-group-item-dark list-group-item-action"
+                    aria-current="true">
+                    Profil karbantartása
+                </a>
+                <a href="{{ url('/kijelentkezes') }}" class="list-group-item list-group-item-dark list-group-item-action">
+                    Kijelentkezés
+                </a>
+            </div>
+        </div>
+    </div>
+@endauth
+{{-- /.Profil offcanvas --}}
+
+{{-- Kosár offcanvas --}}
+<div class="offcanvas offcanvas-end bg-dark text-light" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasCartLabel">Kosár tartalma</h5>
+        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+    
+    </div>
+</div>
+{{-- /.Kosár offcanvas --}}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
