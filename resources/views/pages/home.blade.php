@@ -2,6 +2,9 @@
 
 @section('content')
 
+@include('alerts.success')
+@include('alerts.error')
+
     <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
         
         <div class="carousel-inner">
