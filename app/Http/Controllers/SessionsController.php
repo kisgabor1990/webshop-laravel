@@ -36,7 +36,7 @@ class SessionsController extends Controller
             return redirect()->to("/bejelentkezes")->withErrors(['message' => 'Hibás email/jelszó páros!']);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::find(Auth::id());
 
         if ($cart = session()->get('cart')) {
             foreach ($cart as $key => $product) {
