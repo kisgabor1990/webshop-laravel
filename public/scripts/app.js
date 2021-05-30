@@ -239,6 +239,15 @@ $(function () {
                 $('#minPrice').prop('disabled', true);
                 $('#maxPrice').prop('disabled', true);
             }
+        })
+
+        // infoModal
+        .on('click', '.info', function() {
+            let this_r = $(this);
+            $("#infoModal .modal-header").html(this_r.html());
+            $.get(this_r.data("href"), function(data) {
+                $("#infoModal .modal-body").html(data);
+            })
         });
 
 });

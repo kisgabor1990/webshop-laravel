@@ -296,17 +296,17 @@
                         <p><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}"><i
                                     class="fas fa-home fa-fw"></i> Főoldal</a></p>
                         @foreach ($menu as $key => $menu_item)
-                            <p><a href="{{ url('/' . $key) }}"
+                            <p><a type="button" href="{{ url('/' . $key) }}"
                                     class="{{ request()->is($key) ? 'active' : '' }}"><i
                                         class="fas {{ $menu_item[0] }} fa-fw"></i> {{ $menu_item[1] }}</a></p>
                         @endforeach
                     </div>
                     <div class="col-12 col-md-6">
-                        <p><a href="index.php?module=home">Impresszum</a></p>
-                        <p><a href="index.php?module=home">Általános Szerződési Feltételek</a></p>
-                        <p><a href="index.php?module=home">Adatkezelési Tájékoztató</a></p>
-                        <p><a href="index.php?module=home">Nyilatkozat Elálláshoz</a></p>
-                        <p><a href="index.php?module=home">Panaszkezelés</a></p>
+                        <p><a class="info" type="button" data-href="{{ url('/impresszum') }}" data-bs-toggle="modal" data-bs-target="#infoModal">Impresszum</a></p>
+                        <p><a class="info" type="button" data-href="{{ url('/aszf') }}" data-bs-toggle="modal" data-bs-target="#infoModal">Általános Szerződési Feltételek</a></p>
+                        <p><a class="info" type="button" data-href="{{ url('/adatkezeles') }}" data-bs-toggle="modal" data-bs-target="#infoModal">Adatkezelési Tájékoztató</a></p>
+                        <p><a class="info" type="button" data-href="{{ url('/elallas') }}" data-bs-toggle="modal" data-bs-target="#infoModal">Nyilatkozat Elálláshoz</a></p>
+                        <p><a class="info" type="button" data-href="{{ url('/panaszkezeles') }}" data-bs-toggle="modal" data-bs-target="#infoModal">Panaszkezelés</a></p>
                     </div>
                 </div>
             </div>
@@ -391,6 +391,25 @@
 </div>
 @endif
 {{-- /.Email cím nincs megerősítve --}}
+
+{{-- infoModal --}}
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- /.infoModal --}}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">

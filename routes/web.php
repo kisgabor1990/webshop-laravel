@@ -40,6 +40,21 @@ Route::get('/termek/{product:slug}', [ProductsController::class, 'show']);
 Route::get('/termekek/kereses', [ProductsController::class, 'search']);
 Route::get('/termekek/{category_slug}/{subcategory_slug?}', [ProductsController::class, 'list']);
 
+Route::get('/impresszum', function() {
+    return view('infos.impresszum');
+});
+Route::get('/aszf', function() {
+    return view('infos.aszf');
+});
+Route::get('/adatkezeles', function() {
+    return view('infos.adatkezeles');
+});
+Route::get('/elallas', function() {
+    return view('infos.elallas');
+});
+Route::get('/panaszkezeles', function() {
+    return view('infos.panaszkezeles');
+});
 
 Route::get('/kosar', [CartController::class, 'index']);
 Route::get('/kosarba-rakom/{id}', [CartController::class, 'addToCart']);
