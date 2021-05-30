@@ -13,10 +13,10 @@
 
 <body class="bg-light d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
+        <div class="container px-0">
 
             {{-- Kategória oldalmenü gomb --}}
-            <button class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navCategory"
+            <button class="btn text-white d-block d-lg-none ps-2" data-bs-toggle="offcanvas" data-bs-target="#navCategory"
                 aria-controls="offcanvasExample">
                 <i class="fa fa-tags" data-bs-toggle="offcanvas" href="#navCategory" aria-hidden="true"></i>
             </button>
@@ -47,12 +47,12 @@
                 @php
                     $quantity = 0;
                 @endphp
-                @foreach ((array) session('cart') as $product)
+                @foreach ((array) $cart as $product)
                     @php
                         $quantity += $product['quantity'];
                     @endphp
                 @endforeach
-                <a class="btn btn-outline-danger border-0 d-block d-lg-none cartButton"
+                <a class="btn btn-outline-danger border-0 d-block d-lg-none cartButton px-2"
                 data-href="{{ url('/kosar') }}"
                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                 <i class="fas fa-shopping-cart"></i>
@@ -61,14 +61,14 @@
                 {{-- /.Kosár offcanvas gomb --}}
 
                 {{-- Profil gomb --}}
-                <a class="btn {{ auth()->check() ? "btn-success" : "btn-outline-success" }} border-0 d-block d-lg-none"
+                <a class="btn {{ auth()->check() ? "btn-outline-light" : "btn-outline-success" }} border-0 d-block d-lg-none"
                     data-bs-toggle="{{ auth()->check() ? "offcanvas" : "modal" }}" data-bs-target="{{ auth()->check() ? "#offcanvasProfil" : "#loginModal" }}">
                         <i class="fas fa-user"></i>
                 </a>
                 {{-- /.Profil gomb --}}
 
                 {{-- Főmenü oldalmenü gomb --}}
-                <a class="btn text-white d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#navMenu"
+                <a class="btn text-white d-block d-lg-none px-2" data-bs-toggle="offcanvas" data-bs-target="#navMenu"
                 aria-controls="offcanvasExample">
                 <i class="fa fa-bars" data-bs-toggle="offcanvas" href="#navMenu" aria-hidden="true"></i>
                 </a>
@@ -377,18 +377,16 @@
 
 {{-- Email cím nincs megerősítve --}}
 @if (auth()->check() && !auth()->user()->hasVerifiedEmail())
-<div class="position-fixed bottom-0 start-50 p-3" style="z-index: 5">
-    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body bg-danger text-center">
-            <p class="h4">Email címe nincs megerősítve!</p>
-            <p class="h6">
-                Megerősítő email újraküldése
-            </p>
-            <form action="{{ url('profil/email-megerosites') }}" method="post">
-                @csrf
-                <button type="submit" class="btn btn-primary">Küldés</button>
-            </form>
-        </div>
+<div class="row justify-content-center">
+    <div class="col-12 position-fixed bottom-0 start-0 bg-danger text-center py-3" style="z-index: 99;">
+        <p class="h4">Email címe nincs megerősítve!</p>
+        <p class="h6">
+            Megerősítő email újraküldése
+        </p>
+        <form action="{{ url('profil/email-megerosites') }}" method="post">
+            @csrf
+            <button type="submit" class="btn btn-primary">Küldés</button>
+        </form>
     </div>
 </div>
 @endif
