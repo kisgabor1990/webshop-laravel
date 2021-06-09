@@ -31,14 +31,6 @@
                                     <td>@if ($user->deleted_at)Igen @else Nem @endif</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="user-select-none">Számlázási címei:</th>
-                                    <td>{{ count($user->billing_addresses) }} db.</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="user-select-none">Szállítási címei:</th>
-                                    <td>{{ count($user->shipping_addresses) }} db.</td>
-                                </tr>
-                                <tr>
                                     <th scope="row" class="user-select-none">Megrendelései:</th>
                                     <td>TODO</td>
                                 </tr>
@@ -66,20 +58,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($user->billing_addresses as $billing)
-                                        <tr class="@if ($billing->trashed()) table-dark @endif" style="transform: rotate(0);">
-                                            <td class="text-nowrap"><a href="{{ url('admin/szamlazasi-cimek/mutat/' . $billing->id) }}" class="stretched-link text-reset text-decoration-none">{{ $billing->name }}</a></td>
-                                            <td class="text-nowrap">{{ $billing->tax_num }}</td>
-                                            <td class="text-nowrap">{{ $billing->address->city }}</td>
-                                            <td class="text-nowrap">{{ $billing->address->address }}</td>
-                                            <td class="text-nowrap">{{ $billing->address->address2 }}</td>
-                                            <td class="text-nowrap">{{ $billing->address->zip }}</td>
+                                        <tr class="@if ($user->billing_address->trashed()) table-dark @endif" style="transform: rotate(0);">
+                                            <td class="text-nowrap"><a href="{{ url('admin/szamlazasi-cimek/mutat/' . $user->billing_address->id) }}" class="stretched-link text-reset text-decoration-none">{{ $user->billing_address->name }}</a></td>
+                                            <td class="text-nowrap">{{ $user->billing_address->tax_num }}</td>
+                                            <td class="text-nowrap">{{ $user->billing_address->address->city }}</td>
+                                            <td class="text-nowrap">{{ $user->billing_address->address->address }}</td>
+                                            <td class="text-nowrap">{{ $user->billing_address->address->address2 }}</td>
+                                            <td class="text-nowrap">{{ $user->billing_address->address->zip }}</td>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6">Nincs rögzített számlázási adat!</td>
-                                        </tr>
-                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -100,20 +86,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($user->shipping_addresses as $shipping)
-                                        <tr class="@if ($shipping->trashed()) table-dark @endif" style="transform: rotate(0);">
-                                            <td class="text-nowrap"><a href="{{ url('admin/szallitasi-cimek/mutat/' . $shipping->id) }}" class="stretched-link text-reset text-decoration-none">{{ $shipping->name }}</a></td>
-                                            <td class="text-nowrap">+36{{ $shipping->phone }}</td>
-                                            <td class="text-nowrap">{{ $shipping->address->city }}</td>
-                                            <td class="text-nowrap">{{ $shipping->address->address }}</td>
-                                            <td class="text-nowrap">{{ $shipping->address->address2 }}</td>
-                                            <td class="text-nowrap">{{ $shipping->address->zip }}</td>
+                                        <tr class="@if ($user->shipping_address->trashed()) table-dark @endif" style="transform: rotate(0);">
+                                            <td class="text-nowrap"><a href="{{ url('admin/szallitasi-cimek/mutat/' . $user->shipping_address->id) }}" class="stretched-link text-reset text-decoration-none">{{ $user->shipping_address->name }}</a></td>
+                                            <td class="text-nowrap">+36{{ $user->shipping_address->phone }}</td>
+                                            <td class="text-nowrap">{{ $user->shipping_address->address->city }}</td>
+                                            <td class="text-nowrap">{{ $user->shipping_address->address->address }}</td>
+                                            <td class="text-nowrap">{{ $user->shipping_address->address->address2 }}</td>
+                                            <td class="text-nowrap">{{ $user->shipping_address->address->zip }}</td>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6">Nincs rögzített szállítási adat!</td>
-                                        </tr>
-                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -54,7 +54,6 @@ class ShippingAddressController extends Controller
         $shipping_address = Shipping_address::updateOrCreate([
             'name' => $request->name,
             'phone' => $request->phone,
-            'comment' => $request->comment,
         ]);
 
         $shipping_address->user()->associate($user);

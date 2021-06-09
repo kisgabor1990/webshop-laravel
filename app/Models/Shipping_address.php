@@ -15,7 +15,6 @@ class Shipping_address extends Model
         'name',
         'phone',
         'address_id',
-        'comment',
     ];
 
     public function user() {
