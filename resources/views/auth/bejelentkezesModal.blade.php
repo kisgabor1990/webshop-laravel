@@ -7,14 +7,14 @@
         @csrf
         <div class="col-12 col-lg-8 mx-auto form-group mb-3">
             <label for="email">Email cím</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input type="email" class="form-control" id="login_email" name="email" required>
             <div class="invalid-feedback">
                 Az email cím megadása kötelező és valósnak kell lennie!
             </div>
         </div>
         <div class="col-12 col-lg-8 mx-auto form-group mb-3">
             <label for="password">Jelszó</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="login_password" name="password" required>
             <div class="invalid-feedback">
                 A jelszó megadása kötelező!
             </div>

@@ -13,9 +13,7 @@
             <div class="card-body">
                 <form id="regForm" class="needs-validation" action="{{ url('/regisztracio') }}" method="post" novalidate>
                     @csrf
-                    <div class="row">
-
-                        <div class="col-12 col-lg-6 mb-5">
+                        <div class="col-12 col-lg-6 offset-lg-3 mb-5">
                             <p class="h3 mb-5">Regisztrációs adatok</p>
                             <div class="form-floating mb-5">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Teljes név" value="{{ old('name') }}" required>
@@ -54,25 +52,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-check position-relative">
-                                <input class="form-check-input" type="radio" name="choose_company" id="is_company"
-                                    value="is_company" required @if (old('choose_company') == 'is_company') checked @endif>
-                                <label class="form-check-label" for="is_company">
-                                    Cég
-                                </label>
-                            </div>
-                            <div class="form-check position-relative">
-                                <input class="form-check-input" type="radio" name="choose_company" id="is_person"
-                                    value="is_person" required @if (old('choose_company') == 'is_person') checked @endif>
-                                <label class="form-check-label" for="is_person">
-                                    Magánszemély
-                                </label>
-                                <div class="invalid-tooltip">
-                                    Egyet kötelező választani!
-                                </div>
-                            </div>
+                            
                         </div>
-                        <div class="col-12 col-lg-6 mb-5">
+                        <div class="col-12 col-lg-6 offset-lg-3 mb-5">
                             <p class="h3 mb-5">Kapcsolattartó adatok</p>
                             <div class="col mb-3">
                                 <div class="input-group">
@@ -90,8 +72,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 mb-5">
+                        <div class="col-12 col-lg-6 offset-lg-3 mb-5">
                             <p class="h3 mb-5">Számlázási adatok</p>
+                            <div class="form-check form-check-inline position-relative">
+                                <input class="form-check-input" type="radio" name="choose_company" id="is_company"
+                                    value="is_company" required @if (old('choose_company') == 'is_company') checked @endif>
+                                <label class="form-check-label" for="is_company">
+                                    Cég
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline position-relative mb-5">
+                                <input class="form-check-input" type="radio" name="choose_company" id="is_person"
+                                    value="is_person" required @if (old('choose_company') == 'is_person') checked @endif>
+                                <label class="form-check-label" for="is_person">
+                                    Magánszemély
+                                </label>
+                                <div class="invalid-tooltip">
+                                    Egyet kötelező választani!
+                                </div>
+                            </div>
                             <div class="form-floating mb-5">
                                 <input type="text" class="form-control" id="billing_name" name="billing_name" placeholder="Név"
                                     value="{{ old('billing_name') }}" required>
@@ -146,7 +145,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div id="shippingData" class="col-12 col-lg-6 mb-5" @if (old('shipping_same')) style="display: none" @endif>
+                        <div id="shippingData" class="col-12 col-lg-6 offset-lg-3 mb-5">
                             <p class="h3 mb-5">Szállítási adatok</p>
                             <div class="form-floating mb-5">
                                 <input type="text" class="form-control" id="shipping_name" name="shipping_name" placeholder="Név"
@@ -185,23 +184,18 @@
                                     Az irányítószám megadása kötelező!
                                 </div>
                             </div>
-                            <div class="form-floating mb-5">
-                                <textarea class="form-control" placeholder="Megjegyzés" id="comment" name="comment" style="height: 100px">{{ old('comment') }}</textarea>
-                                <label for="comment">Megjegyzés</label>
-                            </div>
                         </div>
                         <div class="col-12 mb-5 position-relative">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="aszf" name="aszf" value="true" required>
                                 <label class="form-check-label" for="aszf">
-                                    Elfogadom az Általános szerződési feltételeket és az Adatkezelési tájékoztatót.
+                                    Elfogadom az <a class="info"  data-href="{{ url('/aszf') }}" data-bs-toggle="modal" data-bs-target="#infoModal">Általános szerződési feltételek</a>et és az <a class="info"  data-href="{{ url('/adatkezeles') }}" data-bs-toggle="modal" data-bs-target="#infoModal">Adatkezelési tájékoztató</a>t.
                                 </label>
                                 <div class="invalid-tooltip">
                                     Az ÁSZF elfogadása kötelező!
                                 </div>
                             </div>
                         </div>
-                    </div>
             </div>
             <div class="card-footer text-center">
                 <button type="submit" class="btn btn-success">Regisztráció</button>

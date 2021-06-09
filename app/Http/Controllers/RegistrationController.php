@@ -33,13 +33,12 @@ class RegistrationController extends Controller {
             'zip' => $request->billing_zip,
         ]);
 
-        $billing_address = Billing_address::create([
+        $billing_address = $user->billing_address()->create([
             'choose_company' => $request->choose_company,
             'name' => $request->name,
             'tax_num' => $request->taxnum,
         ]);
 
-        $billing_address->user()->associate($user);
         $billing_address->address()->associate($address);
 
         $billing_address->save();
@@ -51,13 +50,11 @@ class RegistrationController extends Controller {
             'zip' => $request->shipping_zip,
         ]);
 
-        $shipping_address = Shipping_address::create([
+        $shipping_address = $user->shipping_address()->create([
             'name' => $request->name,
             'phone' => $request->phone,
-            'comment' => $request->comment,
         ]);
 
-        $shipping_address->user()->associate($user);
         $shipping_address->address()->associate($address);
 
         $shipping_address->save();

@@ -44,12 +44,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
     
-    public function billing_addresses() {
-        return $this->hasMany(Billing_address::class)->withTrashed();
+    public function billing_address() {
+        return $this->hasOne(Billing_address::class)->withTrashed();
     }
 
-    public function shipping_addresses() {
-        return $this->hasMany(Shipping_address::class)->withTrashed();
+    public function shipping_address() {
+        return $this->hasOne(Shipping_address::class)->withTrashed();
     }
 
     public function carts() {

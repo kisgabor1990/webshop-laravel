@@ -14,8 +14,6 @@ function numberFormat(numberString) {
 
 $(function () {
 
-    var topButtonDisplay;
-
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-tooltip="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -51,7 +49,7 @@ $(function () {
 
     $(window).scroll(function () {
         // Az oldal tetejére gomb
-        if ( $(this).scrollTop() > 500 ) {
+        if ($(this).scrollTop() > 500) {
             $("#topButton").fadeIn();
         } else {
             $("#topButton").fadeOut();
@@ -109,12 +107,37 @@ $(function () {
                 $("#shipping_address").val($("#billing_address").val());
                 $("#shipping_address2").val($("#billing_address2").val());
                 $("#shipping_zip").val($("#billing_zip").val());
-            } else {
-                $("#shipping_name").val("");
-                $("#shipping_city").val("");
-                $("#shipping_address").val("");
-                $("#shipping_address2").val("");
-                $("#shipping_zip").val("");
+
+                $("#billing_name, #shipping_name").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_name").val(this.value);
+                        $("#billing_name").val(this.value);
+                    }
+                });
+                $("#billing_city, #shipping_city").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_city").val(this.value);
+                        $("#billing_city").val(this.value);
+                    }
+                });
+                $("#billing_address, #shipping_address").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_address").val(this.value);
+                        $("#billing_address").val(this.value);
+                    }
+                });
+                $("#billing_address2, #shipping_address2").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_address2").val(this.value);
+                        $("#billing_address2").val(this.value);
+                    }
+                });
+                $("#billing_zip, #shipping_zip").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_zip").val(this.value);
+                        $("#billing_zip").val(this.value);
+                    }
+                });
             }
 
         }
@@ -173,7 +196,7 @@ $(function () {
                     $('.product' + this_r.data('id') + ' .product_total_price').html(numberFormat(product_total_price - Number(data.price)));
                     $('.product' + this_r.data('id') + ' input').attr('value', data.quantity);
                 } else {
-                    $('.product' + this_r.data('id')).fadeOut(500, function() {
+                    $('.product' + this_r.data('id')).fadeOut(500, function () {
                         $(this).remove();
                         if ($("#products").children('div').length == 0) {
                             $('hr').remove();
@@ -184,10 +207,10 @@ $(function () {
                 }
             });
         })
-        .on('click', '.removeFromCart', function() {
+        .on('click', '.removeFromCart', function () {
             let this_r = $(this);
 
-            $.get(this_r.data('href'), function() {
+            $.get(this_r.data('href'), function () {
                 let cart_quantity = Number($('.cart_quantity').html());
                 let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
                 let cart_total_price = Number($('.cart_total_price').html().replace(/\s+/g, ''));
@@ -199,7 +222,7 @@ $(function () {
                 $('.cart_quantity').html(cart_quantity - product_total_quantity);
                 $('.cart_price').html(numberFormat(cart_price - product_total_price));
                 $('.cart_total_price').html(numberFormat(cart_total_price - product_total_price));
-                $('.product' + this_r.data('id')).fadeOut(500, function() {
+                $('.product' + this_r.data('id')).fadeOut(500, function () {
                     $(this).remove();
                     if ($("#products").children('div').length == 0) {
                         $('hr').remove();
@@ -209,9 +232,9 @@ $(function () {
                 });
             });
         })
-        .on('click', '.cartButton', function() {
+        .on('click', '.cartButton', function () {
             let this_r = $(this);
-            $.get(this_r.data("href"), function(data) {
+            $.get(this_r.data("href"), function (data) {
                 $("#offcanvasCart .offcanvas-body").html(data);
             });
         })
@@ -242,10 +265,11 @@ $(function () {
         })
 
         // infoModal
-        .on('click', '.info', function() {
+        .on('click', '.info', function () {
             let this_r = $(this);
+            $("#infoModal .modal-body").html("");
             $("#infoModal .modal-title").html(this_r.html());
-            $.get(this_r.data("href"), function(data) {
+            $.get(this_r.data("href"), function (data) {
                 $("#infoModal .modal-body").html(data);
             })
         });
