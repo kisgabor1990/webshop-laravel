@@ -4,8 +4,7 @@
 
 
     <div class="col-12 col-lg-6">
-        @include('alerts.error')
-        @include('alerts.success')
+        
         <form action="{{ url('/elfelejtett-jelszo') }}" method="post" class="needs-validation" novalidate>
             @csrf
             <div class="card">

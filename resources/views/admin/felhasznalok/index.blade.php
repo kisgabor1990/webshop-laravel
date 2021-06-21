@@ -18,8 +18,6 @@
                 </div>
             </div>
             
-            @include('alerts.error')
-            @include('alerts.success')
             <div class="table-responsive">
                 <table class="table table-striped table-hover" id="list">
                     <thead class="thead-inverse user-select-none">

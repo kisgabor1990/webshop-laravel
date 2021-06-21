@@ -18,8 +18,6 @@
                 </div>
             </div>
             
-            @include('alerts.error')
-            @include('alerts.success')
             <div class="table-responsive">
                 <table class="table table-striped table-hover" id="list" data-order='[[1, "asc"], [2, "asc"]]'>
                     <thead class="thead-inverse user-select-none">

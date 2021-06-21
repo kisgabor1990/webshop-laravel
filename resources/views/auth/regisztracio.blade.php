@@ -2,10 +2,6 @@
 
 @section('content')
 
-    @include('alerts.error')
-    @include('alerts.success')
-
-
     <div class="w-100">
         <div class="card">
 

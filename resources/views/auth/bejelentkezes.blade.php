@@ -3,8 +3,7 @@
 @section('content')
 
     <div class="col-12 col-lg-6">
-        @include('alerts.error')
-        @include('alerts.success')
+        
         <div class="card">
             <div class="card-header bg-success text-white">Bejelentkezés</div>
             <div class="card-body">

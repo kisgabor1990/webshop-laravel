@@ -268,6 +268,8 @@
                         </h2>
                     </div>
                 </div>
+                @include('alerts.error')
+                @include('alerts.success')
                 <div id="mainContent">
 
                     @yield('content')

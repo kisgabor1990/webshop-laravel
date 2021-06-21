@@ -4,8 +4,6 @@
 
 
     <div class="col-12 col-lg-6">
-        @include('alerts.error')
-        @include('alerts.success')
         <form action="{{ url('/uj-jelszo') }}" method="post" class="needs-validation" novalidate>
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">

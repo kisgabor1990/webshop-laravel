@@ -5,7 +5,6 @@
 
 <div class="row">
     <div class="col-12 col-lg-6">
-            @include('alerts.error')
             <div class="card">
                 <div class="card-header user-select-none h3">
                     <i class="fas fa-plus fa-lg fa-fw"></i>
