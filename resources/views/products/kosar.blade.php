@@ -17,11 +17,13 @@
                                 {{ $product['name'] }}
                             </a>
                             <p class="h6">{{ $product['brand'] }}</p>
-                            <p class="h4">
-                                <span class="product_total_price">{{ number_format($product['price'] * $product['quantity'], 0, ',', ' ') }}</span> Ft.
+                            <small>Egységár:</small>
+                            <p class="h4 mb-3">
+                                {{ number_format($product['price'], 0, ',', ' ') }} Ft.
                             </p>
+                            
                         </div>
-                        <div class="col-12 d-flex mt-3">
+                        <div class="col-12 d-flex my-3">
                             <div class="col-4 col-lg-5 me-auto">
                                 <div class="input-group">
                                     <a class="btn btn-danger fw-bold px-2 cart-decrease" data-id="{{ $id }}" data-href="{{ url('/kosar/'. $id . '/kevesebb') }}" role="button"><i
@@ -37,6 +39,10 @@
                                         class="fas fa-trash-alt"></i></a>
                             </div>
                         </div>
+                        <small>Összesen:</small>
+                            <p class="h4">
+                                <span class="product_total_price">{{ number_format($product['price'] * $product['quantity'], 0, ',', ' ') }}</span> Ft.
+                            </p>
                     </div>
                 </div>
                 <hr class="my-5 product{{ $id }}">
@@ -59,19 +65,19 @@
                 </tr>
                 <tr>
                     <td scope="row" class="user-select-none">Szállítás</td>
-                    <td class="text-end fw-bold">0 Ft.</td>
+                    <td class="text-end fw-bold">{{ number_format(session('customer.shipping_price') ?? 0, 0, ',', ' ') }} Ft.</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <th class="user-select-none">Végösszeg</th>
-                    <td class="text-end fw-bold"><span class="cart_total_price">{{ number_format($total, 0, ',', ' ') }}</span> Ft.</td>
+                    <td class="text-end fw-bold"><span class="cart_total_price">{{ number_format($total + (session('customer.shipping_price') ?? 0), 0, ',', ' ') }}</span> Ft.</td>
                 </tr>
             </tfoot>
         </table>
         @if ($cart)
         <div class="text-end my-3" id="orderButtonDiv">
-            <a class="btn btn-success btn-lg " href="#" role="button">Megrendelés</a>
+            <a class="btn btn-success btn-lg " href="{{ url('/megrendeles') }}" role="button">Megrendelés</a>
         </div>
         @endif
         <div class="text-end">

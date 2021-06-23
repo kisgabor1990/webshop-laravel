@@ -82,6 +82,39 @@ $(function () {
         $("#taxnum").attr("disabled", "disabled");
     }
 
+    if ($("#shipping_same").prop('checked')) {
+        $("#billing_name, #shipping_name").on("input", function () {
+            if ($("#shipping_same").prop('checked')) {
+                $("#shipping_name").val(this.value);
+                $("#billing_name").val(this.value);
+            }
+        });
+        $("#billing_city, #shipping_city").on("input", function () {
+            if ($("#shipping_same").prop('checked')) {
+                $("#shipping_city").val(this.value);
+                $("#billing_city").val(this.value);
+            }
+        });
+        $("#billing_address, #shipping_address").on("input", function () {
+            if ($("#shipping_same").prop('checked')) {
+                $("#shipping_address").val(this.value);
+                $("#billing_address").val(this.value);
+            }
+        });
+        $("#billing_address2, #shipping_address2").on("input", function () {
+            if ($("#shipping_same").prop('checked')) {
+                $("#shipping_address2").val(this.value);
+                $("#billing_address2").val(this.value);
+            }
+        });
+        $("#billing_zip, #shipping_zip").on("input", function () {
+            if ($("#shipping_same").prop('checked')) {
+                $("#shipping_zip").val(this.value);
+                $("#billing_zip").val(this.value);
+            }
+        });
+    }
+
 
     $(document)
         .on("click", function (e) {
@@ -107,41 +140,8 @@ $(function () {
                 $("#shipping_address").val($("#billing_address").val());
                 $("#shipping_address2").val($("#billing_address2").val());
                 $("#shipping_zip").val($("#billing_zip").val());
-
-                $("#billing_name, #shipping_name").on("input", function () {
-                    if ($("#shipping_same").prop('checked')) {
-                        $("#shipping_name").val(this.value);
-                        $("#billing_name").val(this.value);
-                    }
-                });
-                $("#billing_city, #shipping_city").on("input", function () {
-                    if ($("#shipping_same").prop('checked')) {
-                        $("#shipping_city").val(this.value);
-                        $("#billing_city").val(this.value);
-                    }
-                });
-                $("#billing_address, #shipping_address").on("input", function () {
-                    if ($("#shipping_same").prop('checked')) {
-                        $("#shipping_address").val(this.value);
-                        $("#billing_address").val(this.value);
-                    }
-                });
-                $("#billing_address2, #shipping_address2").on("input", function () {
-                    if ($("#shipping_same").prop('checked')) {
-                        $("#shipping_address2").val(this.value);
-                        $("#billing_address2").val(this.value);
-                    }
-                });
-                $("#billing_zip, #shipping_zip").on("input", function () {
-                    if ($("#shipping_same").prop('checked')) {
-                        $("#shipping_zip").val(this.value);
-                        $("#billing_zip").val(this.value);
-                    }
-                });
             }
-
-        }
-        )
+        })
         .on('submit', '#regForm', function () {
         })
         .on('click', '#addToCartButton', function () {
@@ -201,7 +201,9 @@ $(function () {
                         if ($("#products").children('div').length == 0) {
                             $('hr').remove();
                             $('#orderButtonDiv').remove();
-                            $('#products').html('<p class="h3">A kosár üres!</p>');
+                            $('#products').html('<p class="h3 text-center">A kosár üres!</p>');
+                            $('#cart_header').html('');
+                            $('#cart_footer').html('');
                         }
                     });
                 }
@@ -209,7 +211,7 @@ $(function () {
         })
         .on('click', '.removeFromCart', function () {
             let this_r = $(this);
-
+            
             $.get(this_r.data('href'), function () {
                 let cart_quantity = Number($('.cart_quantity').html());
                 let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
@@ -228,6 +230,8 @@ $(function () {
                         $('hr').remove();
                         $('#orderButtonDiv').remove();
                         $('#products').html('<p class="h3">A kosár üres!</p>');
+                        $('#cart_header').html('');
+                        $('#cart_footer').html('');
                     }
                 });
             });

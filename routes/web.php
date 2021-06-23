@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ShippingAddressController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OpinionController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PasswordRecoveryController;
 use App\Http\Controllers\ProductsController;
@@ -62,6 +63,20 @@ Route::get('/kosar/{id}/tobb', [CartController::class, 'increase']);
 Route::get('/kosar/{id}/kevesebb', [CartController::class, 'decrease']);
 Route::get('/kosar/{id}/torles', [CartController::class, 'destroy']);
 
+Route::middleware(['cart'])->group(function() {
+    Route::get('/megrendeles', [OrderController::class, 'index']);
+    Route::get('/megrendeles/kosar', [OrderController::class, 'showCart']);
+    Route::get('/megrendeles/regisztracio', [OrderController::class, 'createRegistration'])
+        ->middleware('guest');
+    Route::post('/megrendeles/regisztracio', [OrderController::class, 'storeRegistration']);
+    Route::get('/megrendeles/adatok', [OrderController::class, 'createData']);
+    Route::post('/megrendeles/adatok', [OrderController::class, 'storeData']);
+    Route::get('/megrendeles/fizetes-es-szallitas', [OrderController::class, 'createPaymentAndShipping']);
+    Route::post('/megrendeles/fizetes-es-szallitas', [OrderController::class, 'storePaymentAndShipping']);
+    Route::get('/megrendeles/ellenorzes', [OrderController::class, 'createCheckData']);
+    Route::post('/megrendeles/ellenorzes', [OrderController::class, 'storeCheckData']);
+});
+Route::get('/megrendeles/elkuldve', [OrderController::class, 'show']);
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/regisztracio', [RegistrationController::class, 'create']);

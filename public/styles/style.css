@@ -209,3 +209,13 @@
 #galleryCarousel img {
   cursor: zoom-out;
 }
+
+.circle {
+  height: 50px;
+  width: 50px;
+  text-align: center; 
+  display: inline;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: #fff;
+}

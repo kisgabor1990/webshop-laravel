@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider {
             'categories' => $categories,
         ]);
         
-        view()->composer(['index', 'products.kosar'], function ($view) {
+        view()->composer(['index', 'products.kosar', 'orders.order_checkData', 'orders.cart'], function ($view) {
             if ($user = User::find(auth()->id())) {
                 $cart = [];
                 
