@@ -140,8 +140,41 @@ $(function () {
                 $("#shipping_address").val($("#billing_address").val());
                 $("#shipping_address2").val($("#billing_address2").val());
                 $("#shipping_zip").val($("#billing_zip").val());
+
+                $("#billing_name, #shipping_name").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_name").val(this.value);
+                        $("#billing_name").val(this.value);
+                    }
+                });
+                $("#billing_city, #shipping_city").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_city").val(this.value);
+                        $("#billing_city").val(this.value);
+                    }
+                });
+                $("#billing_address, #shipping_address").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_address").val(this.value);
+                        $("#billing_address").val(this.value);
+                    }
+                });
+                $("#billing_address2, #shipping_address2").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_address2").val(this.value);
+                        $("#billing_address2").val(this.value);
+                    }
+                });
+                $("#billing_zip, #shipping_zip").on("input", function () {
+                    if ($("#shipping_same").prop('checked')) {
+                        $("#shipping_zip").val(this.value);
+                        $("#billing_zip").val(this.value);
+                    }
+                });
             }
-        })
+
+        }
+        )
         .on('submit', '#regForm', function () {
         })
         .on('click', '#addToCartButton', function () {
