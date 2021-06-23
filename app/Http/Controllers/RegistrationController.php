@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Notifications\Welcome;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use function view;
 
@@ -35,7 +36,7 @@ class RegistrationController extends Controller {
 
         $billing_address = $user->billing_address()->create([
             'choose_company' => $request->choose_company,
-            'name' => $request->name,
+            'name' => $request->billing_name,
             'tax_num' => $request->taxnum,
         ]);
 
@@ -51,13 +52,23 @@ class RegistrationController extends Controller {
         ]);
 
         $shipping_address = $user->shipping_address()->create([
-            'name' => $request->name,
+            'name' => $request->shipping_name,
             'phone' => $request->phone,
         ]);
 
         $shipping_address->address()->associate($address);
 
         $shipping_address->save();
+
+        if ($cart = session()->get('cart')) {
+            foreach ($cart as $key => $product) {
+
+                $user->carts()->updateOrCreate(
+                    ['product_id' => $key],
+                    ['quantity' => DB::raw('quantity + ' . $product['quantity'])]
+                );
+            }
+        }
 
         $user->notify(new Welcome());
         Auth::login($user);
