@@ -72,7 +72,7 @@
                 <div class="col-12 col-lg-10 offset-lg-1">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="shipping" id="courier" value="XY Futárszolgálat|1490"
-                        @if (session('customer.shipping_type') == 'XY Futárszolgálat' || old('shipping') == 'XY Futárszolgálat|1490') checked @endif>
+                        @if (session('customer.shipping_mode') == 'XY Futárszolgálat' || old('shipping') == 'XY Futárszolgálat|1490') checked @endif>
                         <label class="form-check-label w-100" for="courier">
                             <div class="row align-items-center">
                                 <div class="col-12 col-lg-10">
@@ -87,7 +87,7 @@
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="shipping" id="personal" value="Személyes átvétel|0"
-                        @if (session('customer.shipping_type') == 'Személyes átvétel' || old('shipping') == 'Személyes átvétel|0') checked @endif>
+                        @if (session('customer.shipping_mode') == 'Személyes átvétel' || old('shipping') == 'Személyes átvétel|0') checked @endif>
                         <label class="form-check-label w-100" for="personal">
                           <div class="row align-items-center">
                               <div class="col-12 col-lg-10">
