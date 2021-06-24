@@ -17,8 +17,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+define('STORE_ADDRESS', [
+    'city' => 'Kecskemét',
+    'address' => 'XY utca 1',
+    'zip' => '6000',
+]);
+
 class OrderController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -111,6 +118,12 @@ class OrderController extends Controller
         if (str_starts_with($customer['phone'], '+36')) {
             $customer['phone'] = substr($customer['phone'], 3);
         }
+        $customer['original_shipping'] = [
+            'city' => $request->shipping_city,
+            'address' => $request->shipping_address,
+            'address2' => $request->shipping_address2,
+            'zip' => $request->shipping_zip,
+        ];
         unset($customer["_token"]);
         unset($customer["password"]);
         unset($customer["password_confirmation"]);
@@ -154,6 +167,12 @@ class OrderController extends Controller
         if (str_starts_with($customer['phone'], '+36')) {
             $customer['phone'] = substr($customer['phone'], 3);
         }
+        $customer['original_shipping'] = [
+            'city' => $request->shipping_city,
+            'address' => $request->shipping_address,
+            'address2' => $request->shipping_address2,
+            'zip' => $request->shipping_zip,
+        ];
         unset($customer["_token"]);
         session()->put('customer', $customer);
 
@@ -186,7 +205,23 @@ class OrderController extends Controller
         $customer['shipping_mode'] = explode("|", $request->shipping)[0];
         $customer['shipping_price'] = explode("|", $request->shipping)[1];
 
+        
+
+        if ($customer['shipping_mode'] == "Személyes átvétel") {
+            $customer['shipping_city'] = STORE_ADDRESS['city'];
+            $customer['shipping_address'] = STORE_ADDRESS['address'];
+            $customer['shipping_address2'] = '';
+            $customer['shipping_zip'] = STORE_ADDRESS['zip'];
+            unset($customer['shipping_same']);
+        } else {
+            $customer['shipping_city'] = $customer['original_shipping']['city'];
+            $customer['shipping_address'] = $customer['original_shipping']['address'];
+            $customer['shipping_address2'] = $customer['original_shipping']['address2'];
+            $customer['shipping_zip'] = $customer['original_shipping']['zip'];
+        }
+
         session()->put('customer', $customer);
+        
 
         return redirect('/megrendeles/ellenorzes');
     }
