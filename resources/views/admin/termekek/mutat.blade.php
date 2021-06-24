@@ -64,7 +64,7 @@
                         <div class="col-12 col-lg-6 offset-lg-1">
                             <div class="col-12">
                                 <p class="h4 user-select-none">Leírás</p>
-                                {{ $product->description }}
+                                {!! $product->description !!}
                             </div>
                         </div>
                     </div>

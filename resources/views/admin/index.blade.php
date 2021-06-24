@@ -130,6 +130,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/e8e7489ac2.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js"></script>
     <script src="{{ URL::asset('scripts/jquery.ui.touch-punch.js') }}"></script>
     <script src="{{ URL::asset('scripts/admin.js') }}"></script>
     <script src="{{ URL::asset('scripts/admin_confirmModal.js') }}"></script>

@@ -89,7 +89,6 @@
                                 <div class="col-12 form-floating mb-3 mx-auto">
                                     <textarea class="form-control" placeholder="Leírás" id="description" name="description"
                                         style="height: 200px" required>{{ old('description') }}</textarea>
-                                    <label for="description">Leírás</label>
                                     <div class="invalid-feedback">
                                         A leírás megadása kötelező!
                                     </div>
@@ -105,5 +104,16 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
 @endsection
