@@ -38,7 +38,7 @@
                 <div class="col-12 col-lg-6 offset-lg-3">
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="name" name="name" placeholder="Teljes név"
-                            value="{{ old('name') }}" required>
+                            value="{{ old('name') }}" autocomplete="name" required>
                         <label for="name">Név</label>
                         <div class="invalid-tooltip">
                             A név megadása kötelező!
@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="email" class="form-control" id="email" name="email" placeholder="valami@valami.hu"
-                            value="{{ old('email') }}" required>
+                            value="{{ old('email') }}" autocomplete="email" required>
                         <label for="email">Email cím</label>
                         <div class="invalid-tooltip">
                             Az email cím megadása kötelező és valósnak kell lennie!
@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="password" class="form-control" id="password" name="password" placeholder="Jelszó"
-                            required>
+                            autocomplete="new-password" required>
                         <label for="password">Jelszó</label>
                         <div class="invalid-tooltip">
                             A jelszó megadása kötelező!
@@ -62,7 +62,7 @@
                     </div>
                     <div class="form-floating">
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
-                            placeholder="Jelszó újra" required>
+                            placeholder="Jelszó újra" autocomplete="new-password" required>
                         <label for="password_confirmation">Jelszó újra</label>
                         <div class="invalid-tooltip">
                             A jelszó megadása kötelező!
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col form-floating">
                             <input type="tel" class="form-control" id="phone" name="phone" value="{{ old('phone') }}"
-                                placeholder="Telefonszám" required>
+                                placeholder="Telefonszám" autocomplete="tel-national" required>
                             <label for="phone">Telefonszám</label>
                             <div class="invalid-tooltip">
                                 A telefonszám megadása kötelező!
@@ -119,7 +119,7 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="billing_name" name="billing_name" placeholder="Név"
-                            value="{{ old('billing_name') }}" required>
+                            value="{{ old('billing_name') }}" autocomplete="billing name" required>
                         <label for="billing_name">Név</label>
                         <div class="invalid-tooltip">
                             A név megadása kötelező!
@@ -136,7 +136,7 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="billing_city" name="billing_city" placeholder="Város"
-                            value="{{ old('billing_city') }}" required>
+                            value="{{ old('billing_city') }}" autocomplete="billing address-level2" required>
                         <label for="billing_city">Város</label>
                         <div class="invalid-tooltip">
                             A város megadása kötelező!
@@ -144,7 +144,7 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="billing_address" name="billing_address"
-                            placeholder="Utca / Házszám" value="{{ old('billing_address') }}" required>
+                            placeholder="Utca / Házszám" value="{{ old('billing_address') }}" autocomplete="billing address-line1" required>
                         <label for="billing_address">Utca / Házszám</label>
                         <div class="invalid-tooltip">
                             A cím megadása kötelező!
@@ -152,18 +152,18 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="billing_address2" name="billing_address2"
-                            placeholder="Emelet / Ajtó" value="{{ old('billing_address2') }}">
+                            placeholder="Emelet / Ajtó" value="{{ old('billing_address2') }}" autocomplete="billing address-line2">
                         <label for="billing_address2">Emelet / Ajtó</label>
                     </div>
                     <div class="form-floating mb-5">
                         <input type="number" class="form-control" id="billing_zip" name="billing_zip"
-                            placeholder="Irányítószám" value="{{ old('billing_zip') }}" min="1000" max="9999" required>
+                            placeholder="Irányítószám" value="{{ old('billing_zip') }}" min="1000" max="9999" autocomplete="billing postal-code" required>
                         <label for="billing_zip">Irányítószám</label>
                         <div class="invalid-tooltip">
                             Az irányítószám megadása kötelező!
                         </div>
                     </div>
-                    <div class="form-check form-switch">
+                    <div class="form-check form-switch py-3 shadow-lg rounded-pill">
                         <input class="form-check-input" type="checkbox" id="shipping_same" name="shipping_same" value="true"
                             @if (old('shipping_same')) checked @endif>
                         <label class="form-check-label" for="shipping_same">
@@ -181,7 +181,7 @@
                 <div id="shippingData" class="col-12 col-lg-6 offset-lg-3">
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="shipping_name" name="shipping_name" placeholder="Név"
-                            value="{{ old('shipping_name') }}" required>
+                            value="{{ old('shipping_name') }}" autocomplete="shipping name" required>
                         <label for="shipping_name">Név</label>
                         <div class="invalid-tooltip">
                             A név megadása kötelező!
@@ -189,7 +189,7 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="shipping_city" name="shipping_city" placeholder="Város"
-                            value="{{ old('shipping_city') }}" required>
+                            value="{{ old('shipping_city') }}" autocomplete="shipping address-level2" required>
                         <label for="shipping_city">Város</label>
                         <div class="invalid-tooltip">
                             A város megadása kötelező!
@@ -197,7 +197,7 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="shipping_address" name="shipping_address"
-                            placeholder="Utca / Házszám" value="{{ old('shipping_address') }}" required>
+                            placeholder="Utca / Házszám" value="{{ old('shipping_address') }}" autocomplete="shipping address-line1" required>
                         <label for="shipping_address">Utca / Házszám</label>
                         <div class="invalid-tooltip">
                             A cím megadása kötelező!
@@ -205,12 +205,12 @@
                     </div>
                     <div class="form-floating mb-5">
                         <input type="text" class="form-control" id="shipping_address2" name="shipping_address2"
-                            placeholder="Emelet / Ajtó" value="{{ old('shipping_address2') }}">
+                            placeholder="Emelet / Ajtó" value="{{ old('shipping_address2') }}" autocomplete="shipping address-line2">
                         <label for="shipping_address2">Emelet / Ajtó</label>
                     </div>
                     <div class="form-floating">
                         <input type="number" class="form-control" id="shipping_zip" name="shipping_zip"
-                            placeholder="Irányítószám" value="{{ old('shipping_zip') }}" min="1000" max="9999" required>
+                            placeholder="Irányítószám" value="{{ old('shipping_zip') }}" min="1000" max="9999" autocomplete="shipping postal-code" required>
                         <label for="shipping_zip">Irányítószám</label>
                         <div class="invalid-tooltip">
                             Az irányítószám megadása kötelező!
