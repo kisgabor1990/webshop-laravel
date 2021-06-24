@@ -87,7 +87,7 @@ class OrderController extends Controller
 
         $shipping_address = $user->shipping_address()->create([
             'name' => $request->shipping_name,
-            'phone' => $request->phone,
+            'phone' => str_starts_with($request->phone, '+36') ? substr($request->phone, 3) : $request->phone,
         ]);
 
         $shipping_address->address()->associate($address);
@@ -107,6 +107,9 @@ class OrderController extends Controller
         $customer = session()->get('customer');
         foreach ($request->all() as $key => $value) {
             $customer[$key] = $value;
+        }
+        if (str_starts_with($customer['phone'], '+36')) {
+            $customer['phone'] = substr($customer['phone'], 3);
         }
         unset($customer["_token"]);
         unset($customer["password"]);
@@ -147,6 +150,9 @@ class OrderController extends Controller
         $customer = session()->get('customer');
         foreach ($request->all() as $key => $value) {
             $customer[$key] = $value;
+        }
+        if (str_starts_with($customer['phone'], '+36')) {
+            $customer['phone'] = substr($customer['phone'], 3);
         }
         unset($customer["_token"]);
         session()->put('customer', $customer);
