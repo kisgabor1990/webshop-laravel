@@ -80,14 +80,14 @@
                 <div class="col-12 col-lg-6 offset-lg-3">
                     <div class="form-check form-check-inline position-relative">
                         <input class="form-check-input" type="radio" name="choose_company" id="is_company"
-                            value="is_company" required @if ( (session('customer') && session('customer.choose_company') == 'is_company') || (!session('customer') && ($user?->billing_address->choose_company == "is_company" || old('choose_company') == 'is_company'))) checked @endif>
+                            value="is_company" required @if ( (session('customer') && session('customer.choose_company') == 'is_company') || (!session('customer') && ($user?->billing_address?->choose_company == "is_company" || old('choose_company') == 'is_company'))) checked @endif>
                         <label class="form-check-label" for="is_company">
                             Cég
                         </label>
                     </div>
                     <div class="form-check form-check-inline position-relative mb-5">
                         <input class="form-check-input" type="radio" name="choose_company" id="is_person" value="is_person"
-                            required @if ((session('customer') && session('customer.choose_company') == 'is_person') || (!session('customer') && ($user?->billing_address->choose_company == "is_person" || old('choose_company') == 'is_person'))) checked @endif>
+                            required @if ((session('customer') && session('customer.choose_company') == 'is_person') || (!session('customer') && ($user?->billing_address?->choose_company == "is_person" || old('choose_company') == 'is_person'))) checked @endif>
                         <label class="form-check-label" for="is_person">
                             Magánszemély
                         </label>
