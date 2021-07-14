@@ -10,12 +10,15 @@ use App\Models\Order;
 use App\Models\Order_billing;
 use App\Models\Order_shipping;
 use App\Models\User;
+use App\Notifications\AdminNewOrder;
+use App\Notifications\OrderComplete;
 use App\Notifications\Welcome;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 define('STORE_ADDRESS', [
     'city' => 'Kecskemét',
@@ -331,6 +334,9 @@ class OrderController extends Controller
         $order->billing()->associate($db_billing);
         $order->shipping()->associate($db_shipping);
         $order->save();
+
+        Notification::send(User::admins(), new AdminNewOrder($order));
+        $db_customer->notify(new OrderComplete($order));
 
         session()->put('order', $order->id);
 

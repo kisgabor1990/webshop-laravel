@@ -56,4 +56,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Cart::class);
     }
 
+    public static function admins() {
+        return self::where('is_admin', '1')->get();
+    }
+
 }
