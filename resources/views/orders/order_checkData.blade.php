@@ -216,10 +216,10 @@
                     <div class="row mb-3">
                         <div class="col-12 col-lg-6 offset-lg-6">
                             <div class="row fw-bold align-items-center">
-                                <div class="col-6 col-lg-8 fs-5 text-end text-uppercase">
+                                <div class="col-6 col-lg-6 fs-5 text-end text-uppercase">
                                     Összesen<span class="d-none d-lg-inline"> (bruttó)</span>:
                                 </div>
-                                <div class="col-6 col-lg-4 fs-5 text-end">
+                                <div class="col-6 col-lg-6 fs-5 text-end">
                                     {{ number_format($total, 0, ',', ' ') }} Ft.
                                 </div>
                             </div>
@@ -228,10 +228,10 @@
                     <div class="row mb-3">
                         <div class="col-12 col-lg-6 offset-lg-6">
                             <div class="row fw-bold align-items-center">
-                                <div class="col-6 col-lg-8 fs-5 text-end text-uppercase">
+                                <div class="col-6 col-lg-6 fs-5 text-end text-uppercase">
                                     Szállítás<span class="d-none d-lg-inline">i költség</span>:
                                 </div>
-                                <div class="col-6 col-lg-4 fs-5 text-end">
+                                <div class="col-6 col-lg-6 fs-5 text-end">
                                     {{ number_format(session('customer.shipping_price'), 0, ',', ' ') }} Ft.
                                 </div>
                             </div>
@@ -240,10 +240,10 @@
                     <div class="row mb-3">
                         <div class="col-12 col-lg-6 offset-lg-6">
                             <div class="row fw-bold text-primary align-items-center">
-                                <div class="col-6 col-lg-8 fs-4 text-end text-uppercase">
+                                <div class="col-6 col-lg-6 fs-4 text-end text-uppercase">
                                     Végösszeg:
                                 </div>
-                                <div class="col-6 col-lg-4 fs-4 text-end">
+                                <div class="col-6 col-lg-6 fs-4 text-end">
                                     {{ number_format($total + session('customer.shipping_price'), 0, ',', ' ') }} Ft.
                                 </div>
                             </div>
