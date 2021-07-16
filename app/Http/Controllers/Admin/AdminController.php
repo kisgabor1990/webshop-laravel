@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Billing_address;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Property;
 use App\Models\Shipping_address;
@@ -22,7 +23,7 @@ class AdminController extends Controller
         $brands = Brand::withTrashed()->get();
         $properties = Property::withTrashed()->get();
         $products = Product::withTrashed()->get();
-        $orders = null;
+        $orders = Order::get();
 
         return view('admin.dashboard')->with([
             'users' => $users,
@@ -32,6 +33,7 @@ class AdminController extends Controller
             'brands' => $brands,
             'properties' => $properties,
             'products' => $products,
+            'orders' => $orders,
         ]);
     }
 }

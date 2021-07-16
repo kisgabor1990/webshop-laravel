@@ -7,8 +7,8 @@
             <div class="card" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Felhasználók</div>
                 <div class="card-body">
-                    <p>Aktív: {{ count($users->where('deleted_at', null)) }} db.</p>
-                    <p>Inaktív: {{ count($users->where('deleted_at', '!=', null)) }} db.</p>
+                    <p>Aktív: <span class="fw-bold"> {{ count($users->where('deleted_at', null)) }} db.</span></p>
+                    <p>Inaktív: <span class="fw-bold"> {{ count($users->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/felhasznalok') }}"
@@ -23,8 +23,8 @@
             <div class="card" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Számlázási címek</div>
                 <div class="card-body">
-                    <p>Aktív: {{ count($billing_addresses->where('deleted_at', null)) }} db.</p>
-                    <p>Inaktív: {{ count($billing_addresses->where('deleted_at', '!=', null)) }} db.</p>
+                    <p>Aktív: <span class="fw-bold"> {{ count($billing_addresses->where('deleted_at', null)) }} db.</span></p>
+                    <p>Inaktív: <span class="fw-bold"> {{ count($billing_addresses->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/szamlazasi-cimek') }}"
@@ -36,8 +36,8 @@
             <div class="card" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Szállítási címek</div>
                 <div class="card-body">
-                    <p>Aktív: {{ count($shipping_addresses->where('deleted_at', null)) }} db.</p>
-                    <p>Inaktív: {{ count($shipping_addresses->where('deleted_at', '!=', null)) }} db.</p>
+                    <p>Aktív: <span class="fw-bold"> {{ count($shipping_addresses->where('deleted_at', null)) }} db.</span></p>
+                    <p>Inaktív: <span class="fw-bold"> {{ count($shipping_addresses->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/szallitasi-cimek') }}"
@@ -51,8 +51,8 @@
             <div class="card" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Kategóriák</div>
                 <div class="card-body">
-                    <p>Aktív: {{ count($categories->where('deleted_at', null)) }} db.</p>
-                    <p>Inaktív: {{ count($categories->where('deleted_at', '!=', null)) }} db.</p>
+                    <p>Aktív: <span class="fw-bold"> {{ count($categories->where('deleted_at', null)) }} db.</span></p>
+                    <p>Inaktív: <span class="fw-bold"> {{ count($categories->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/kategoriak') }}" role="button">Kategóriák</a>
@@ -66,8 +66,8 @@
             <div class="card" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Gyártók</div>
                 <div class="card-body">
-                    <p>Aktív: {{ count($brands->where('deleted_at', null)) }} db.</p>
-                    <p>Inaktív: {{ count($brands->where('deleted_at', '!=', null)) }} db.</p>
+                    <p>Aktív: <span class="fw-bold"> {{ count($brands->where('deleted_at', null)) }} db.</span></p>
+                    <p>Inaktív: <span class="fw-bold"> {{ count($brands->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/gyartok') }}"
@@ -79,8 +79,8 @@
             <div class="card" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Tulajdonságok</div>
                 <div class="card-body">
-                    <p>Aktív: {{ count($properties->where('deleted_at', null)) }} db.</p>
-                    <p>Inaktív: {{ count($properties->where('deleted_at', '!=', null)) }} db.</p>
+                    <p>Aktív: <span class="fw-bold"> {{ count($properties->where('deleted_at', null)) }} db.</span></p>
+                    <p>Inaktív: <span class="fw-bold"> {{ count($properties->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/tulajdonsagok') }}"
@@ -94,8 +94,8 @@
             <div class="card" style="width:18rem;">
                 <div class="card-header text-center user-select-none h3">Termékek</div>
                 <div class="card-body">
-                    <p>Aktív: {{ count($products->where('deleted_at', null)) }} db.</p>
-                    <p>Inaktív: {{ count($products->where('deleted_at', '!=', null)) }} db.</p>
+                    <p>Aktív: <span class="fw-bold"> {{ count($products->where('deleted_at', null)) }} db.</span></p>
+                    <p>Inaktív: <span class="fw-bold"> {{ count($products->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/termekek') }}" role="button">Termékek</a>
@@ -105,10 +105,12 @@
     </div>
     <div class="row justify-content-center justify-content-lg-start mt-5">
         <div class="col-auto">
-            <div class="card" style="width:18rem;">
+            <div class="card">
                 <div class="card-header text-center user-select-none h3">Rendelések</div>
                 <div class="card-body">
-                     db.
+                     <p>Új megrendelések: <span class="fw-bold"> {{ count($orders->where('status', 'Új megrendelés')) }} db.</span></p>
+                     <p>Folyamatban lévő megrendelések: <span class="fw-bold"> {{ count($orders->where('status', '!=', 'Új megrendelés')->where('status', '!=', 'Lezárt')) }} db.</span></p>
+                     <p>Lezárt megrendelések: <span class="fw-bold"> {{ count($orders->where('status', 'Lezárt')) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/rendelesek') }}" role="button">Rendelések</a>
