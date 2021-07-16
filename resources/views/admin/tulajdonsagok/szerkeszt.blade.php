@@ -32,10 +32,10 @@
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                     </a>
                                 </div>
-                                @foreach ($property->values as $value)
+                                @foreach ($property->values->sortBy('name') as $value)
                                     <div class="input-group mb-5 edit_value{{ $value->id }}">
                                         <div class="col form-floating position-relative">
-                                            <input type="tel" class="form-control" name="values[]"
+                                            <input type="tel" class="form-control" name="edit_values[{{ $value->id }}]"
                                                 value="{{ $value->name }}" placeholder="Érték" required>
                                             <label>Érték</label>
                                             <div class="invalid-tooltip">

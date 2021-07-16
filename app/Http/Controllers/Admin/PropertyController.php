@@ -53,8 +53,8 @@ class PropertyController extends Controller
         $property->category()->associate($category);
         $property->save();
 
-        if ($request->values) {
-            foreach ($request->values as $key => $value) {
+        if ($request->new_values) {
+            foreach ($request->new_values as $key => $value) {
                 $property->values()->updateOrCreate([
                     'name' => $value,
                 ]);
@@ -113,12 +113,24 @@ class PropertyController extends Controller
         $property->name = $request->name;
         $property->hasList = $request->add_values ? '1' : '0';
         $property->save();
-        if ($request->values) {
-            $property->values()->whereNotIn('name', $request->values)->delete();
-            foreach ($request->values as $key => $value) {
-                $property->values()->updateOrCreate([
-                    'name' => $value,
-                ]);
+
+        if ($request->add_values) {
+            if ($request->edit_values) {
+                $property->values()->whereNotIn('id', array_keys($request->edit_values))->delete();
+                foreach ($request->edit_values as $key => $value) {
+                    $property->values()->updateOrCreate(['id' => $key], [
+                        'name' => $value,
+                    ]);
+                }
+            } else {
+                $property->values()->delete();
+            }
+            if ($request->new_values) {
+                foreach ($request->new_values as $key => $value) {
+                    $property->values()->updateOrCreate([
+                        'name' => $value,
+                    ]);
+                }
             }
         } else {
             $property->values()->delete();

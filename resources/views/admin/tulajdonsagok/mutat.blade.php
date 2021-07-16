@@ -29,6 +29,10 @@
                                 <th scope="row" class="user-select-none">Utoljára módosítva:</th>
                                 <td>{{ $property->updated_at }}</td>
                             </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Inaktív:</th>
+                                <td>{{ $property->trashed() ? "Igen" : "Nem" }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
