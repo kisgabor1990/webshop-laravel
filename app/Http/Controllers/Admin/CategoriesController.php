@@ -22,7 +22,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::withTrashed()->orderBy('order')->get();
+        $categories = Category::withTrashed()->with('subCategories')->orderBy('order')->get();
         $brands = Brand::withTrashed()->get();
         $properties = Property::withTrashed()->get();
 
@@ -159,8 +159,6 @@ class CategoriesController extends Controller
         if (!$category = Category::withTrashed()->find($id)) {
             return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Nem létező kategória!']);
         }
-
-        // ddd($request);
 
         $category->name = $request->name;
         $category->slug = Str::of($request->name)->slug('-');
