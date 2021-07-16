@@ -26,6 +26,14 @@ $(function () {
         })
 
 
+    if ($("#is_company").prop('checked')) {
+        $("#taxnumDiv").show();
+        $("#taxnum").removeAttr("disabled");
+    }
+    else {
+        $("#taxnumDiv").hide();
+        $("#taxnum").attr("disabled", "disabled");
+    }
 
     $(document)
         .on('click', '#is_company', function () {
@@ -67,7 +75,7 @@ $(function () {
         value_count++;
         let input_field = '<div class="input-group mb-5 value' + value_count + '">'
             + '<div class="col form-floating position-relative">'
-            + '<input type="tel" class="form-control" name="values[]" placeholder="Érték" required>'
+            + '<input type="text" class="form-control" name="new_values[]" placeholder="Érték" required>'
             + '<label>Érték</label>'
             + '<div class="invalid-tooltip">'
             + 'Az érték megadása kötelező!'
