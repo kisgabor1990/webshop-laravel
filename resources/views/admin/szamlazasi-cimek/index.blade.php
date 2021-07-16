@@ -20,7 +20,7 @@
             </div>
             
             <div class="table-responsive">
-                <table class="table table-striped table-hover" id="list">
+                <table class="table table-striped table-hover list">
                     <thead class="thead-inverse user-select-none">
                         <tr class="align-middle">
                             <th rowspan="2">Felhasználó</th>

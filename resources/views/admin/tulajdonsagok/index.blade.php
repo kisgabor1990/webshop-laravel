@@ -19,7 +19,7 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-striped table-hover" id="list">
+                <table class="table table-striped table-hover list">
                     <thead class="thead-inverse user-select-none">
                         <tr>
                             <th>Kategória</th>
