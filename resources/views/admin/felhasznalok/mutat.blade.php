@@ -27,6 +27,10 @@
                                     <td>{{ $user->updated_at }}</td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" class="user-select-none">Utoljára belépve:</th>
+                                    <td>{{ $user->last_login ?? "Még nem lépett be!" }}</td>
+                                </tr>
+                                <tr>
                                     <th scope="row" class="user-select-none">Jelszó módosítás szükséges:</th>
                                     <td>{{ $user->password_must_change ? "Igen" : "Nem" }}</td>
                                 </tr>
