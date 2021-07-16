@@ -31,6 +31,10 @@
                                 <th scope="row" class="user-select-none">Utoljára módosítva:</th>
                                 <td>{{ $brand->updated_at }}</td>
                             </tr>
+                            <tr>
+                                <th scope="row" class="user-select-none">Inaktív:</th>
+                                <td>{{ $brand->trashed() ? "Igen" : "Nem" }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

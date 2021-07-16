@@ -44,7 +44,7 @@
                                 <td>{{ $billing_address->updated_at }}</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="user-select-none">Törölve:</th>
+                                <th scope="row" class="user-select-none">Inaktív:</th>
                                 <td>{{ $billing_address->deleted_at ? 'Igen' : 'Nem' }}</td>
                             </tr>
                             <tr>

@@ -23,8 +23,8 @@
                 <table class="table table-striped table-hover" id="list">
                     <thead class="thead-inverse user-select-none">
                         <tr class="align-middle">
-                            <th rowspan="2">#</th>
                             <th rowspan="2">Felhasználó</th>
+                            <th rowspan="2">Email cím</th>
                             <th rowspan="2">Név</th>
                             <th rowspan="2">Adószám</th>
                             <th colspan="4">Cím</th>
@@ -40,8 +40,8 @@
                     <tbody>
                         @forelse ($billing_addresses as $billing_address)
                             <tr class="{{ $billing_address->trashed() ? 'table-dark' : '' }}">
-                                <td scope="row" class="user-select-none fw-bold">{{ $billing_address->id }}</td>
-                                <td class="text-nowrap">{{ $billing_address->user->name ?? '' }}</td>
+                                <td class="text-nowrap">{{ $billing_address->user->name }}</td>
+                                <td class="text-nowrap">{{ $billing_address->user->email }}</td>
                                 <td class="text-nowrap">{{ $billing_address->name }}</td>
                                 <td class="text-nowrap">{{ $billing_address->tax_num }}</td>
                                 <td class="text-nowrap">{{ $billing_address->address->city }}</td>

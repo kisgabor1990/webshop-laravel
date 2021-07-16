@@ -22,15 +22,13 @@
                 <table class="table table-striped table-hover" id="list">
                     <thead class="thead-inverse user-select-none">
                         <tr>
-                            <th>#</th>
-                            <th class="w-50">Név</th>
+                            <th class="w-100">Név</th>
                             <th class="text-end">Műveletek</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($brands as $brand)
                             <tr class="{{ $brand->trashed() ? 'table-dark' : '' }}">
-                                <td scope="row" class="user-select-none fw-bold">{{ $brand->id }}</td>
                                 <td class="text-nowrap">{{ $brand->name }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
