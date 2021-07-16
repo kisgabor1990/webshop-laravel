@@ -20,7 +20,7 @@
             </div>
             
             <div class="table-responsive">
-                <table class="table table-striped table-hover list">
+                <table class="table table-striped table-hover @if (count($billing_addresses)) list @endif">
                     <thead class="thead-inverse user-select-none">
                         <tr class="align-middle">
                             <th rowspan="2">Felhasználó</th>

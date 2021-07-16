@@ -19,7 +19,7 @@
             </div>
             
             <div class="table-responsive">
-                <table class="table table-striped table-hover list">
+                <table class="table table-striped table-hover @if (count($users)) list @endif">
                     <thead class="thead-inverse user-select-none">
                         <tr>
                             <th>Név</th>

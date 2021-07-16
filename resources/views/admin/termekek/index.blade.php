@@ -19,7 +19,7 @@
             </div>
             
             <div class="table-responsive">
-                <table class="table table-striped table-hover list" data-order='[[1, "asc"], [2, "asc"]]'>
+                <table class="table table-striped table-hover @if (count($products)) list @endif" data-order='[[1, "asc"], [2, "asc"]]'>
                     <thead class="thead-inverse user-select-none">
                         <tr>
                             <th>Megnevezés</th>

@@ -79,7 +79,7 @@
                     <div class="card-header text-center user-select-none h3">Termékek</div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover list">
+                            <table class="table table-hover @if (count($category->products)) list @endif">
                                 <thead class="user-select-none">
                                     <tr>
                                         <th>Gyártó</th>
