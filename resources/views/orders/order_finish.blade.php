@@ -35,7 +35,7 @@
             </div>
             <div class="card-body py-3">
                 <p class="text-center">
-                    A megrendelés száma: <span class="text-primary fw-bold fs-4">{{ str_pad($order->id, 6, "0", STR_PAD_LEFT) }}</span>
+                    A megrendelés száma: <span class="text-primary fw-bold fs-4">#{{ str_pad($order->id, 6, "0", STR_PAD_LEFT) }}</span>
                 </p>
                 
             </div>
