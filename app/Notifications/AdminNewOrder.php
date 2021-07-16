@@ -47,7 +47,7 @@ class AdminNewOrder extends Notification implements ShouldQueue
         $message->subject("Új megrendelés!")
         ->greeting('Kedves ' . $notifiable->name . '!')
         ->line("Új megrendelés érkezett!")
-        ->line("Rendelés azonosítója: <strong>" . str_pad($this->order->id, 6, '0', STR_PAD_LEFT) . "</strong>")
+        ->line("Rendelés azonosítója: <strong>#" . str_pad($this->order->id, 6, '0', STR_PAD_LEFT) . "</strong>")
         ->line("Rendelés részletei:")
         ->line(
             "Rendelés dátuma: <strong>" . $this->order->created_at->format("Y. M d. H:i:s") . "</strong><br>"
