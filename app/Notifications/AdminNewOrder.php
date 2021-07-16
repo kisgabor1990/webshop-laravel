@@ -57,7 +57,7 @@ class AdminNewOrder extends Notification implements ShouldQueue
         )
         ->line("A rendeléshez fűzött megjegyzés: <strong>" . $this->order->comment . "</strong>")
         ->line("Megrendelt termékek:")
-            ->line("<hr>");
+        ->line("<hr>");
 
         foreach ($this->order->products as $product) {
             $message
