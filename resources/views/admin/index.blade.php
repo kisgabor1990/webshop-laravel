@@ -80,10 +80,10 @@
         </div>
     </nav>
     
-    @include('alerts.error')
-    @include('alerts.success')
-
+    
     <div class="container my-5" id="maincontent">
+        @include('alerts.error')
+        @include('alerts.success')
         @yield('content')
     </div>
 
