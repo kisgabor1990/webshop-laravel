@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-12 col-lg-6 offset-lg-1">
                             <div class="col-12">
-                                <p class="h4 user-select-none">Leírás</p>
+                                <p class="h4 user-select-none mt-3 mb-5 mt-lg-0">Leírás</p>
                                 {!! $product->description !!}
                             </div>
                         </div>

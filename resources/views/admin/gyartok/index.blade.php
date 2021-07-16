@@ -8,7 +8,7 @@
             <div class="row justify-content-center">
                 <div class="col-auto me-sm-auto">
                     <p class="h1 user-select-none">
-                        Gyártók
+                        <i class="far fa-copyright"></i> Gyártók
                     </p>
                 </div>
                 <div class="col-auto">

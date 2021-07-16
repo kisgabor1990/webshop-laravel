@@ -8,7 +8,7 @@
             <div class="row justify-content-center">
                 <div class="col-auto me-sm-auto">
                     <p class="h1 user-select-none">
-                        Termékek
+                        <i class="fas fa-store"></i> Termékek
                     </p>
                 </div>
                 <div class="col-auto">
@@ -22,7 +22,7 @@
                 <table class="table table-striped table-hover" id="list" data-order='[[1, "asc"], [2, "asc"]]'>
                     <thead class="thead-inverse user-select-none">
                         <tr>
-                            <th>Model</th>
+                            <th>Megnevezés</th>
                             <th>Kategória</th>
                             <th>Alkategória</th>
                             <th>Gyártó</th>

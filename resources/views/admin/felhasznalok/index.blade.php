@@ -22,7 +22,6 @@
                 <table class="table table-striped table-hover" id="list">
                     <thead class="thead-inverse user-select-none">
                         <tr>
-                            <th>#</th>
                             <th>Név</th>
                             <th>E-mail cím</th>
                             <th>Utoljára belépve</th>
@@ -32,7 +31,6 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr class="{{ $user->trashed() ? 'table-dark' : '' }} {{ $user->is_admin != 0 ? "bg-warning" : "" }}">
-                                <td scope="row" class="user-select-none fw-bold">{{ $user->id }}</td>
                                 <td class="text-nowrap">{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->last_login }}</td>
