@@ -47,7 +47,7 @@ class OrderComplete extends Notification implements ShouldQueue
         $message->subject("Sikeres rendelés!")
             ->greeting('Kedves ' . $notifiable->name . '!')
             ->line("Köszönjük rendelésed! Hamarosan elkezdjük a feldolgozását, melyről újabb email üzenetet kapsz.")
-            ->line("Rendelés azonosítód: <strong>" . str_pad($this->order->id, 6, '0', STR_PAD_LEFT) . "</strong>")
+            ->line("Rendelés azonosítód: <strong>#" . str_pad($this->order->id, 6, '0', STR_PAD_LEFT) . "</strong>")
             ->line("Rendelés részletei:")
             ->line(
                 "Rendelés dátuma: <strong>" . $this->order->created_at->format("Y. M d. H:i:s") . "</strong><br>"
