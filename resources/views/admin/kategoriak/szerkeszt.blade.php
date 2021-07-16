@@ -50,7 +50,7 @@
                                 @foreach ($category->subCategories as $subCategory)
                                     <div class="input-group mb-5 edit_value{{ $subCategory->id }}">
                                         <div class="col form-floating position-relative">
-                                            <input type="tel" class="form-control" name="values[]"
+                                            <input type="text" class="form-control" name="edit_values[{{ $subCategory->id }}]"
                                                 value="{{ $subCategory->name }}" placeholder="Érték" required>
                                             <label>Érték</label>
                                             <div class="invalid-tooltip">

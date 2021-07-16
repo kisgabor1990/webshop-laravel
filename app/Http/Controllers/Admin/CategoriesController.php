@@ -98,8 +98,8 @@ class CategoriesController extends Controller
 
         $category->brands()->attach($request->brands);
 
-        if ($request->values) {
-            foreach ($request->values as $key => $value) {
+        if ($request->new_values) {
+            foreach ($request->new_values as $key => $value) {
                 $category->subCategories()->updateOrCreate([
                     'name' => $value,
                     'slug' => Str::of($value)->slug('-'),
@@ -160,6 +160,8 @@ class CategoriesController extends Controller
             return redirect()->to("/admin/kategoriak")->withErrors(['message' => 'Nem létező kategória!']);
         }
 
+        // ddd($request);
+
         $category->name = $request->name;
         $category->slug = Str::of($request->name)->slug('-');
         $category->hasSubCategories = $request->add_values ? '1' : '0';
@@ -167,13 +169,25 @@ class CategoriesController extends Controller
 
         $category->brands()->sync($request->brands);
 
-        if ($request->values) {
-            $category->subCategories()->whereNotIn('name', $request->values)->delete();
-            foreach ($request->values as $key => $value) {
-                $category->subCategories()->updateOrCreate([
-                    'name' => $value,
-                    'slug' => Str::of($value)->slug('-'),
-                ]);
+        if ($request->add_values) {
+            if ($request->edit_values) {
+                $category->subCategories()->whereNotIn('id', array_keys($request->edit_values))->delete();
+                foreach ($request->edit_values as $key => $value) {
+                    $category->subCategories()->updateOrCreate(['id' => $key], [
+                        'name' => $value,
+                        'slug' => Str::of($value)->slug('-'),
+                    ]);
+                }
+            } else {
+                $category->subCategories()->delete();
+            }
+            if ($request->new_values) {
+                foreach ($request->new_values as $key => $value) {
+                    $category->subCategories()->updateOrCreate([
+                        'name' => $value,
+                        'slug' => Str::of($value)->slug('-'),
+                    ]);
+                }
             }
         } else {
             $category->subCategories()->delete();

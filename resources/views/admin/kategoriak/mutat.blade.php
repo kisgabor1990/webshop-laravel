@@ -61,7 +61,7 @@
                                 <td>{{ $category->updated_at }}</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="user-select-none">Törölve:</th>
+                                <th scope="row" class="user-select-none">Inaktív:</th>
                                 <td>{{ $category->deleted_at ? 'Igen' : 'Nem' }}</td>
                             </tr>
                         </tbody>
