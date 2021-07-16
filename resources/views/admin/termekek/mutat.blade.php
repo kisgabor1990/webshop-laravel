@@ -54,7 +54,7 @@
                                             <td>{{ $product->updated_at }}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row" class="user-select-none">Törölve:</th>
+                                            <th scope="row" class="user-select-none">Inaktív:</th>
                                             <td>{{ $product->deleted_at ? 'Igen' : 'Nem' }}</td>
                                         </tr>
                                     </tbody>
@@ -71,9 +71,9 @@
                     <div class="row">
                         <div class="col-12 my-5">
                             <p class="h4 user-select-none mb-3">Képek</p>
-                            <div class="row">
-                                @forelse ($product->images->sortBy('id') as $image)
-                                    <div class="col-6 col-lg-4 mb-5 text-center">
+                            <div class="row align-items-center">
+                                @forelse ($product->images->sortByDesc('isCover') as $image)
+                                    <div class="col-6 col-lg-3 mb-5 text-center">
                                         @if ($image->isCover) <p class="text-center mb-0">Borítókép</p> @endif
                                         <img src="{{ url($image->path) }}" class="img-fluid" alt="{{ $product->model }}">
                                     </div>
