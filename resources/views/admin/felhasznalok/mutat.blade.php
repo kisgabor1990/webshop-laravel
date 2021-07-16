@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12 col-lg-5 mb-5">
             <div class="card">
-                <div class="card-header text-center user-select-none h3">{{ $user->id }} - {{ $user->name }}</div>
+                <div class="card-header text-center user-select-none h3">#{{ $user->id }} - {{ $user->name }}</div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -16,7 +16,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="user-select-none">E-mail cím megerősítve:</th>
-                                    <td>{{ $user->email_verified_at }}</td>
+                                    <td>{{ $user->email_verified_at ?? "Nincs megerősítve!" }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="user-select-none">Fiók létrehozva:</th>
@@ -27,8 +27,12 @@
                                     <td>{{ $user->updated_at }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="user-select-none">Törölve:</th>
-                                    <td>@if ($user->deleted_at)Igen @else Nem @endif</td>
+                                    <th scope="row" class="user-select-none">Jelszó módosítás szükséges:</th>
+                                    <td>{{ $user->password_must_change ? "Igen" : "Nem" }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="user-select-none">Inaktív:</th>
+                                    <td>{{ $user->deleted_at ? "Igen" : "Nem" }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="user-select-none">Megrendelései:</th>
@@ -58,6 +62,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if ($user->billing_address)
                                         <tr class="@if ($user->billing_address->trashed()) table-dark @endif" style="transform: rotate(0);">
                                             <td class="text-nowrap"><a href="{{ url('admin/szamlazasi-cimek/mutat/' . $user->billing_address->id) }}" class="stretched-link text-reset text-decoration-none">{{ $user->billing_address->name }}</a></td>
                                             <td class="text-nowrap">{{ $user->billing_address->tax_num }}</td>
@@ -66,6 +71,11 @@
                                             <td class="text-nowrap">{{ $user->billing_address->address->address2 }}</td>
                                             <td class="text-nowrap">{{ $user->billing_address->address->zip }}</td>
                                         </tr>
+                                    @else
+                                        <tr>
+                                            <td colspan="6" class="text-nowrap">Nem található számlázási cím!</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -86,6 +96,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if ($user->shipping_address)
                                         <tr class="@if ($user->shipping_address->trashed()) table-dark @endif" style="transform: rotate(0);">
                                             <td class="text-nowrap"><a href="{{ url('admin/szallitasi-cimek/mutat/' . $user->shipping_address->id) }}" class="stretched-link text-reset text-decoration-none">{{ $user->shipping_address->name }}</a></td>
                                             <td class="text-nowrap">+36{{ $user->shipping_address->phone }}</td>
@@ -94,6 +105,11 @@
                                             <td class="text-nowrap">{{ $user->shipping_address->address->address2 }}</td>
                                             <td class="text-nowrap">{{ $user->shipping_address->address->zip }}</td>
                                         </tr>
+                                    @else
+                                        <tr>
+                                            <td colspan="6" class="text-nowrap">Nem található szállítási cím!</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

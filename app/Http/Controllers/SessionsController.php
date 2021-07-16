@@ -37,19 +37,25 @@ class SessionsController extends Controller
         }
 
         $user = User::find(Auth::id());
-
+        $user->last_login = date("Y-m-d H:i:s");
+        $user->save();
+        
         if ($cart = session()->get('cart')) {
             foreach ($cart as $key => $product) {
-
+                
                 $user->carts()->updateOrCreate(
                     ['product_id' => $key],
                     ['quantity' => DB::raw('quantity + ' . $product['quantity'])]
                 );
             }
         }
-
+        
         $request->session()->regenerate();
 
+        if ($user->password_must_change == 1) {
+            return redirect("/profil/jelszo-modositas");
+        }
+        
         return redirect()->intended();
     }
 
@@ -62,5 +68,10 @@ class SessionsController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->to('/');
+    }
+
+    public function createPasswordChange()
+    {
+        return view('auth.jelszo-modositas');
     }
 }

@@ -90,13 +90,13 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::get('/profil/email-megerosites', function() {
-    // return view('auth.email_megerosites');
     return redirect('/')->withErrors('Erősítse meg email címét!');
 })->name('verification.notice');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/kijelentkezes', [SessionsController::class, 'destroy']);
     Route::get('/profil', [SessionsController::class, 'index']);
+    Route::get('/profil/jelszo-modositas', [SessionsController::class, 'createPasswordChange']);
 
 
     Route::get('/profil/email-megerosites/{id}/{hash}', function (EmailVerificationRequest $request) {

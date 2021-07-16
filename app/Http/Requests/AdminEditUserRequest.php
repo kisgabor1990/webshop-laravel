@@ -29,7 +29,6 @@ class AdminEditUserRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'password' => 'confirmed',
         ];
     }
 }

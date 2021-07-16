@@ -26,7 +26,6 @@ class AdminNewUserRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
         ];
     }
 }

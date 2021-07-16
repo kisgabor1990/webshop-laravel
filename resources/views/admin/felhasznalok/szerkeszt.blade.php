@@ -27,21 +27,15 @@
                                 Az email cím megadása kötelező és valósnak kell lennie!
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Jelszó">
-                            <label for="password">Jelszó</label>
-                            <div class="invalid-feedback">
-                                A jelszó megadása kötelező!
+                        @if ($user->is_admin != 2)
+                            <div class="col-12 col-lg-6 orm-check form-switch shadow-lg rounded-pill mb-3 mx-auto">
+                                <input class="form-check-input" type="checkbox" id="isAdmin" name="isAdmin" value="true"
+                                @if ($user->is_admin) checked @endif>
+                                <label class="form-check-label" for="isAdmin">
+                                    Admin
+                                </label>
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
-                            <input type="password" class="form-control" id="password_confirmation"
-                                name="password_confirmation" placeholder="Jelszó újra">
-                            <label for="password_confirmation">Jelszó újra</label>
-                            <div class="invalid-feedback">
-                                A jelszó megadása kötelező!
-                            </div>
-                        </div>
+                        @endif
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-success btn-sm">Mentés</button>

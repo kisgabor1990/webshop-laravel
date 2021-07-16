@@ -23,40 +23,44 @@
                     <thead class="thead-inverse user-select-none">
                         <tr>
                             <th>#</th>
-                            <th class="w-50">Név</th>
+                            <th>Név</th>
                             <th>E-mail cím</th>
+                            <th>Utoljára belépve</th>
                             <th class="text-end">Műveletek</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr class="{{ $user->trashed() ? 'table-dark' : '' }}">
+                            <tr class="{{ $user->trashed() ? 'table-dark' : '' }} {{ $user->is_admin != 0 ? "bg-warning" : "" }}">
                                 <td scope="row" class="user-select-none fw-bold">{{ $user->id }}</td>
                                 <td class="text-nowrap">{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->last_login }}</td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($user->trashed())
-                                        <a class="btn btn-danger btn-sm delete me-3" href="#"
-                                                    data-href="{{ url('admin/felhasznalok/vegleg-torol/' . $user->id) }}"
-                                                    data-header="felhasználó" data-name="{{ $user->name }}"
-                                                    data-email="{{ $user->email }}"
-                                                    data-id="{{ $user->id }}" role="button"
-                                                    data-bs-tooltip="tooltip" data-placement="top" title="Végleges törlés">
-                                                    <i class="fas fa-trash fa-sm fa-fw"></i>
-                                                </a>
+                                            <a class="btn btn-danger btn-sm delete me-3" href="#"
+                                                data-href="{{ url('admin/felhasznalok/vegleg-torol/' . $user->id) }}"
+                                                data-header="felhasználó" data-name="{{ $user->name }}"
+                                                data-email="{{ $user->email }}"
+                                                data-id="{{ $user->id }}" role="button"
+                                                data-bs-tooltip="tooltip" data-placement="top" title="Végleges törlés">
+                                                <i class="fas fa-trash fa-sm fa-fw"></i>
+                                            </a>
                                         @endif
                                         <a class="btn btn-primary btn-sm "
                                             href="{{ url('admin/felhasznalok/mutat/' . $user->id) }}" role="button"
                                             data-bs-tooltip="tooltip" data-placement="top" title="Megtekintés">
                                             <i class="fas fa-eye fa-sm fa-fw"></i>
                                         </a>
-                                        <a class="btn btn-warning btn-sm "
-                                            href="{{ url('admin/felhasznalok/szerkeszt/' . $user->id) }}" role="button"
-                                            data-bs-tooltip="tooltip" data-placement="top" title="Szerkesztés">
-                                            <i class="fas fa-edit fa-sm fa-fw"></i>
-                                        </a>
-                                        @if ($user->is_admin == 0)
+                                        @if ($user->is_admin != 2 || auth()->user()->is_admin == 2)
+                                            <a class="btn btn-warning btn-sm"
+                                                href="{{ url('admin/felhasznalok/szerkeszt/' . $user->id) }}" role="button"
+                                                data-bs-tooltip="tooltip" data-placement="top" title="Szerkesztés">
+                                                <i class="fas fa-edit fa-sm fa-fw"></i>
+                                            </a>
+                                        @endif
+                                        @if ($user->is_admin != 2 && $user->id != auth()->user()->id)
                                             @if ($user->trashed())
                                                 <a class="btn btn-success btn-sm"
                                                     href="{{ url('admin/felhasznalok/visszaallit/' . $user->id) }}" role="button"
@@ -64,11 +68,11 @@
                                                     <i class="fas fa-trash-restore fa-sm fa-fw"></i>
                                                 </a>
                                             @else
-                                            <a class="btn btn-danger btn-sm"
-                                                href="{{ url('admin/felhasznalok/torol/' . $user->id) }}" role="button"
-                                                data-bs-tooltip="tooltip" data-placement="top" title="Törlés">
-                                            <i class="fas fa-trash fa-sm fa-fw"></i>
-                                        </a>
+                                                <a class="btn btn-danger btn-sm"
+                                                    href="{{ url('admin/felhasznalok/torol/' . $user->id) }}" role="button"
+                                                    data-bs-tooltip="tooltip" data-placement="top" title="Törlés">
+                                                <i class="fas fa-trash fa-sm fa-fw"></i>
+                                                </a>
                                             @endif
                                         @endif
                                     </div>

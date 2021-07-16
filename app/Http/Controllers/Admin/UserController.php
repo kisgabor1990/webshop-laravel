@@ -8,8 +8,10 @@ use App\Http\Requests\AdminNewUserRequest;
 use App\Models\Billing_address;
 use App\Models\Shipping_address;
 use App\Models\User;
+use App\Notifications\AdminNewUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class UserController extends Controller
 {
@@ -49,13 +51,16 @@ class UserController extends Controller
      */
     public function store(AdminNewUserRequest $request)
     {
-        $user = [
+        $password = substr(sha1(rand()), 0, 8);
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ];
+            'password' => Hash::make($password),
+            'is_admin' => $request->isAdmin ? 1 : 0,
+            'password_must_change' => 1,
+        ]);
 
-        User::create($user);
+        $user->notify(new AdminNewUser($password));
 
         return redirect()->to('admin/felhasznalok')->withSuccess('Új felhasználó sikeresen létrehozva!');
     }
@@ -102,9 +107,7 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        if ($request->password != '') {
-            $user->password = Hash::make($request->password);
-        }
+        $user->is_admin = $request->isAdmin ? 1 : 0;
         $user->save();
 
         return redirect()->to('admin/felhasznalok')->withSuccess('Felhasználó adatai sikeresen módosítva!');
