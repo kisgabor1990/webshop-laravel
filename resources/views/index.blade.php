@@ -378,17 +378,25 @@
 {{-- /.Kosár offcanvas --}}
 
 {{-- Email cím nincs megerősítve --}}
-@if (auth()->check() && !auth()->user()->hasVerifiedEmail())
+@if (auth()->check() && (!auth()->user()->hasVerifiedEmail() || auth()->user()->password_must_change == 1))
 <div class="row justify-content-center">
     <div class="col-12 position-fixed bottom-0 start-0 bg-danger text-center py-3" style="z-index: 99;">
-        <p class="h4">Email címe nincs megerősítve!</p>
-        <p class="h6">
-            Megerősítő email újraküldése
-        </p>
-        <form action="{{ url('profil/email-megerosites') }}" method="post">
-            @csrf
-            <button type="submit" class="btn btn-primary">Küldés</button>
-        </form>
+        @if (auth()->user()->password_must_change == 1)
+            <p class="h4">Jelszavát meg kell változtatnia!</p>
+            <a class="btn btn-primary mb-3" href="{{ url("/profil/jelszo-modositas") }}">
+                Jelszó módosítás
+            </a>
+        @endif
+        @if (!auth()->user()->hasVerifiedEmail())
+            <p class="h4">Email címe nincs megerősítve!</p>
+            <p class="h6">
+                Megerősítő email újraküldése
+            </p>
+            <form action="{{ url('profil/email-megerosites') }}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-primary mb-3">Küldés</button>
+            </form>
+        @endif
     </div>
 </div>
 @endif
