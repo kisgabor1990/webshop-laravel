@@ -72,10 +72,6 @@
                                 Az irányítószám megadása kötelező!
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
-                            <textarea class="form-control" placeholder="Megjegyzés" id="comment" name="comment" style="height: 100px">{{ $shipping_address->comment }}</textarea>
-                            <label for="comment">Megjegyzés</label>
-                        </div>
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-success btn-sm">Mentés</button>

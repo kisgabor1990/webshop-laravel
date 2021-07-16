@@ -123,7 +123,6 @@ class ShippingAddressController extends Controller
 
         $shipping_address->name = $request->name;
         $shipping_address->phone = $request->phone;
-        $shipping_address->comment = $request->comment;
 
         $shipping_address->user()->associate($user);
         $shipping_address->address()->associate($address);

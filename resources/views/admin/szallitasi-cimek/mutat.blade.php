@@ -30,10 +30,6 @@
                                 <td>+36{{ $shipping_address->phone }}</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="user-select-none w-50">Megjegyzés:</th>
-                                <td>{{ $shipping_address->comment }}</td>
-                            </tr>
-                            <tr>
                                 <th scope="row" class="user-select-none">Cím létrehozva:</th>
                                 <td>{{ $shipping_address->created_at }}</td>
                             </tr>
@@ -42,7 +38,7 @@
                                 <td>{{ $shipping_address->updated_at }}</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="user-select-none">Törölve:</th>
+                                <th scope="row" class="user-select-none">Inaktív:</th>
                                 <td>{{ $shipping_address->deleted_at ? 'Igen' : 'Nem' }}</td>
                             </tr>
                             <tr>
