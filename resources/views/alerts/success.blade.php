@@ -1,6 +1,6 @@
 @if (session()->has('success'))
 <div class="row">
-    <div class="col-auto">
+    <div class="col">
         <div class="alert alert-success alert-dismissible fade show">
             @if(is_array(session('success')))
                 <ul>
