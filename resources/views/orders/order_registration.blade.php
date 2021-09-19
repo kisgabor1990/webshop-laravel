@@ -71,7 +71,6 @@
                 </div>
             </div>
         </div>
-        </div>
         <div class="card my-5">
             <div class="card-header text-center text-uppercase bg-dark text-white">
                 Kapcsolattartó adatok
