@@ -22,7 +22,7 @@
             </button>
 
             {{-- Navigáció sáv --}}
-            <a class="navbar-brand d-block d-lg-none" href="{{ url('/') }}">Webshop logó</a>
+            <a class="navbar-brand d-block d-lg-none" href="{{ url('/') }}">Műszaki Webáruház</a>
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav w-100">
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }} me-3" href="{{ url('/') }}">
@@ -56,7 +56,7 @@
                 data-href="{{ url('/kosar') }}"
                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="badge rounded-pill bg-light text-dark cart_quantity {{ $quantity == 0 ? "d-none" : "d-inline" }}">{{ $quantity }}</span>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark cart_quantity {{ $quantity == 0 ? "d-none" : "d-inline" }}">{{ $quantity }}</span>
                 </a>
                 {{-- /.Kosár offcanvas gomb --}}
 
@@ -141,33 +141,36 @@
                 {{-- Webshop Logó --}}
                 <div class="col-12 col-lg-3">
                     <h2 class="text-center p-2 m-0">
-                        Logó
+                        Műszaki
                     </h2>
                     <h2 class="text-center p-2 m-0">
-                        Webshop
+                        Webáruház
                     </h2>
                 </div>
                 <div class="col-12 col-lg-9">
                     <div class="row">
 
                         {{-- Kereső, telefonszám, email cím --}}
-                        <div class="col-4 me-auto">
+                        <div class="col-6 me-auto">
                             <div class="row mb-3">
-                                    <div class="col-auto me-auto">
+                                    <div class="col-4 me-auto">
                                         <i class="fas fa-phone-alt h5 me-1"></i> 06-1/123-45-67
                                     </div>
-                                    <div class="col-auto">
-                                        <i class="far fa-envelope h5 me-1"></i> info@valami.hu
+                                    <div class="col-8">
+                                        <i class="far fa-envelope h5 me-1"></i> info@muszakiwebaruhaz.hu
                                     </div>
                             </div>
                             <form action="{{ url('termekek/kereses') }}" method="get">
                                 <div class="row">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="q" placeholder="Keresés"
-                                            required>
-                                        <button type="submit" class="btn btn-outline-warning searchButton"
-                                            data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!"><i
-                                                class="fas fa-search"></i></button>
+                                    <div class="col-8">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="q" placeholder="Keresés"
+                                                   required>
+                                            <button type="submit" class="btn btn-outline-warning searchButton"
+                                                    data-bs-tooltip="tooltip" data-bs-placement="right" title="Kereés!">
+                                                <i
+                                                    class="fas fa-search"></i></button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -230,7 +233,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
 
 
                     </div>
@@ -291,7 +294,7 @@
     </div>
     <div class="container-fluid bg-dark bg-gradient p-5 mt-auto">
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0 d-flex align-items-end justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4 mb-5 mb-lg-0 d-flex justify-content-center">
                 <div id="also_linkek" class="row text-center text-lg-start">
 
                     <div class="col-12 col-md-6">
@@ -318,15 +321,19 @@
                 </h3>
                 <ul class="list-group">
                     <li class="list-group-item">Kecskemét</li>
-                    <li class="list-group-item">Nemtudommilyen utca 2.</li>
-                    <li class="list-group-item"><a href="index.php">Webshop neve</a></li>
-                    <li class="list-group-item"><a href="tel:+36001234567">+36-00/123-45-67</a></li>
-                    <li class="list-group-item"><a href="mailto:val@mi.hu">val@mi.hu</a></li>
+                    <li class="list-group-item">Fő utca 1.</li>
+                    <li class="list-group-item"><a href="index.php">Műszaki Webáruház</a></li>
+                    <li class="list-group-item"><a href="tel:+36001234567">+36-1/123-45-67</a></li>
+                    <li class="list-group-item"><a href="info@muszakiwebaruhaz.hu">info@muszakiwebaruhaz.hu</a></li>
                 </ul>
             </div>
-            <div class="col-12 col-lg-4 text-light">
-                Google térkép esetleg
-            </div>
+            <div class="col-12 col-lg-4">
+                <div class="map-responsive">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25935.210889796515!2d19.66699676533161!3d46.900688100187786!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4743da6108f61c3f%3A0x400c4290c1e1180!2sKecskem%C3%A9t!5e0!3m2!1shu!2shu!4v1632070061119!5m2!1shu!2shu"
+                        width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
         </div>
     </div>
 
@@ -352,9 +359,24 @@
         <div class="offcanvas-body">
             <div class="col-12 col-lg-8 mx-lg-auto list-group list-group-flush">
                 <a href="{{ url('/profil') }}"
-                    class="list-group-item list-group-item-dark list-group-item-action"
+                    class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('profil') ? 'active' : '' }}"
                     aria-current="true">
-                    Profil karbantartása
+                    Személyes adatok
+                </a>
+                <a href="{{ url('/profil/jelszo-modositas') }}"
+                    class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('profil/jelszo-modositas') ? 'active' : '' }}"
+                    aria-current="true">
+                    Jelszó módosítás
+                </a>
+                <a href="{{ url('/rendelesek') }}"
+                    class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('rendelesek') ? 'active' : '' }}"
+                    aria-current="true">
+                    Rendelések
+                </a>
+                <a href="{{ url('/eszamlak') }}"
+                    class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('eszamlak') ? 'active' : '' }} disabled"
+                    aria-current="true">
+                    Számlák (Fejlesztés alatt)
                 </a>
                 <a href="{{ url('/kijelentkezes') }}" class="list-group-item list-group-item-dark list-group-item-action">
                     Kijelentkezés
@@ -372,7 +394,7 @@
         <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-    
+
     </div>
 </div>
 {{-- /.Kosár offcanvas --}}
@@ -411,7 +433,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer text-center">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
