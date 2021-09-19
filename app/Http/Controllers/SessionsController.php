@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Hash;
 use function auth;
 use function back;
 use function redirect;
@@ -70,7 +72,18 @@ class SessionsController extends Controller
         return view('auth.jelszo-modositas');
     }
 
-    public function storePasswordChange() {
+    public function storePasswordChange(ChangePasswordRequest $request) {
+        $user = Auth::user();
+        $userPassword = $user->password;
 
+        if (!Hash::check($request->old_password, $userPassword)) {
+            return back()->withErrors(['old_password' => 'A beírt jelszó nem egyezik jelenlegi jelszavával!']);
+        }
+
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+
+        return redirect()->back()->withSuccess("A jelszó módosítása sikeres!");
     }
 }
