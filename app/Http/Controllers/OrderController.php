@@ -34,16 +34,14 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         if (Auth::check()) {
             return redirect('/megrendeles/adatok');
         }
         return view('orders.orderas');
     }
 
-    public function showCart()
-    {
+    public function showCart() {
         return view('orders.cart');
     }
 
@@ -52,19 +50,17 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createRegistration()
-    {
+    public function createRegistration() {
         return view('orders.order_registration');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function storeRegistration(RegistrationRequest $request)
-    {
+    public function storeRegistration(RegistrationRequest $request) {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -144,8 +140,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createData()
-    {
+    public function createData() {
         $user = null;
         if (auth()->check()) {
             $user = User::find(auth()->id());
@@ -158,11 +153,10 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function storeData(CustomerRequest $request)
-    {
+    public function storeData(CustomerRequest $request) {
         $customer = session()->get('customer');
         foreach ($request->all() as $key => $value) {
             $customer[$key] = $value;
@@ -187,9 +181,8 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createPaymentAndShipping()
-    {
-        if (!session('customer')) {
+    public function createPaymentAndShipping() {
+        if ( ! session('customer')) {
             return redirect('/');
         }
         return view('orders.order_shippingAndPayment');
@@ -198,17 +191,15 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function storePaymentAndShipping(Request $request)
-    {
+    public function storePaymentAndShipping(Request $request) {
         $customer = session()->get('customer');
         $customer['payment'] = $request->payment;
         $customer['shipping_mode'] = explode("|", $request->shipping)[0];
         $customer['shipping_price'] = explode("|", $request->shipping)[1];
 
-        
 
         if ($customer['shipping_mode'] == "Személyes átvétel") {
             $customer['shipping_city'] = STORE_ADDRESS['city'];
@@ -224,7 +215,7 @@ class OrderController extends Controller
         }
 
         session()->put('customer', $customer);
-        
+
 
         return redirect('/megrendeles/ellenorzes');
     }
@@ -234,9 +225,8 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createCheckData()
-    {
-        if (!session('customer')) {
+    public function createCheckData() {
+        if ( ! session('customer')) {
             return redirect('/');
         }
 
@@ -246,27 +236,26 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function storeCheckData(Request $request)
-    {
+    public function storeCheckData(Request $request) {
         $user = null;
         if (auth()->check()) {
             $user = User::find(auth()->id());
 
             $cart = [];
-                
-                foreach ($user->carts()->with(['product', 'product.images', 'product.brand'])->get() as $key => $db_cart) {
-                    $cart[$db_cart->product_id] = [
-                        'name' => $db_cart->product->name,
-                        'slug' => $db_cart->product->slug,
-                        'price' => $db_cart->product->price,
-                        'image' => $db_cart->product->coverImage()->path,
-                        'brand' => $db_cart->product->brand->name,
-                        'quantity' => $db_cart->quantity,
-                    ];
-                }
+
+            foreach ($user->carts()->with(['product', 'product.images', 'product.brand'])->get() as $key => $db_cart) {
+                $cart[$db_cart->product_id] = [
+                    'name' => $db_cart->product->name,
+                    'slug' => $db_cart->product->slug,
+                    'price' => $db_cart->product->price,
+                    'image' => $db_cart->product->coverImage()->path,
+                    'brand' => $db_cart->product->brand->name,
+                    'quantity' => $db_cart->quantity,
+                ];
+            }
 
             $user->carts()->delete();
 
@@ -346,12 +335,11 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param \App\Models\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function show()
-    {
-        if (!session('order')) {
+    public function show() {
+        if ( ! session('order')) {
             return redirect('/');
         }
 
@@ -363,34 +351,31 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param \App\Models\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
-    {
+    public function edit(Order $order) {
         //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
-    {
+    public function update(Request $request, Order $order) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Order  $order
+     * @param \App\Models\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
-    {
+    public function destroy(Order $order) {
         //
     }
 }
