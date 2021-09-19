@@ -35,7 +35,7 @@ class SessionsController extends Controller
             return redirect()->to("/bejelentkezes")->withErrors(['message' => 'Hibás email/jelszó páros!']);
         }
 
-        $user = User::find(Auth::id());
+        $user             = User::find(Auth::id());
         $user->last_login = date("Y-m-d H:i:s");
         $user->save();
 
@@ -73,10 +73,10 @@ class SessionsController extends Controller
     }
 
     public function storePasswordChange(ChangePasswordRequest $request) {
-        $user = Auth::user();
+        $user         = Auth::user();
         $userPassword = $user->password;
 
-        if (!Hash::check($request->old_password, $userPassword)) {
+        if ( ! Hash::check($request->old_password, $userPassword)) {
             return back()->withErrors(['old_password' => 'A beírt jelszó nem egyezik jelenlegi jelszavával!']);
         }
 
