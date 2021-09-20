@@ -244,7 +244,7 @@ $(function () {
         })
         .on('click', '.removeFromCart', function () {
             let this_r = $(this);
-            
+
             $.get(this_r.data('href'), function () {
                 let cart_quantity = Number($('.cart_quantity').html());
                 let cart_price = Number($('.cart_price').html().replace(/\s+/g, ''));
@@ -288,9 +288,9 @@ $(function () {
 
         .on('click', '#resetButton', function (e) {
             e.preventDefault();
-            $('#minPrice').attr('value', 0);
+            $('#minPrice').val(0);
             $('#minPrice_value').html("0 Ft.");
-            $('#maxPrice').attr('value', $('#maxPrice').attr('max'));
+            $('#maxPrice').val($('#maxPrice').attr('max'));
             $('#maxPrice_value').html(numberFormat($('#maxPrice').attr('max')) + " Ft.");
             $('input:checkbox').prop('checked', false);
         })
