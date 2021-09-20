@@ -4,11 +4,13 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BillingAddessController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductsController as AdminProductsController;
 use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\ShippingAddressController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DataModificationController;
 use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PagesController;
@@ -17,6 +19,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\UserOrdersController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -81,7 +84,7 @@ Route::get('/megrendeles/elkuldve', [OrderController::class, 'show']);
 Route::middleware(['guest'])->group(function () {
     Route::get('/regisztracio', [RegistrationController::class, 'create']);
     Route::post('/regisztracio', [RegistrationController::class, 'store']);
-    Route::get('/elfelejtett-jelszo', [PasswordRecoveryController::class, 'create']);
+    Route::get('/elfelejtett-jelszo', [PasswordRecoveryControđđđller::class, 'create']);
     Route::post('/elfelejtett-jelszo', [PasswordRecoveryController::class, 'store']);
     Route::get('/uj-jelszo/{token}/{email}', [ResetPasswordController::class, 'create']);
     Route::post('/uj-jelszo', [ResetPasswordController::class, 'store']);
@@ -95,19 +98,21 @@ Route::get('/profil/email-megerosites', function() {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/kijelentkezes', [SessionsController::class, 'destroy']);
-    Route::get('/profil', [SessionsController::class, 'index']);
+    Route::get('/profil', [DataModificationController::class, 'index']);
+    Route::post('/profil', [DataModificationController::class, 'store']);
     Route::get('/profil/jelszo-modositas', [SessionsController::class, 'createPasswordChange']);
-
+    Route::post('/profil/jelszo-modositas', [SessionsController::class, 'storePasswordChange']);
+    Route::get('/rendelesek', [UserOrdersController::class, 'index']);
 
     Route::get('/profil/email-megerosites/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
-    
+
         return redirect('/')->withSuccess('Email címe sikeresen megerősítve!');
     })->middleware('signed')->name('verification.verify');
 
     Route::post('/profil/email-megerosites', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
-    
+
         return redirect('/')->withSuccess('Az email cím megerősítéséhez szükséges levelet kiküldtük!');
     })->middleware('throttle:6,1')->name('verification.send');
 
@@ -130,7 +135,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/felhasznalok/torol/{user}', [UserController::class, 'delete'] );
     Route::get('/felhasznalok/vegleg-torol/{id}', [UserController::class, 'destroy'] );
     Route::get('/felhasznalok/visszaallit/{id}', [UserController::class, 'restore'] );
-    
+
     Route::get('/kategoriak', [CategoriesController::class, 'index'] );
     Route::get('/kategoriak/mutat/{id}', [CategoriesController::class, 'show'] );
     Route::get('/kategoriak/rendez', [CategoriesController::class, 'order'] );
@@ -142,7 +147,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/kategoriak/torol/{category}', [CategoriesController::class, 'delete'] );
     Route::get('/kategoriak/vegleg-torol/{id}', [CategoriesController::class, 'destroy'] );
     Route::get('/kategoriak/visszaallit/{id}', [CategoriesController::class, 'restore'] );
-    
+
     Route::get('/szamlazasi-cimek', [BillingAddessController::class, 'index'] );
     Route::get('/szamlazasi-cimek/mutat/{id}', [BillingAddessController::class, 'show'] );
     Route::get('/szamlazasi-cimek/uj', [BillingAddessController::class, 'create'] );
@@ -152,7 +157,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/szamlazasi-cimek/torol/{billing_address}', [BillingAddessController::class, 'delete'] );
     Route::get('/szamlazasi-cimek/vegleg-torol/{id}', [BillingAddessController::class, 'destroy'] );
     Route::get('/szamlazasi-cimek/visszaallit/{id}', [BillingAddessController::class, 'restore'] );
-    
+
     Route::get('/szallitasi-cimek', [ShippingAddressController::class, 'index'] );
     Route::get('/szallitasi-cimek/mutat/{id}', [ShippingAddressController::class, 'show'] );
     Route::get('/szallitasi-cimek/uj', [ShippingAddressController::class, 'create'] );
@@ -172,7 +177,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/gyartok/torol/{brand}', [BrandController::class, 'delete'] );
     Route::get('/gyartok/visszaallit/{id}', [BrandController::class, 'restore'] );
     Route::get('/gyartok/vegleg-torol/{id}', [BrandController::class, 'destroy'] );
-    
+
     Route::get('/tulajdonsagok', [PropertyController::class, 'index'] );
     Route::get('/tulajdonsagok/mutat/{id}', [PropertyController::class, 'show'] );
     Route::get('/tulajdonsagok/uj', [PropertyController::class, 'create'] );
@@ -182,7 +187,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/tulajdonsagok/torol/{property}', [PropertyController::class, 'delete'] );
     Route::get('/tulajdonsagok/visszaallit/{id}', [PropertyController::class, 'restore'] );
     Route::get('/tulajdonsagok/vegleg-torol/{id}', [PropertyController::class, 'destroy'] );
-    
+
     Route::get('/termekek', [AdminProductsController::class, 'index'] );
     Route::get('/termekek/mutat/{id}', [AdminProductsController::class, 'show'] );
     Route::get('/termekek/uj', [AdminProductsController::class, 'create'] );
@@ -192,6 +197,8 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/termekek/torol/{product}', [AdminProductsController::class, 'delete'] );
     Route::get('/termekek/visszaallit/{id}', [AdminProductsController::class, 'restore'] );
     Route::get('/termekek/vegleg-torol/{id}', [AdminProductsController::class, 'destroy'] );
+
+    Route::get('/rendelesek', [OrdersController::class, 'index'] );
 });
 
 
