@@ -361,7 +361,7 @@
                 <a href="{{ url('/profil') }}"
                     class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('profil') ? 'active' : '' }}"
                     aria-current="true">
-                    Személyes adatok
+                    Személyes adatok módosítása
                 </a>
                 <a href="{{ url('/profil/jelszo-modositas') }}"
                     class="list-group-item list-group-item-dark list-group-item-action {{ request()->is('profil/jelszo-modositas') ? 'active' : '' }}"
