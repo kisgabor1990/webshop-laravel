@@ -291,6 +291,8 @@ $(function () {
             $('#minPrice').val(0);
             $('#minPrice_value').html("0 Ft.");
             $('#maxPrice').val($('#maxPrice').attr('max'));
+            $('#maxPrice').attr('min', 0);
+            $('#minPrice').attr('max', $('#maxPrice').val());
             $('#maxPrice_value').html(numberFormat($('#maxPrice').attr('max')) + " Ft.");
             $('input:checkbox').prop('checked', false);
         })
