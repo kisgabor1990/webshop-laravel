@@ -204,5 +204,4 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('/rendelesek/szerkeszt/{id}', [OrdersController::class, 'update'] );
     Route::get('/rendelesek/torol/{id}', [OrdersController::class, 'delete'] );
 });
-
 Route::get('{page}', [PagesController::class, 'show']);
