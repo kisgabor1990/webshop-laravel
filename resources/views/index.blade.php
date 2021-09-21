@@ -141,7 +141,7 @@
                 {{-- Webshop Logó --}}
                 <div class="col-12 col-lg-3">
                     <h2 class="text-center p-2 m-0">
-                        Műszakiaa
+                        Műszaki
                     </h2>
                     <h2 class="text-center p-2 m-0">
                         Webáruház
