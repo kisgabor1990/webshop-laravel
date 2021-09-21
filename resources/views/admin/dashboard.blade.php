@@ -109,8 +109,9 @@
                 <div class="card-header text-center user-select-none h3">Rendelések</div>
                 <div class="card-body">
                      <p>Új megrendelések: <span class="fw-bold"> {{ count($orders->where('status', 'Új megrendelés')) }} db.</span></p>
-                     <p>Folyamatban lévő megrendelések: <span class="fw-bold"> {{ count($orders->where('status', '!=', 'Új megrendelés')->where('status', '!=', 'Lezárt')) }} db.</span></p>
+                     <p>Folyamatban lévő megrendelések: <span class="fw-bold"> {{ count($orders->where('status', '!=', 'Új megrendelés')->where('status', '!=', 'Lezárt')->where('status', '!=', 'Törölt')) }} db.</span></p>
                      <p>Lezárt megrendelések: <span class="fw-bold"> {{ count($orders->where('status', 'Lezárt')) }} db.</span></p>
+                     <p>Törölt megrendelések: <span class="fw-bold"> {{ count($orders->where('status', 'Törölt')) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/rendelesek') }}" role="button">Rendelések</a>

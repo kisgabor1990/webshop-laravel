@@ -199,6 +199,10 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/termekek/vegleg-torol/{id}', [AdminProductsController::class, 'destroy'] );
 
     Route::get('/rendelesek', [OrdersController::class, 'index'] );
+    Route::get('/rendelesek/mutat/{id}', [OrdersController::class, 'show'] );
+    Route::get('/rendelesek/szerkeszt/{id}', [OrdersController::class, 'edit'] );
+    Route::post('/rendelesek/szerkeszt/{id}', [OrdersController::class, 'update'] );
+    Route::get('/rendelesek/torol/{id}', [OrdersController::class, 'delete'] );
 });
 
 
