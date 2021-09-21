@@ -205,6 +205,4 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/rendelesek/torol/{id}', [OrdersController::class, 'delete'] );
 });
 
-
-
 Route::get('{page}', [PagesController::class, 'show']);
