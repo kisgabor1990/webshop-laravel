@@ -80,7 +80,8 @@ class SessionsController extends Controller
             return back()->withErrors(['old_password' => 'A beírt jelszó nem egyezik jelenlegi jelszavával!']);
         }
 
-        $user->password = Hash::make($request->password);
+        $user->password             = Hash::make($request->password);
+        $user->password_must_change = 0;
 
         $user->save();
 
