@@ -26,15 +26,13 @@ class DataModificationController extends Controller
             'zip'      => $request->billing_zip,
         ]);
 
-        $billing_address = $user->billing_address()->updateOrCreate([
-            'choose_company' => $request->choose_company,
-            'name' => $request->billing_name,
-            'tax_num' => $request->taxnum,
-        ]);
+        $user->billing_address->choose_company = $request->choose_company;
+        $user->billing_address->name = $request->billing_name;
+        $user->billing_address->tax_num = $request->taxnum;
 
-        $billing_address->address()->associate($address);
+        $user->billing_address->address()->associate($address);
 
-        $billing_address->save();
+        $user->billing_address->save();
 
         $address = Address::updateOrCreate([
             'city'     => $request->shipping_city,
@@ -43,14 +41,12 @@ class DataModificationController extends Controller
             'zip'      => $request->shipping_zip,
         ]);
 
-        $shipping_address = $user->shipping_address()->updateOrCreate([
-            'name' => $request->shipping_name,
-            'phone' => $request->phone,
-        ]);
+        $user->shipping_address->name = $request->shipping_name;
+        $user->shipping_address->phone = $request->phone;
 
-        $shipping_address->address()->associate($address);
+        $user->shipping_address->address()->associate($address);
 
-        $shipping_address->save();
+        $user->shipping_address->save();
 
         return redirect()->back()->withSuccess("Az adatok módosítása sikeres!");
     }

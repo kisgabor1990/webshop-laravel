@@ -60,6 +60,14 @@ class UserController extends Controller
             'password_must_change' => 1,
         ]);
 
+        $user->billing_address()->create([
+            'name' => $request->name
+        ]);
+
+        $user->shipping_address()->create([
+            'name' => $request->name
+        ]);
+
         $user->notify(new AdminNewUser($password));
 
         return redirect()->to('admin/felhasznalok')->withSuccess('Új felhasználó sikeresen létrehozva!');
@@ -74,7 +82,6 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::withTrashed()->with(['billing_address.address', 'shipping_address.address'])->find($id);
-
 
         return view('admin.felhasznalok.mutat')->with([
             'user' => $user,
