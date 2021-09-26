@@ -20,11 +20,8 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $model = new Category();
-        $categories = $model->getCategories();
-
         return view('products.categories')
-            ->with('categories', $categories);
+            ->with('categories', Category::get());
     }
 
     public function list(Request $request, $category_slug, $subcategory_slug = null)
@@ -89,7 +86,7 @@ class ProductsController extends Controller
             })->with(['images', 'ratings', 'brand', 'properties'])->inRandomOrder()->limit(4)->get();
 
         if (Auth::check()) {
-            $user  = User::find(auth()->user()->id);
+            $user  = auth()->user();
             $myOpinion = $opinionModel->getOpinion($product->id, $user->id);
         }
 
@@ -115,8 +112,8 @@ class ProductsController extends Controller
                     $q->where('name', 'LIKE', '%' . $query . '%');
                 }
             })->paginate(6);
-        
-        
+
+
         return view('products.kereses')->with([
             'query' => $query_string,
             'products' => $products,

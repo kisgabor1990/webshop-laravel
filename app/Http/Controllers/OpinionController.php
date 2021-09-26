@@ -40,7 +40,7 @@ class OpinionController extends Controller
         $model = new Product();
         $product = $model->getProduct($id);
 
-        $user  = User::find(auth()->user()->id);
+        $user  = auth()->user();
         $user->rate($product, $request->stars);
 
         $opinion = [
@@ -76,7 +76,7 @@ class OpinionController extends Controller
     {
         $model = new Product();
         $product = $model->getProduct($id);
-        $user  = User::find(auth()->user()->id);
+        $user  = auth()->user();
         $myOpinion = $opinion->getOpinion($product->id, $user->id);
 
         if (!session()->has('url.intended')) {
@@ -100,7 +100,7 @@ class OpinionController extends Controller
     {
         $model = new Product();
         $product = $model->getProduct($id);
-        
+
         $opinion->updateOpinion($product, $request->stars, $request->opinion);
 
         return redirect()->intended();

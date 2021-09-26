@@ -23,7 +23,7 @@ class Opinion extends Model
     }
 
     public function updateOpinion($product, $rate, $comment) {
-        $user  = User::find(auth()->user()->id);
+        $user  = auth()->user();
         $user->rate($product, $rate);
 
         $this::where('user_id', $user->id)
@@ -43,7 +43,7 @@ class Opinion extends Model
     }
 
     public function destroyOpinion($product) {
-        $user  = User::find(auth()->user()->id);
+        $user  = auth()->user();
         $user->unrate($product);
 
         $this::where('product_id', $product->id)
