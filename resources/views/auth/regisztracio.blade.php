@@ -106,7 +106,7 @@
                         <label for="taxnum">Adószám</label>
                         <div class="form-text">Helyes formátum: xxxxxxxx-y-zz</div>
                         <div class="invalid-tooltip">
-                            Cég esetén az adószám nem lehet üres, vagy a formátum nem megfelelő!
+                            Az adószám megadása kötelező, vagy a formátum nem megfelelő!
                         </div>
                     </div>
                     <div class="form-floating mb-5">
