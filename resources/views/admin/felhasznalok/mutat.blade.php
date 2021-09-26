@@ -40,7 +40,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="user-select-none">Megrendelései:</th>
-                                    <td>TODO</td>
+                                    <td>{{ count($user->orders) }} db.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -70,10 +70,14 @@
                                         <tr class="@if ($user->billing_address->trashed()) table-dark @endif" style="transform: rotate(0);">
                                             <td class="text-nowrap"><a href="{{ url('admin/szamlazasi-cimek/mutat/' . $user->billing_address->id) }}" class="stretched-link text-reset text-decoration-none">{{ $user->billing_address->name }}</a></td>
                                             <td class="text-nowrap">{{ $user->billing_address->tax_num }}</td>
-                                            <td class="text-nowrap">{{ $user->billing_address->address->city }}</td>
-                                            <td class="text-nowrap">{{ $user->billing_address->address->address }}</td>
-                                            <td class="text-nowrap">{{ $user->billing_address->address->address2 }}</td>
-                                            <td class="text-nowrap">{{ $user->billing_address->address->zip }}</td>
+                                            @if ($user->billing_address->address)
+                                                <td class="text-nowrap">{{ $user->billing_address->address->city }}</td>
+                                                <td class="text-nowrap">{{ $user->billing_address->address->address }}</td>
+                                                <td class="text-nowrap">{{ $user->billing_address->address->address2 }}</td>
+                                                <td class="text-nowrap">{{ $user->billing_address->address->zip }}</td>
+                                            @else
+                                                <td colspan="4" class="text-nowrap"></td>
+                                            @endif
                                         </tr>
                                     @else
                                         <tr>
@@ -104,10 +108,14 @@
                                         <tr class="@if ($user->shipping_address->trashed()) table-dark @endif" style="transform: rotate(0);">
                                             <td class="text-nowrap"><a href="{{ url('admin/szallitasi-cimek/mutat/' . $user->shipping_address->id) }}" class="stretched-link text-reset text-decoration-none">{{ $user->shipping_address->name }}</a></td>
                                             <td class="text-nowrap">+36{{ $user->shipping_address->phone }}</td>
-                                            <td class="text-nowrap">{{ $user->shipping_address->address->city }}</td>
-                                            <td class="text-nowrap">{{ $user->shipping_address->address->address }}</td>
-                                            <td class="text-nowrap">{{ $user->shipping_address->address->address2 }}</td>
-                                            <td class="text-nowrap">{{ $user->shipping_address->address->zip }}</td>
+                                            @if ($user->shipping_address->address)
+                                                <td class="text-nowrap">{{ $user->shipping_address->address->city }}</td>
+                                                <td class="text-nowrap">{{ $user->shipping_address->address->address }}</td>
+                                                <td class="text-nowrap">{{ $user->shipping_address->address->address2 }}</td>
+                                                <td class="text-nowrap">{{ $user->shipping_address->address->zip }}</td>
+                                            @else
+                                                <td colspan="4" class="text-nowrap"></td>
+                                            @endif
                                         </tr>
                                     @else
                                         <tr>

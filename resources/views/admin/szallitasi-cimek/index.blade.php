@@ -18,7 +18,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="table-responsive">
                 <table class="table table-striped table-hover @if (count($shipping_addresses)) list @endif">
                     <thead class="thead-inverse user-select-none">
@@ -44,10 +44,14 @@
                                 <td class="text-nowrap">{{ $shipping_address->user->email }}</td>
                                 <td class="text-nowrap">{{ $shipping_address->name }}</td>
                                 <td class="text-nowrap">{{ $shipping_address->phone }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->address->city }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->address->address }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->address->address2 }}</td>
-                                <td class="text-nowrap">{{ $shipping_address->address->zip }}</td>
+                                @if ($shipping_address->address)
+                                    <td class="text-nowrap">{{ $shipping_address->address->city }}</td>
+                                    <td class="text-nowrap">{{ $shipping_address->address->address }}</td>
+                                    <td class="text-nowrap">{{ $shipping_address->address->address2 }}</td>
+                                    <td class="text-nowrap">{{ $shipping_address->address->zip }}</td>
+                                @else
+                                    <td colspan="4" class="text-nowrap"></td>
+                                @endif
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         @if ($shipping_address->trashed())

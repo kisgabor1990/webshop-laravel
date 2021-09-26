@@ -11,19 +11,19 @@
                         <tbody>
                             <tr>
                                 <th scope="row" class="user-select-none w-50">Város:</th>
-                                <td>{{ $billing_address->address->city }}</td>
+                                <td>{{ $billing_address->address->city ?? "" }}</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none w-50">Utca / Házszám:</th>
-                                <td>{{ $billing_address->address->address }}</td>
+                                <td>{{ $billing_address->address->address ?? "" }}</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none w-50">Emelet / Ajtó:</th>
-                                <td>{{ $billing_address->address->address2 }}</td>
+                                <td>{{ $billing_address->address->address2 ?? "" }}</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none w-50">Irányítószám:</th>
-                                <td>{{ $billing_address->address->zip }}</td>
+                                <td>{{ $billing_address->address->zip ?? "" }}</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="user-select-none w-50">Cég / Magán:</th>
