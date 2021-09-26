@@ -154,10 +154,10 @@
                         <div class="col-6 me-auto">
                             <div class="row mb-3">
                                     <div class="col-4 me-auto">
-                                        <i class="fas fa-phone-alt h5 me-1"></i> 06-1/123-45-67
+                                        <i class="fas fa-phone-alt h5 me-1"></i> {{ env('STORE_PHONE') }}
                                     </div>
                                     <div class="col-8">
-                                        <i class="far fa-envelope h5 me-1"></i> info@muszakiwebaruhaz.hu
+                                        <i class="far fa-envelope h5 me-1"></i> {{ env('STORE_EMAIL') }}
                                     </div>
                             </div>
                             <form action="{{ url('termekek/kereses') }}" method="get">
@@ -320,11 +320,11 @@
                     <i class="fas fa-address-book"></i> Ügyfélszolgálat
                 </h3>
                 <ul class="list-group">
-                    <li class="list-group-item">Kecskemét</li>
-                    <li class="list-group-item">Fő utca 1.</li>
-                    <li class="list-group-item"><a href="index.php">Műszaki Webáruház</a></li>
-                    <li class="list-group-item"><a href="tel:+36001234567">+36-1/123-45-67</a></li>
-                    <li class="list-group-item"><a href="info@muszakiwebaruhaz.hu">info@muszakiwebaruhaz.hu</a></li>
+                    <li class="list-group-item">{{ env('STORE_CITY') }}</li>
+                    <li class="list-group-item">{{ env('STORE_ADDRESS') }} {{ env('STORE_ADDRESS2') }}</li>
+                    <li class="list-group-item"><a href="{{ url("/") }}">{{ env('APP_NAME') }}</a></li>
+                    <li class="list-group-item"><a href="tel:{{ env('STORE_PHONE') }}">{{ env('STORE_PHONE') }}</a></li>
+                    <li class="list-group-item"><a href="{{ env('STORE_EMAIL') }}">{{ env('STORE_EMAIL') }}</a></li>
                 </ul>
             </div>
             <div class="col-12 col-lg-4">

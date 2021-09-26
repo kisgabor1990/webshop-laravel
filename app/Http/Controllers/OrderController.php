@@ -20,12 +20,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
-define('STORE_ADDRESS', [
-    'city' => 'Kecskemét',
-    'address' => 'XY utca 1',
-    'zip' => '6000',
-]);
-
 class OrderController extends Controller
 {
 
@@ -202,10 +196,10 @@ class OrderController extends Controller
 
 
         if ($customer['shipping_mode'] == "Személyes átvétel") {
-            $customer['shipping_city'] = STORE_ADDRESS['city'];
-            $customer['shipping_address'] = STORE_ADDRESS['address'];
-            $customer['shipping_address2'] = '';
-            $customer['shipping_zip'] = STORE_ADDRESS['zip'];
+            $customer['shipping_city'] = env('STORE_CITY');
+            $customer['shipping_address'] = env('STORE_ADDRESS');
+            $customer['shipping_address2'] = env('STORE_ADDRESS2');
+            $customer['shipping_zip'] = env('STORE_ZIP');
             unset($customer['shipping_same']);
         } else {
             $customer['shipping_city'] = $customer['original_shipping']['city'];
