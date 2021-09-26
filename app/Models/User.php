@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public static function admins() {
-        return self::where('is_admin', '1')->get();
+        return self::where('is_admin', '!=', '0')->get();
     }
 
 }
