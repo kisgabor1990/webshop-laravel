@@ -114,7 +114,9 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->is_admin = $request->isAdmin ? 1 : 0;
+        if ($user->is_admin != 2) {
+            $user->is_admin = $request->isAdmin ? 1 : 0;
+        }
         $user->save();
 
         return redirect()->to('admin/felhasznalok')->withSuccess('Felhasználó adatai sikeresen módosítva!');
