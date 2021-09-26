@@ -133,7 +133,7 @@
                     <div class="card-header text-center user-select-none h3">Leadott megrendelések</div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover @if (count($user->orders)) list @endif">
                                 <thead class="user-select-none">
                                     <tr class="text-center">
                                         <th>Azonosító</th>
@@ -142,17 +142,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @forelse ($billing_addresses as $billing_address)
+                                     @forelse ($user->orders as $order)
                                         <tr style="transform: rotate(0);">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{ $order->id }}</td>
+                                            <td>{{ $order->created_at->format("Y-m-d H:i.S") }}</td>
+                                            <td>{{ $order->status }}</td>
                                         </tr>
                                     @empty
                                         <tr>
                                             <td colspan="3">Nincs rögzített megrendelés!</td>
                                         </tr>
-                                    @endforelse --}}
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

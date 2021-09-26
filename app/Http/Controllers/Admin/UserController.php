@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::withTrashed()->with(['billing_address.address', 'shipping_address.address'])->find($id);
+        $user = User::withTrashed()->with(['billing_address.address', 'shipping_address.address', 'orders'])->find($id);
 
         return view('admin.felhasznalok.mutat')->with([
             'user' => $user,
