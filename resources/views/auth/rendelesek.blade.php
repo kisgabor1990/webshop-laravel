@@ -7,7 +7,7 @@
             <h2 class="accordion-header" id="headingFolyamatban">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFolyamatban"
                         aria-expanded="true" aria-controls="collapseFolyamatban">
-                    Folyamatban lévő megrendelések ({{ count($user->orders->where('status', '!=', 'Lezárt')) }})
+                    Folyamatban lévő megrendelések ({{ count($user->orders->where('status', '!=', 'Lezárt')->where('status', '!=', 'Törölt')) }})
                 </button>
             </h2>
             <div id="collapseFolyamatban" class="accordion-collapse collapse show" aria-labelledby="headingFolyamatban"
@@ -15,7 +15,7 @@
                 <div class="accordion-body">
 
                     <div class="accordion" id="ordersFolyamatban">
-                        @forelse ($user->orders->where('status', '!=', 'Lezárt') as $order)
+                        @forelse ($user->orders->where('status', '!=', 'Lezárt')->where('status', '!=', 'Törölt') as $order)
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ $order->id }}">
                                 <button class="accordion-button collapsed lh-lg fs-5 fw-bold fst-italic" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $order->id }}"
@@ -30,6 +30,7 @@
                                         <div class="col-12 col-lg-8 offset-0 offset-lg-2">
                                             <p class="fs-4">Megrendelés bizonylatszáma: <span class="h3">#{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</span> </p>
                                             <p>Rendelés leadva: <span class="fw-bold"> {{ $order->created_at->format("Y. m. d.") }} </span></p>
+                                            <p>Státusz: <span class="fw-bold"> {{ $order->status }} </span></p>
                                             <p>Végösszeg: <span class="fw-bold">{{ number_format($order->amount, 0, ',', ' ') }} Ft. </span></p>
                                             <p>Átvétel módja: <span class="fw-bold">{{ $order->shipping_mode }}</span></p>
                                             <p>Átvétel helye: <span class="fw-bold">{{ $order->shipping->address->zip }} {{ $order->shipping->address->city }}, {{ $order->shipping->address->address }} {{ $order->shipping->address->address2 }}</span></p>
@@ -104,7 +105,7 @@
                             </div>
                         </div>
                         @empty
-                        <p>Jelenleg nincs folyamatban lévő megrendelése!</p>
+                            <p>Jelenleg nincs folyamatban lévő megrendelése!</p>
                         @endforelse
                     </div>
 
