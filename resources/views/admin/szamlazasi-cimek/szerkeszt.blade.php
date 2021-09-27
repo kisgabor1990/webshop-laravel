@@ -34,14 +34,6 @@
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
-                            <select class="form-select" id="user_id" name="user_id">
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" @if ($billing_address->user_id == $user->id) selected @endif>{{ $user->name }} - {{ $user->email }}</option>
-                                @endforeach
-                            </select>
-                            <label for="user_id">Felhasználó (Név - Email cím)</label>
-                        </div>
-                        <div class="col-12 col-lg-6 form-floating mb-3 mx-auto">
                             <input type="text" class="form-control" id="name" name="name" placeholder="Név"
                                 value="{{ $billing_address->name }}" required>
                             <label for="name">Név</label>

@@ -16,169 +16,70 @@ class BillingAddessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $billing_addresses = Billing_address::withTrashed()->with(['address', 'user'])->orderBy('user_id')->get();
 
         return view('admin.szamlazasi-cimek.index')->with('billing_addresses', $billing_addresses);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $users = User::get();
-        return view('admin.szamlazasi-cimek.uj')->with('users', $users);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(AdminBillingAddressRequest $request)
-    {
-        $user = User::find($request->user_id);
-
-        $address = Address::updateOrCreate([
-            'city' => $request->city,
-            'address' => $request->address,
-            'address2' => $request->address2,
-            'zip' => $request->zip,
-        ]);
-
-        $billing_address = Billing_address::updateOrCreate([
-            'choose_company' => $request->choose_company,
-            'name' => $request->name,
-            'tax_num' => $request->taxnum,
-        ]);
-
-        $billing_address->user()->associate($user);
-        $billing_address->address()->associate($address);
-
-        $billing_address->save();
-
-        return redirect()->to('admin/szamlazasi-cimek')->withSuccess('Új számlázási cím sikeresen létrehozva!');
-    }
-
-    /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Billing_address  $billing_address
+     * @param \App\Models\Billing_address $billing_address
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
+    public function show($id) {
+        if ( ! $billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
         return view('admin.szamlazasi-cimek.mutat')->with([
-            'billing_address' => $billing_address
+            'billing_address' => $billing_address,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Billing_address  $billing_address
+     * @param \App\Models\Billing_address $billing_address
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
+    public function edit($id) {
+        if ( ! $billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
-        $users = User::get();
 
         return view('admin.szamlazasi-cimek.szerkeszt')->with([
             'billing_address' => $billing_address,
-            'users' => $users,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Billing_address  $billing_address
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Billing_address $billing_address
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminBillingAddressRequest $request, $id)
-    {
-        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
+    public function update(AdminBillingAddressRequest $request, $id) {
+        if ( ! $billing_address = Billing_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
         }
 
-        $user = User::find($request->user_id);
-
         $address = Address::updateOrCreate([
-            'city' => $request->city,
-            'address' => $request->address,
+            'city'     => $request->city,
+            'address'  => $request->address,
             'address2' => $request->address2,
-            'zip' => $request->zip,
+            'zip'      => $request->zip,
         ]);
 
         $billing_address->choose_company = $request->choose_company;
-        $billing_address->name = $request->name;
-        $billing_address->tax_num = $request->taxnum;
+        $billing_address->name           = $request->name;
+        $billing_address->tax_num        = $request->taxnum;
 
-        $billing_address->user()->associate($user);
         $billing_address->address()->associate($address);
 
         $billing_address->save();
 
         return redirect()->to('admin/szamlazasi-cimek')->withSuccess('Számlázási cím sikeresen módosítva!');
-    }
-
-    /**
-     * Disable the specified resource.
-     *
-     * @param  \App\Models\Billing_address  $billing_address
-     * @return \Illuminate\Http\Response
-     */
-    public function delete(Billing_address $billing_address)
-    {
-        if (!$billing_address) {
-            return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
-        }
-        $billing_address->delete();
-
-        return redirect()->to('admin/szamlazasi-cimek')->withSuccess('A számlázási cím törlésre került!');
-    }
-
-    /**
-     * Restore the specified resource.
-     *
-     * @param  \App\Models\Billing_address  $billing_address
-     * @return \Illuminate\Http\Response
-     */
-    public function restore($id)
-    {
-        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
-            return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
-        }
-        $billing_address->restore();
-
-        return redirect()->to('admin/szamlazasi-cimek')->withSuccess('A számlázási cím sikeresen visszaállítva!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Billing_address  $billing_address
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        if (!$billing_address = Billing_address::withTrashed()->find($id)) {
-            return redirect()->to("/admin/szamlazasi-cimek")->withErrors(['message' => 'Nem létező számlázási cím!']);
-        }
-        $billing_address->forceDelete();
-
-        return redirect()->to('admin/szamlazasi-cimek')->withSuccess('A számlázási cím végleg törlésre került!');
     }
 }

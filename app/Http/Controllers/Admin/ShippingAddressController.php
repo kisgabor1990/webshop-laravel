@@ -24,47 +24,6 @@ class ShippingAddressController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $users = User::get();
-        return view('admin.szallitasi-cimek.uj')->with('users', $users);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(AdminShippingAddressRequest $request)
-    {
-        $user = User::find($request->user_id);
-
-        $address = Address::updateOrCreate([
-            'city' => $request->city,
-            'address' => $request->address,
-            'address2' => $request->address2,
-            'zip' => $request->zip,
-        ]);
-
-        $shipping_address = Shipping_address::updateOrCreate([
-            'name' => $request->name,
-            'phone' => $request->phone,
-        ]);
-
-        $shipping_address->user()->associate($user);
-        $shipping_address->address()->associate($address);
-
-        $shipping_address->save();
-
-        return redirect()->to('admin/szallitasi-cimek')->withSuccess('Új szállítási cím sikeresen létrehozva!');
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Shipping_address  $shipping_address
@@ -91,11 +50,9 @@ class ShippingAddressController extends Controller
         if (!$shipping_address = Shipping_address::withTrashed()->find($id)) {
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
-        $users = User::get();
 
         return view('admin.szallitasi-cimek.szerkeszt')->with([
             'shipping_address' => $shipping_address,
-            'users' => $users,
         ]);
     }
 
@@ -112,8 +69,6 @@ class ShippingAddressController extends Controller
             return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
         }
 
-        $user = User::find($request->user_id);
-
         $address = Address::updateOrCreate([
             'city' => $request->city,
             'address' => $request->address,
@@ -122,61 +77,12 @@ class ShippingAddressController extends Controller
         ]);
 
         $shipping_address->name = $request->name;
-        $shipping_address->phone = $request->phone;
+        $shipping_address->phone = str_starts_with($request->phone, '+36') ? substr($request->phone, 3) : $request->phone;
 
-        $shipping_address->user()->associate($user);
         $shipping_address->address()->associate($address);
 
         $shipping_address->save();
 
         return redirect()->to('admin/szallitasi-cimek')->withSuccess('Szállítási cím sikeresen módosítva!');
-    }
-
-    /**
-     * Disable the specified resource.
-     *
-     * @param  \App\Models\Shipping_address  $shipping_address
-     * @return \Illuminate\Http\Response
-     */
-    public function delete(Shipping_address $shipping_address)
-    {
-        if (!$shipping_address) {
-            return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
-        }
-        $shipping_address->delete();
-
-        return redirect()->to('admin/szallitasi-cimek')->withSuccess('A szállítási cím törlésre került!');
-    }
-
-    /**
-     * Restore the specified resource.
-     *
-     * @param  \App\Models\shipping_address  $shipping_address
-     * @return \Illuminate\Http\Response
-     */
-    public function restore($id)
-    {
-        if (!$shipping_address = Shipping_address::withTrashed()->find($id)) {
-            return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
-        }
-        $shipping_address->restore();
-
-        return redirect()->to('admin/szallitasi-cimek')->withSuccess('A szállítási cím sikeresen visszaállítva!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\shipping_address  $shipping_address
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        if (!$shipping_address = Shipping_address::withTrashed()->find($id)) {
-            return redirect()->to("/admin/szallitasi-cimek")->withErrors(['message' => 'Nem létező szállítási cím!']);
-        }
-        $shipping_address->forceDelete();
-
-        return redirect()->to('admin/szallitasi-cimek')->withSuccess('A szállítási cím végleg törlésre került!');
     }
 }

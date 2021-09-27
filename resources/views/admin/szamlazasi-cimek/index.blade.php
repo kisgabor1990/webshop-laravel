@@ -11,12 +11,6 @@
                         <i class="far fa-address-card fa-fw"></i> Számlázási címek
                     </p>
                 </div>
-                <div class="col-auto">
-                    <a class="btn btn-outline-primary btn-lg mb-5" href="{{ url('admin/szamlazasi-cimek/uj') }}"
-                        role="button">
-                        <i class="fas fa-plus fa-lg fa-fw"></i> Új számlázási cím
-                    </a>
-                </div>
             </div>
 
             <div class="table-responsive">
@@ -54,17 +48,6 @@
                                 @endif
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
-                                        @if ($billing_address->trashed())
-                                            <a class="btn btn-danger btn-sm delete me-3" href="#"
-                                                data-href="{{ url('admin/szamlazasi-cimek/vegleg-torol/' . $billing_address->id) }}"
-                                                data-header="számlázási cím" data-name="{{ $billing_address->name }}"
-                                                data-user="{{ $billing_address->user->name ?? '' }}"
-                                                data-address="{{ $billing_address->address->zip }} {{ $billing_address->address->city }}, {{ $billing_address->address->address }} {{ $billing_address->address->address2 }}"
-                                                data-id="{{ $billing_address->id }}" role="button"
-                                                data-bs-tooltip="tooltip" data-placement="top" title="Végleges törlés">
-                                                <i class="fas fa-trash fa-sm fa-fw"></i>
-                                            </a>
-                                        @endif
                                         <a class="btn btn-primary btn-sm "
                                             href="{{ url('admin/szamlazasi-cimek/mutat/' . $billing_address->id) }}"
                                             role="button"
@@ -77,27 +60,12 @@
                                             data-bs-tooltip="tooltip" data-placement="top" title="Szerkesztés">
                                             <i class="fas fa-edit fa-sm fa-fw"></i>
                                         </a>
-                                        @if ($billing_address->trashed())
-                                            <a class="btn btn-success btn-sm"
-                                                href="{{ url('admin/szamlazasi-cimek/visszaallit/' . $billing_address->id) }}"
-                                                role="button"
-                                                data-bs-tooltip="tooltip" data-placement="top" title="Visszaállítás">
-                                                <i class="fas fa-trash-restore fa-sm fa-fw"></i>
-                                            </a>
-                                        @else
-                                            <a class="btn btn-danger btn-sm"
-                                                href="{{ url('admin/szamlazasi-cimek/torol/' . $billing_address->id) }}"
-                                                role="button"
-                                                data-bs-tooltip="tooltip" data-placement="top" title="Törlés">
-                                                <i class="fas fa-trash fa-sm fa-fw"></i>
-                                            </a>
-                                        @endif
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">Nincs rögzített szállítási adat!</td>
+                                <td colspan="9">Nincs rögzített számlázási adat!</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -53,7 +53,7 @@ class RegistrationController extends Controller {
 
         $shipping_address = $user->shipping_address()->create([
             'name' => $request->shipping_name,
-            'phone' => $request->phone,
+            'phone' => str_starts_with($request->phone, '+36') ? substr($request->phone, 3) : $request->phone,
         ]);
 
         $shipping_address->address()->associate($address);

@@ -11,12 +11,6 @@
                         <i class="far fa-address-card fa-fw"></i> Szállítási címek
                     </p>
                 </div>
-                <div class="col-auto">
-                    <a class="btn btn-outline-primary btn-lg mb-5" href="{{ url('admin/szallitasi-cimek/uj') }}"
-                        role="button">
-                        <i class="fas fa-plus fa-lg fa-fw"></i> Új szállítási cím
-                    </a>
-                </div>
             </div>
 
             <div class="table-responsive">
@@ -54,17 +48,6 @@
                                 @endif
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
-                                        @if ($shipping_address->trashed())
-                                            <a class="btn btn-danger btn-sm delete me-3" href="#"
-                                                data-href="{{ url('admin/szallitasi-cimek/vegleg-torol/' . $shipping_address->id) }}"
-                                                data-header="szállítási cím" data-name="{{ $shipping_address->name }}"
-                                                data-user="{{ $shipping_address->user->name ?? '' }}"
-                                                data-address="{{ $shipping_address->address->zip }} {{ $shipping_address->address->city }}, {{ $shipping_address->address->address }} {{ $shipping_address->address->address2 }}"
-                                                data-id="{{ $shipping_address->id }}" role="button"
-                                                data-bs-tooltip="tooltip" data-placement="top" title="Végleges törlés">
-                                                <i class="fas fa-trash fa-sm fa-fw"></i>
-                                            </a>
-                                        @endif
                                         <a class="btn btn-primary btn-sm "
                                             href="{{ url('admin/szallitasi-cimek/mutat/' . $shipping_address->id) }}"
                                             role="button"
@@ -77,21 +60,6 @@
                                             data-bs-tooltip="tooltip" data-placement="top" title="Szerkesztés">
                                             <i class="fas fa-edit fa-sm fa-fw"></i>
                                         </a>
-                                        @if ($shipping_address->trashed())
-                                            <a class="btn btn-success btn-sm"
-                                                href="{{ url('admin/szallitasi-cimek/visszaallit/' . $shipping_address->id) }}"
-                                                role="button"
-                                                data-bs-tooltip="tooltip" data-placement="top" title="Visszaállítás">
-                                                <i class="fas fa-trash-restore fa-sm fa-fw"></i>
-                                            </a>
-                                        @else
-                                            <a class="btn btn-danger btn-sm"
-                                                href="{{ url('admin/szallitasi-cimek/torol/' . $shipping_address->id) }}"
-                                                role="button"
-                                                data-bs-tooltip="tooltip" data-placement="top" title="Törlés">
-                                                <i class="fas fa-trash fa-sm fa-fw"></i>
-                                            </a>
-                                        @endif
                                     </div>
                                 </td>
                             </tr>

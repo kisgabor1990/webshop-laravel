@@ -150,23 +150,13 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
 
     Route::get('/szamlazasi-cimek', [BillingAddessController::class, 'index'] );
     Route::get('/szamlazasi-cimek/mutat/{id}', [BillingAddessController::class, 'show'] );
-    Route::get('/szamlazasi-cimek/uj', [BillingAddessController::class, 'create'] );
-    Route::post('/szamlazasi-cimek/uj', [BillingAddessController::class, 'store'] );
     Route::get('/szamlazasi-cimek/szerkeszt/{id}', [BillingAddessController::class, 'edit'] );
     Route::post('/szamlazasi-cimek/szerkeszt/{id}', [BillingAddessController::class, 'update'] );
-    Route::get('/szamlazasi-cimek/torol/{billing_address}', [BillingAddessController::class, 'delete'] );
-    Route::get('/szamlazasi-cimek/vegleg-torol/{id}', [BillingAddessController::class, 'destroy'] );
-    Route::get('/szamlazasi-cimek/visszaallit/{id}', [BillingAddessController::class, 'restore'] );
 
     Route::get('/szallitasi-cimek', [ShippingAddressController::class, 'index'] );
     Route::get('/szallitasi-cimek/mutat/{id}', [ShippingAddressController::class, 'show'] );
-    Route::get('/szallitasi-cimek/uj', [ShippingAddressController::class, 'create'] );
-    Route::post('/szallitasi-cimek/uj', [ShippingAddressController::class, 'store'] );
     Route::get('/szallitasi-cimek/szerkeszt/{id}', [ShippingAddressController::class, 'edit'] );
     Route::post('/szallitasi-cimek/szerkeszt/{id}', [ShippingAddressController::class, 'update'] );
-    Route::get('/szallitasi-cimek/torol/{shipping_address}', [ShippingAddressController::class, 'delete'] );
-    Route::get('/szallitasi-cimek/vegleg-torol/{id}', [ShippingAddressController::class, 'destroy'] );
-    Route::get('/szallitasi-cimek/visszaallit/{id}', [ShippingAddressController::class, 'restore'] );
 
     Route::get('/gyartok', [BrandController::class, 'index'] );
     Route::get('/gyartok/mutat/{id}', [BrandController::class, 'show'] );
