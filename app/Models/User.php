@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\VerifyEmailQueued;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Nagy\LaravelRating\Traits\Rate\CanRate;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
+
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -47,6 +50,19 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmailQueued);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+
+
 
     public function billing_address() {
         return $this->hasOne(Billing_address::class)->withTrashed();
