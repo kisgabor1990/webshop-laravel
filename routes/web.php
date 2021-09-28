@@ -84,7 +84,7 @@ Route::get('/megrendeles/elkuldve', [OrderController::class, 'show']);
 Route::middleware(['guest'])->group(function () {
     Route::get('/regisztracio', [RegistrationController::class, 'create']);
     Route::post('/regisztracio', [RegistrationController::class, 'store']);
-    Route::get('/elfelejtett-jelszo', [PasswordRecoveryControđđđller::class, 'create']);
+    Route::get('/elfelejtett-jelszo', [PasswordRecoveryController::class, 'create']);
     Route::post('/elfelejtett-jelszo', [PasswordRecoveryController::class, 'store']);
     Route::get('/uj-jelszo/{token}/{email}', [ResetPasswordController::class, 'create']);
     Route::post('/uj-jelszo', [ResetPasswordController::class, 'store']);
