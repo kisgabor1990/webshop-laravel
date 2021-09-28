@@ -21,8 +21,7 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $products = Product::withTrashed()->with(['brand', 'category', 'subCategory'])->get();
 
         return view('admin.termekek.index')->with([
@@ -35,9 +34,10 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $categories = Category::withTrashed()->get();
+    public function create() {
+        if ( ! count($categories = Category::withTrashed()->get())) {
+            return redirect()->to('admin/termekek')->withErrors('Még nincs egy kategória sem!');
+        }
 
         return view('admin.termekek.uj_kategoria_valasztas')->with([
             'categories' => $categories,
@@ -47,42 +47,41 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         if ($request->selected_category) {
             $category = Category::withTrashed()->with(['properties.values'])->find($request->selected_category);
             return view('admin.termekek.uj')->with('category', $category);
         }
 
-        $category = Category::withTrashed()->find($request->category_id);
-        $brand = Brand::withTrashed()->find($request->brand_id);
+        $category    = Category::withTrashed()->find($request->category_id);
+        $brand       = Brand::withTrashed()->find($request->brand_id);
         $subcategory = Category_subcategory::find($request->subcategory_id);
 
         $product_name = $brand->name . ' ' . $request->model . ' ' . ($subcategory->name ?? $category->name);
 
         $product = Product::updateOrCreate([
-            'model' => $request->model,
-            'name' => $product_name,
-            'slug' => Str::of($product_name)->slug('-'),
+            'model'       => $request->model,
+            'name'        => $product_name,
+            'slug'        => Str::of($product_name)->slug('-'),
             'description' => $request->description,
-            'price' => $request->price,
+            'price'       => $request->price,
         ]);
 
         $images_path = 'images/products/' . $product->id;
-        if (!Storage::exists($images_path)) {
+        if ( ! Storage::exists($images_path)) {
             Storage::makeDirectory($images_path);
         }
         if ($request->hasFile('cover_image')) {
             $cover_image = $request->file('cover_image');
-            $path = $cover_image->store($images_path,  'public');
+            $path        = $cover_image->store($images_path, 'public');
 
             $product->images()->updateOrCreate([
-                'path' => '/storage/' . $path,
+                'path'     => '/storage/' . $path,
                 'realpath' => $path,
-                'isCover' => 1,
+                'isCover'  => 1,
             ]);
         }
         if ($request->hasFile('images')) {
@@ -92,9 +91,9 @@ class ProductsController extends Controller
                 $path = $image->store($images_path, 'public');
 
                 $product->images()->updateOrCreate([
-                    'path' => '/storage/' . $path,
+                    'path'     => '/storage/' . $path,
                     'realpath' => $path,
-                    'isCover' => 0,
+                    'isCover'  => 0,
                 ]);
             }
         }
@@ -112,12 +111,11 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        if (!$product = Product::withTrashed()->with(['category', 'brand'])->find($id)) {
+    public function show($id) {
+        if ( ! $product = Product::withTrashed()->with(['category', 'brand'])->find($id)) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
 
@@ -127,12 +125,11 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        if (!$product = Product::withTrashed()->with(['category.properties.values'])->find($id)) {
+    public function edit($id) {
+        if ( ! $product = Product::withTrashed()->with(['category.properties.values'])->find($id)) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
         return view('admin.termekek.szerkeszt')->with('product', $product);
@@ -141,28 +138,27 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        if (!$product = Product::withTrashed()->with(['properties'])->find($id)) {
+    public function update(Request $request, $id) {
+        if ( ! $product = Product::withTrashed()->with(['properties'])->find($id)) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
 
-        $brand = Brand::withTrashed()->find($request->brand_id);
-        $category = Category::withTrashed()->find($request->category_id);
+        $brand       = Brand::withTrashed()->find($request->brand_id);
+        $category    = Category::withTrashed()->find($request->category_id);
         $subcategory = Category_subcategory::find($request->subcategory_id);
 
         $product_name = $brand->name . ' ' . $request->model . ' ' . ($subcategory->name ?? $category->name);
 
-        $product->model = $request->model;
-        $product->name = $product_name;
-        $product->slug = Str::of($product_name)->slug('-');
+        $product->model       = $request->model;
+        $product->name        = $product_name;
+        $product->slug        = Str::of($product_name)->slug('-');
         $product->description = $request->description;
-        $product->price = $request->price;
-        $images_path = 'images/products/' . $product->id;
+        $product->price       = $request->price;
+        $images_path          = 'images/products/' . $product->id;
 
         if ($request->cover_image && ($product->coverImage()->id != $request->cover_image)) {
             $product->images()->where('id', $product->coverImage()->id)->update([
@@ -183,7 +179,7 @@ class ProductsController extends Controller
             }
         }
 
-        if (!Storage::exists($images_path)) {
+        if ( ! Storage::exists($images_path)) {
             Storage::makeDirectory($images_path);
         }
 
@@ -194,9 +190,9 @@ class ProductsController extends Controller
                 $path = $image->store($images_path, 'public');
 
                 $product->images()->updateOrCreate([
-                    'path' => '/storage/' . $path,
+                    'path'     => '/storage/' . $path,
                     'realpath' => $path,
-                    'isCover' => 0,
+                    'isCover'  => 0,
                 ]);
             }
         }
@@ -212,12 +208,11 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function delete(Product $product)
-    {
-        if (!$product) {
+    public function delete(Product $product) {
+        if ( ! $product) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
         $product->delete();
@@ -228,12 +223,11 @@ class ProductsController extends Controller
     /**
      * Restore the specified resource.
      *
-     * @param  \App\Models\Billing_address  $billing_address
+     * @param \App\Models\Billing_address $billing_address
      * @return \Illuminate\Http\Response
      */
-    public function restore($id)
-    {
-        if (!$product = Product::withTrashed()->find($id)) {
+    public function restore($id) {
+        if ( ! $product = Product::withTrashed()->find($id)) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
         $product->restore();
@@ -244,12 +238,11 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Billing_address  $billing_address
+     * @param \App\Models\Billing_address $billing_address
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        if (!$product = Product::withTrashed()->find($id)) {
+    public function destroy($id) {
+        if ( ! $product = Product::withTrashed()->find($id)) {
             return redirect()->to("/admin/termekek")->withErrors(['message' => 'Nem létező termék!']);
         }
         $product->forceDelete();

@@ -11,13 +11,15 @@
                         <i class="fas fa-store"></i> Termékek
                     </p>
                 </div>
-                <div class="col-auto">
-                    <a class="btn btn-outline-primary btn-lg mb-5" href="{{ url('admin/termekek/uj') }}" role="button">
-                        <i class="fas fa-plus fa-lg fa-fw"></i> Új termék
-                    </a>
-                </div>
+                @if (count($categories))
+                    <div class="col-auto">
+                        <a class="btn btn-outline-primary btn-lg mb-5" href="{{ url('admin/termekek/uj') }}" role="button">
+                            <i class="fas fa-plus fa-lg fa-fw"></i> Új termék
+                        </a>
+                    </div>
+                @endif
             </div>
-            
+
             <div class="table-responsive">
                 <table class="table table-striped table-hover @if (count($products)) list @endif" data-order='[[1, "asc"], [2, "asc"]]'>
                     <thead class="thead-inverse user-select-none">

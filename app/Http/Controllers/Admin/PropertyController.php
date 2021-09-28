@@ -32,8 +32,12 @@ class PropertyController extends Controller
      */
     public function create()
     {
+        if ( ! count($categories = Category::get())) {
+            return redirect()->to('admin/tulajdonsagok')->withErrors('Még nincs egy kategória sem!');
+        }
+
         return view('admin.tulajdonsagok.uj')->with([
-            'categories' => Category::withTrashed()->get(),
+            'categories' => $categories,
         ]);
     }
 
@@ -45,6 +49,10 @@ class PropertyController extends Controller
      */
     public function store(AdminPropertyRequest $request)
     {
+        if ( ! count(Category::get())) {
+            return redirect()->to('admin/tulajdonsagok')->withErrors('Még nincs egy kategória sem!');
+        }
+
         $category = Category::find($request->selected_category);
         $property = Property::updateOrCreate([
             'name' => $request->name,

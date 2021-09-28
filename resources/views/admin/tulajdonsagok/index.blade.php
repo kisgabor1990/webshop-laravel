@@ -11,11 +11,13 @@
                         <i class="fas fa-check-double"></i> Tulajdonságok
                     </p>
                 </div>
+                @if (count($categories))
                 <div class="col-auto">
                     <a class="btn btn-outline-primary btn-lg mb-5" href="{{ url('admin/tulajdonsagok/uj') }}" role="button">
                         <i class="fas fa-plus fa-lg fa-fw"></i> Új tulajdonság
                     </a>
                 </div>
+                @endif
             </div>
 
             <div class="table-responsive">
