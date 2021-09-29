@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Notifications\OrderStatusUpdated;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -72,7 +73,11 @@ class OrdersController extends Controller
             return redirect()->to("/admin/rendelesek")->withErrors(['message' => 'Lezárt rendelés nem módosítható!']);
         }
 
-        $order->status = $request->status;
+        if ($order->status != $request->status) {
+            $order->customer->notify(new OrderStatusUpdated($order));
+            $order->status = $request->status;
+        }
+
         $order->isPaid = $request->isPaid ?? 1;
 
         $order->save();
