@@ -68,8 +68,8 @@ class AdminNewOrder extends Notification implements ShouldQueue
         }
 
         $message
-            ->line("A megrendelés visszaigazolásához kattintson az alábbi gombra: ")
-            ->action("Visszaigazolás", url("/"))
+            ->line("A megrendelés megtekintéséhez kattintson az alábbi gombra: ")
+            ->action("Megtekintés", url("/admin/rendelesek/mutat/" . $this->order->id))
             ->line("Visszaigazolás után megkezdheti a termék(ek) összekészítését.");
 
         return $message;
