@@ -16,7 +16,7 @@ class CartController extends Controller
 
     public function addToCart($slug) {
         if ( ! ($product = Product::where('slug', $slug)->first())) {
-            return view('pages.404');
+            return response()->json(["Hiba" => "A termek nem talalhato!"], 404);
         }
 
         if ($user = User::find(Auth::id())) {
@@ -81,7 +81,7 @@ class CartController extends Controller
             session()->put('cart', $cart);
             return response()->json($cart[$id]);
         }
-        return view('pages.404');
+        return response()->json(["Hiba" => "A termek nem talalhato!"], 404);
 
     }
 
@@ -123,7 +123,7 @@ class CartController extends Controller
             return response()->json($product);
         }
 
-        return view('pages.404');
+        return response()->json(["Hiba" => "A termek nem talalhato!"], 404);
     }
 
     public function destroy($id) {
@@ -142,6 +142,6 @@ class CartController extends Controller
             return response(status: 200);
         }
 
-        return view('pages.404');
+        return response()->json(["Hiba" => "A termek nem talalhato!"], 404);
     }
 }

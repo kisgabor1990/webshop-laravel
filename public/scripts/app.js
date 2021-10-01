@@ -194,7 +194,6 @@ $(function () {
                     myModal.hide();
                 }, 1500)
             });
-
         })
         .on('click', '.cart-increase', function () {
             let this_r = $(this);
