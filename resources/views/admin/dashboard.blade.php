@@ -24,7 +24,6 @@
                 <div class="card-header text-center user-select-none h3">Számlázási címek</div>
                 <div class="card-body">
                     <p>Aktív: <span class="fw-bold"> {{ count($billing_addresses->where('deleted_at', null)) }} db.</span></p>
-                    <p>Inaktív: <span class="fw-bold"> {{ count($billing_addresses->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/szamlazasi-cimek') }}"
@@ -37,7 +36,6 @@
                 <div class="card-header text-center user-select-none h3">Szállítási címek</div>
                 <div class="card-body">
                     <p>Aktív: <span class="fw-bold"> {{ count($shipping_addresses->where('deleted_at', null)) }} db.</span></p>
-                    <p>Inaktív: <span class="fw-bold"> {{ count($shipping_addresses->where('deleted_at', '!=', null)) }} db.</span></p>
                 </div>
                 <div class="card-footer text-end">
                     <a class="btn btn-primary btn-sm " href="{{ url('admin/szallitasi-cimek') }}"
