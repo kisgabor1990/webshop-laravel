@@ -61,6 +61,7 @@
                             <input type="tel" class="form-control" id="phone" name="phone" value="{{ old('phone') }}"
                                    placeholder="Telefonszám" autocomplete="tel-national" required>
                             <label for="phone">Telefonszám</label>
+                            <div class="form-text">+36 nélkül adjuk meg</div>
                             <div class="invalid-tooltip">
                                 A telefonszám megadása kötelező!
                             </div>
